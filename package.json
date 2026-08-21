@@ -208,7 +208,7 @@
     "g:lint": "nx run-many -t lint",
     "g:lint:changed": "nx affected -t lint --base=${NX_BASE:-main} --head=${NX_HEAD:-HEAD}",
     "g:lint:fix": "nx run-many -t lint:fix",
-    "g:typecheck": "bun g:prepare && nx run @universe/uniswap-nx:typecheck:workspace",
+    "g:typecheck": "bun g:prepare && nx run-many -t typecheck",
     "g:test": "nx run-many -t test",
     "g:test:changed": "nx affected -t test --base=${NX_BASE:-main} --head=${NX_HEAD:-HEAD}",
     "g:snapshots": "nx run-many -t snapshots",
@@ -271,7 +271,6 @@
     "apps/*",
     "packages/*",
     "config/*",
-    "tools/uniswap-nx",
     "labs/*"
   ],
   "patchedDependencies": {
