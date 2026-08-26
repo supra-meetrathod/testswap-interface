@@ -4,7 +4,22 @@ import path from 'node:path'
 import { parse as dotenvParse } from 'dotenv'
 
 // Env vars that should be read directly from process.env instead of the .env files.
-export const PROCESS_ENV_OVERRIDES = ['CI', 'IS_E2E_TEST', 'JEST_WORKER_ID', 'VITEST_WORKER_ID', 'SKIP_CSP', 'DISABLE_SOURCEMAP', 'CLOUD_FUNCTIONS_GRAPHQL_ENDPOINT_OVERRIDE']
+// SUPRA_BACKEND_URL added so QA/Prod CI can point this build at a deployed
+// supraswap-gateway-service via that platform's own env-var settings, the
+// same way local dev does via .env.override — see apps/web/.env.override and
+// supraswap-gateway-service/PLAN.md. One var drives every blockchain-data
+// endpoint this fork calls (GraphQL, ExploreStatsService, GetPortfolio) —
+// see packages/config/src/BaseConfig.ts's supraBackendUrlOverride.
+export const PROCESS_ENV_OVERRIDES = [
+  'CI',
+  'IS_E2E_TEST',
+  'JEST_WORKER_ID',
+  'VITEST_WORKER_ID',
+  'SKIP_CSP',
+  'DISABLE_SOURCEMAP',
+  'CLOUD_FUNCTIONS_GRAPHQL_ENDPOINT_OVERRIDE',
+  'SUPRA_BACKEND_URL',
+]
 
 interface ResolveEnvConfigsOptions {
   /** Directory containing .env / .env.e2e.override / .env.override (i.e. apps/web). */

@@ -14,6 +14,7 @@ import { OPTIMISM_CHAIN_INFO } from 'uniswap/src/features/chains/evm/info/optimi
 import { POLYGON_CHAIN_INFO } from 'uniswap/src/features/chains/evm/info/polygon'
 import { ROBINHOOD_CHAIN_INFO } from 'uniswap/src/features/chains/evm/info/robinhood'
 import { SONEIUM_CHAIN_INFO } from 'uniswap/src/features/chains/evm/info/soneium'
+import { SUPRA_CHAIN_INFO } from 'uniswap/src/features/chains/evm/info/supra'
 import { TEMPO_CHAIN_INFO } from 'uniswap/src/features/chains/evm/info/tempo'
 import { UNICHAIN_CHAIN_INFO, UNICHAIN_SEPOLIA_CHAIN_INFO } from 'uniswap/src/features/chains/evm/info/unichain'
 import { WORLD_CHAIN_INFO } from 'uniswap/src/features/chains/evm/info/worldchain'
@@ -55,6 +56,7 @@ export const ORDERED_CHAINS = [
   ZKSYNC_CHAIN_INFO,
   SEPOLIA_CHAIN_INFO,
   UNICHAIN_SEPOLIA_CHAIN_INFO,
+  SUPRA_CHAIN_INFO,
 ] as const satisfies UniverseChainInfo[]
 
 type ConstChainInfo<P extends Platform = Platform> = Extract<(typeof ORDERED_CHAINS)[number], { platform: P }>
@@ -109,18 +111,24 @@ export const UNIVERSE_CHAIN_INFO = {
   // TESTNET
   [UniverseChainId.Sepolia]: SEPOLIA_CHAIN_INFO,
   [UniverseChainId.UnichainSepolia]: UNICHAIN_SEPOLIA_CHAIN_INFO,
+  [UniverseChainId.Supra]: SUPRA_CHAIN_INFO,
 
   // SVM
   [UniverseChainId.Solana]: SOLANA_CHAIN_INFO,
 } as const satisfies AllChainsMap
 
-export const GQL_MAINNET_CHAINS = ORDERED_EVM_CHAINS.filter((chain) => !chain.testnet).map(
-  (chain) => chain.backendChain.chain,
-)
+// Filtering on `backendChain.backendSupported` (not just `testnet`) matters
+// once a chain has no real backend chain enum value to report (e.g. Supra —
+// see evm/info/supra.ts) — without it, that chain's placeholder value would
+// leak into backend chain-list queries. No-op for every previously existing
+// chain, since all of them set `backendSupported: true`.
+export const GQL_MAINNET_CHAINS = ORDERED_EVM_CHAINS.filter(
+  (chain) => !chain.testnet && chain.backendChain.backendSupported,
+).map((chain) => chain.backendChain.chain)
 
-export const GQL_TESTNET_CHAINS = ORDERED_EVM_CHAINS.filter((chain) => chain.testnet).map(
-  (chain) => chain.backendChain.chain,
-)
+export const GQL_TESTNET_CHAINS = ORDERED_EVM_CHAINS.filter(
+  (chain) => chain.testnet && chain.backendChain.backendSupported,
+).map((chain) => chain.backendChain.chain)
 
 // If limit support expands beyond Mainnet, refactor to use a `supportsLimits`
 // property on chain info objects and filter chains, similar to the pattern used above

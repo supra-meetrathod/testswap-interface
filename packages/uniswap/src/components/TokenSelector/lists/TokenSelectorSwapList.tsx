@@ -183,7 +183,14 @@ export function useTokenSectionsForSwap({
     }
 
     if (isTestnetModeEnabled) {
-      return [...(suggestedSection ?? []), ...(portfolioSection ?? [])]
+      // Real Uniswap testnets (Sepolia, Unichain Sepolia) have no meaningful trending
+      // data, hence this exclusion — but this fork's gateway only ever answers
+      // TokenRankings for Supra (testnet: true here, but this fork's one real chain,
+      // see supraswap-gateway-service/PLAN.md), everything else stays empty same as
+      // before. Excluding trendingSection unconditionally left Supra's swap card
+      // token list empty (no fallback suggested/portfolio data either) even once the
+      // gateway started answering it correctly.
+      return [...(suggestedSection ?? []), ...(portfolioSection ?? []), ...(trendingSection ?? [])]
     }
 
     return [

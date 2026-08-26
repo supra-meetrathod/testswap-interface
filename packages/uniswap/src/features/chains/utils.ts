@@ -135,6 +135,12 @@ export function fromGraphQLChain(chain: GraphQLApi.Chain | string | undefined): 
       return UniverseChainId.Zora
     case GraphQLApi.Chain.Tempo:
       return UniverseChainId.Tempo
+    // Not part of Uniswap Labs' real Chain enum — our own gateway service
+    // (supraswap-gateway-service) emits this string in TokenRankingsStat/
+    // PoolStats/TokenStats.chain and the GraphQL Token.chain field for
+    // Supra. See its PLAN.md "Unavoidable frontend touch-points".
+    case 'SUPRA':
+      return UniverseChainId.Supra
   }
 
   return null
@@ -337,7 +343,9 @@ function getDefaultChainId({
     return UniverseChainId.Solana
   }
 
-  return isTestnetModeEnabled ? UniverseChainId.Sepolia : UniverseChainId.Mainnet
+  // This fork is Supra-only end-state (see supraswap-gateway-service/PLAN.md)
+  // — testnet mode should default to Supra, not Sepolia.
+  return isTestnetModeEnabled ? UniverseChainId.Supra : UniverseChainId.Mainnet
 }
 
 /** Returns all stablecoins for a given chainId. */

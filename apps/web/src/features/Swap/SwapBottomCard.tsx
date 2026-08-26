@@ -132,6 +132,7 @@ const CHAIN_THEME_LIGHT: Record<UniverseChainId, ChainTheme> = {
   [UniverseChainId.Sepolia]: { bgColor: '#6B8AFF33', textColor: '#6B8AFF' },
   [UniverseChainId.Solana]: { bgColor: '#9945FF33', textColor: '#000000' },
   [UniverseChainId.Soneium]: { bgColor: '#FFFFFF', textColor: '#000000' },
+  [UniverseChainId.Supra]: { bgColor: 'rgba(221, 20, 56, 0.12)', textColor: '#DD1438' },
   [UniverseChainId.Tempo]: { bgColor: 'rgba(26, 26, 46, 0.08)', textColor: '#1A1A2E' },
   [UniverseChainId.XLayer]: { bgColor: '#A7A7A747', textColor: '#121212' },
   [UniverseChainId.Unichain]: { bgColor: '#F50DB433', textColor: '#F50DB4' },

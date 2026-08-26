@@ -89,6 +89,20 @@ export function cspMetaTagPlugin(mode?: string, envValues?: Record<string, strin
         }
       }
 
+      // Same pattern as tradingApiUrlOverride above — SUPRA_BACKEND_URL
+      // (apps/web/.env.override locally, or a real env var in CI for QA/Prod —
+      // see resolveEnvConfigs.ts's PROCESS_ENV_OVERRIDES) points every
+      // blockchain-data call (Connect/protobuf, GraphQL, GetPortfolio) at
+      // supraswap-gateway-service instead of Uniswap's real backend;
+      // connect-src must allow that origin too.
+      const supraBackendUrl = envValues?.SUPRA_BACKEND_URL
+      if (supraBackendUrl) {
+        const supraBackendOrigin = getCrossOriginBase(supraBackendUrl) ?? supraBackendUrl
+        if (!baseCSP.connectSrc.includes(supraBackendOrigin)) {
+          baseCSP.connectSrc.push(supraBackendOrigin)
+        }
+      }
+
       // E2E-only: the hermetic WalletConnect relay runs on a local ws port (see
       // src/playwright/wc/localRelay.ts). Allow a localhost ws origin in connect-src only for the
       // e2e build, keeping the prod policy (csp.json) free of any localhost ws.

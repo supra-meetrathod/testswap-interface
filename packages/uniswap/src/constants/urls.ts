@@ -201,6 +201,12 @@ export const UniswapStaticUrls = {
  * Config-derived URL overrides
  */
 export interface UniswapUrlOverrides {
+  // Single override for every blockchain-data endpoint this fork's own
+  // supraswap-gateway-service serves (apiBaseUrlV2, graphQLUrl, and — via
+  // getEntryGatewayUrl — GetPortfolio). See BaseConfig.ts's
+  // supraBackendUrlOverride comment for why this bypasses the usual
+  // dev-only-override discipline the other fields below follow.
+  supraBackendUrlOverride?: string
   amplitudeProxyUrlOverride?: string
   apiBaseUrlOverride?: string
   apiBaseUrlV2Override?: string
@@ -248,7 +254,8 @@ export function getUniswapServiceUrls(overrides: UniswapUrlOverrides): UniswapSe
 
     apiBaseUrl: overrides.apiBaseUrlOverride || getCloudflareApiBaseUrl(),
 
-    apiBaseUrlV2: overrides.apiBaseUrlV2Override || getCloudflareApiBaseUrl({ postfix: 'v2' }),
+    apiBaseUrlV2:
+      overrides.supraBackendUrlOverride || overrides.apiBaseUrlV2Override || getCloudflareApiBaseUrl({ postfix: 'v2' }),
 
     embeddedWalletHostname,
 
@@ -257,8 +264,9 @@ export function getUniswapServiceUrls(overrides: UniswapUrlOverrides): UniswapSe
     // FOR traffic goes through the Entry Gateway host, same as Plan / Chained Actions.
     forApiUrl: overrides.forApiUrlOverride || getForApiUrl(),
 
-    graphQLUrl:
-      overrides.graphqlUrlOverride || getCloudflareApiBaseUrl({ flow: TrafficFlows.GraphQL, postfix: 'v1/graphql' }),
+    graphQLUrl: overrides.supraBackendUrlOverride
+      ? `${overrides.supraBackendUrlOverride}/graphql`
+      : overrides.graphqlUrlOverride || getCloudflareApiBaseUrl({ flow: TrafficFlows.GraphQL, postfix: 'v1/graphql' }),
 
     liquidityServiceUrl:
       overrides.liquidityServiceUrlOverride ||

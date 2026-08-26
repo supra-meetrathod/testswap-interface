@@ -37,6 +37,10 @@ export enum UniverseChainId {
   Zksync = UniswapSDKChainId.ZKSYNC,
   Zora = UniswapSDKChainId.ZORA,
   Solana = 501000101,
+  // Inline literal, not `SUPRA_CHAIN_ID` — see packages/chains/src/rpc/types.ts's
+  // identical enum for why (const-variable references don't get a literal
+  // enum-member type, which breaks noUncheckedIndexedAccess lookups). Keep in sync.
+  Supra = 953497288926,
 }
 
 export type UniverseChainIdByPlatform<T extends Platform> = ((typeof UNIVERSE_CHAIN_INFO)[UniverseChainId] & {

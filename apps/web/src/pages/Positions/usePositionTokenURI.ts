@@ -33,14 +33,25 @@ type UsePositionTokenURIResult =
 /**
  * Both v3 and v4 position manager contracts.
  * Only the address differs by protocol version.
+ *
+ * NONFUNGIBLE_POSITION_MANAGER_ADDRESSES / CHAIN_TO_ADDRESSES_MAP come from
+ * @uniswap/sdk-core and are keyed by its own ChainId enum, which has no Supra
+ * entry (see packages/uniswap/src/features/chains/evm/info/supra.ts — its
+ * NonfungiblePositionManager address isn't recorded anywhere yet either).
+ * Indexed as partial maps so a chain with no known deployment address
+ * resolves to undefined instead of failing to type-check.
  */
 function getPositionManagerAddress(version: ProtocolVersion, chainId?: EVMUniverseChainId): string | undefined {
   if (!chainId) {
     return undefined
   }
+  const v3AddressesByChain = NONFUNGIBLE_POSITION_MANAGER_ADDRESSES as Partial<Record<EVMUniverseChainId, string>>
+  const v4AddressesByChain = CHAIN_TO_ADDRESSES_MAP as Partial<
+    Record<EVMUniverseChainId, { v4PositionManagerAddress?: string }>
+  >
   return version === ProtocolVersion.V3
-    ? NONFUNGIBLE_POSITION_MANAGER_ADDRESSES[chainId]
-    : CHAIN_TO_ADDRESSES_MAP[chainId]?.v4PositionManagerAddress
+    ? v3AddressesByChain[chainId]
+    : v4AddressesByChain[chainId]?.v4PositionManagerAddress
 }
 
 export function usePositionTokenURI({

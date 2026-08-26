@@ -19,6 +19,7 @@
     "@tamagui/theme-base": "1.136.1",
     "@tanstack/react-query": "5.90.20",
     "@testing-library/react": "16.3.0",
+    "@universe/chains": "workspace:^",
     "@universe/environment": "workspace:^",
     "ethers": "5.7.2",
     "expo-blur": "56.0.3",

@@ -1,4 +1,5 @@
 #!/usr/bin/env bun
+import { SUPRA_CHAIN_ID } from '@universe/chains'
 
 const debug = (...args: unknown[]) => {
   if (process.env.DEBUG) console.log(...args)
@@ -206,13 +207,17 @@ function addToTypeAlias(source: string, typeName: string, typeToAdd: string): st
 }
 
 /**
- * Add an enum member. Optionally with a @deprecated JSDoc comment.
+ * Add an enum member. Optionally marked deprecated via a leading JSDoc comment.
  */
 function addEnumMember(
   source: string,
   enumName: string,
   newMember: { name: string; value: string },
   deprecated = false,
+  // ChainId's existing members are numeric literals (`'_1' = 1`), not
+  // string-valued like every other enum this script touches — set this to
+  // emit an unquoted value for that case.
+  numeric = false,
 ): string {
   // Check if the enum exists
   const enumRegex = new RegExp(`(export\\s+enum\\s+${enumName}\\s*\\{)`)
@@ -254,7 +259,9 @@ function addEnumMember(
   if (deprecated) {
     insertion += `\n    /** @deprecated Deprecation flag added via modifyTradingApiTypes.mts in order to not break existing code. */`
   }
-  insertion += `\n    ${newMember.name} = "${newMember.value}",`
+  insertion += numeric
+    ? `\n    ${newMember.name} = ${newMember.value},`
+    : `\n    ${newMember.name} = "${newMember.value}",`
 
   // Ensure there's a comma after the last existing member
   // Find the last non-whitespace character before the closing brace
@@ -336,6 +343,26 @@ async function main(): Promise<void> {
     let source = await readFile(filePath)
     source = addEnumMember(source, 'Routing', { name: 'JUPITER', value: 'JUPITER' })
     source = addEnumMember(source, 'Routing', { name: 'DUTCH_LIMIT', value: 'DUTCH_LIMIT' }, true)
+    await writeFile(filePath, source)
+  }
+
+  // ChainId enum — add Supra (SUPRA_CHAIN_ID). NOT part of the real Uniswap
+  // Trading API OpenAPI spec (api.json) — Uniswap's backend has never heard
+  // of Supra — this is this fork's own addition so
+  // toTradingApiSupportedChainId() (packages/uniswap/src/features/
+  // transactions/swap/utils/tradingApi.ts) stops returning undefined for
+  // Supra, which is what disables the swap-quote query outright today. See
+  // supraswap-gateway-service/PLAN.md §4.
+  {
+    const filePath = `${path}/ChainId.ts`
+    let source = await readFile(filePath)
+    source = addEnumMember(
+      source,
+      'ChainId',
+      { name: `_${SUPRA_CHAIN_ID}`, value: String(SUPRA_CHAIN_ID) },
+      false,
+      true,
+    )
     await writeFile(filePath, source)
   }
 

@@ -1,6 +1,9 @@
 // oxlint-disable-next-line eslint/no-restricted-imports -- canonical source of truth: this file defines UniverseChainId by aliasing the SDK enum
 import { ChainId as UniswapSDKChainId } from '@uniswap/sdk-core'
 
+/** Supra chain id — sole const for this value, everything else references it. */
+export const SUPRA_CHAIN_ID = 953497288926 as const
+
 /**
  * Chain identifiers used across the Uniswap ecosystem.
  * Canonical source of truth — other packages re-export from here.
@@ -31,6 +34,14 @@ export enum UniverseChainId {
   Zksync = UniswapSDKChainId.ZKSYNC,
   Zora = UniswapSDKChainId.ZORA,
   Solana = 501000101,
+  // Inline literal (not `SUPRA_CHAIN_ID`) is required, not stylistic: a numeric
+  // enum member only keeps its own literal type when initialized from another
+  // literal or another enum's member (same trick `Solana` above relies on) —
+  // referencing an imported `const` makes this a "computed member" typed as
+  // plain `number`, which under `noUncheckedIndexedAccess` widens every
+  // `Record<UniverseChainId, X>[UniverseChainId.Supra]` lookup across the
+  // codebase to `X | undefined`. Keep this literal in sync with SUPRA_CHAIN_ID.
+  Supra = 953497288926,
 }
 
 export enum RPCType {

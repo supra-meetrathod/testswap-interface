@@ -1,4 +1,4 @@
-export { UniverseChainId, RPCType } from './rpc/types'
+export { UniverseChainId, RPCType, SUPRA_CHAIN_ID } from './rpc/types'
 export type { RpcChainInfo, ViemChainInfo } from './rpc/types'
 export type { RpcConfig, FlashbotsConfig, RpcUrlSelectorCtx, RpcUrlSelector } from './rpc/rpcUrlSelector'
 export type { RpcConfigResolver, RpcConfigResolverInput } from './rpc/resolveRpcConfig'

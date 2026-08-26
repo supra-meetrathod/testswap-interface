@@ -28,6 +28,7 @@ export const CHAIN_ID_TO_URL_PARAM: Record<UniverseChainId, string> = {
   [UniverseChainId.Sepolia]: 'ethereum_sepolia',
   [UniverseChainId.Solana]: 'solana',
   [UniverseChainId.Soneium]: 'soneium',
+  [UniverseChainId.Supra]: 'supra',
   [UniverseChainId.Tempo]: 'tempo',
   [UniverseChainId.UnichainSepolia]: 'unichain_sepolia',
   [UniverseChainId.Unichain]: 'unichain',

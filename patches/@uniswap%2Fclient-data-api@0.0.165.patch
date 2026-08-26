@@ -1,0 +1,1328 @@
+diff --git a/node_modules/@uniswap/client-data-api/.bun-tag-87e37f033127ad63 b/.bun-tag-87e37f033127ad63
+new file mode 100644
+index 0000000000000000000000000000000000000000..e69de29bb2d1d6434b8b29ae775ad8c2e48c5391
+diff --git a/dist/data/v1/api_pb.js b/dist/data/v1/api_pb.js
+index fe312b7b6571dc09258321cb6e15ae865b9bb6ad..77b83102c85290d20ada1cfc219f22d5af903ac5 100644
+--- a/dist/data/v1/api_pb.js
++++ b/dist/data/v1/api_pb.js
+@@ -248,7 +248,7 @@ export class CreatePendingTokenFactoryTokenRequest extends Message {
+          */
+         this.tokenAddress = "";
+         /**
+-         * @generated from field: uint32 chain_id = 3;
++         * @generated from field: double chain_id = 3;
+          */
+         this.chainId = 0;
+         /**
+@@ -287,7 +287,7 @@ CreatePendingTokenFactoryTokenRequest.typeName = "data.v1.CreatePendingTokenFact
+ CreatePendingTokenFactoryTokenRequest.fields = proto3.util.newFieldList(() => [
+     { no: 1, name: "request_id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+     { no: 2, name: "token_address", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+-    { no: 3, name: "chain_id", kind: "scalar", T: 13 /* ScalarType.UINT32 */ },
++    { no: 3, name: "chain_id", kind: "scalar", T: 1 /* ScalarType.DOUBLE */ /* patched: was UINT32, Supra chain id SUPRA_CHAIN_ID overflows uint32 */ },
+     { no: 4, name: "token_name", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+     { no: 5, name: "token_symbol", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+     { no: 6, name: "image_url", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+@@ -303,7 +303,7 @@ export class CreatePendingTokenFactoryTokenResponse extends Message {
+     constructor(data) {
+         super();
+         /**
+-         * @generated from field: uint32 chain_id = 1;
++         * @generated from field: double chain_id = 1;
+          */
+         this.chainId = 0;
+         /**
+@@ -328,7 +328,7 @@ export class CreatePendingTokenFactoryTokenResponse extends Message {
+ CreatePendingTokenFactoryTokenResponse.runtime = proto3;
+ CreatePendingTokenFactoryTokenResponse.typeName = "data.v1.CreatePendingTokenFactoryTokenResponse";
+ CreatePendingTokenFactoryTokenResponse.fields = proto3.util.newFieldList(() => [
+-    { no: 1, name: "chain_id", kind: "scalar", T: 13 /* ScalarType.UINT32 */ },
++    { no: 1, name: "chain_id", kind: "scalar", T: 1 /* ScalarType.DOUBLE */ /* patched: was UINT32, Supra chain id SUPRA_CHAIN_ID overflows uint32 */ },
+     { no: 2, name: "address", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+ ]);
+ /**
+@@ -368,7 +368,7 @@ export class SubmitTokenFactoryTokenResponse extends Message {
+     constructor(data) {
+         super();
+         /**
+-         * @generated from field: uint32 chain_id = 1;
++         * @generated from field: double chain_id = 1;
+          */
+         this.chainId = 0;
+         /**
+@@ -393,7 +393,7 @@ export class SubmitTokenFactoryTokenResponse extends Message {
+ SubmitTokenFactoryTokenResponse.runtime = proto3;
+ SubmitTokenFactoryTokenResponse.typeName = "data.v1.SubmitTokenFactoryTokenResponse";
+ SubmitTokenFactoryTokenResponse.fields = proto3.util.newFieldList(() => [
+-    { no: 1, name: "chain_id", kind: "scalar", T: 13 /* ScalarType.UINT32 */ },
++    { no: 1, name: "chain_id", kind: "scalar", T: 1 /* ScalarType.DOUBLE */ /* patched: was UINT32, Supra chain id SUPRA_CHAIN_ID overflows uint32 */ },
+     { no: 2, name: "address", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+ ]);
+ /**
+@@ -468,7 +468,7 @@ export class GetTokenRequest extends Message {
+     constructor(data) {
+         super();
+         /**
+-         * @generated from field: uint32 chain_id = 1;
++         * @generated from field: double chain_id = 1;
+          */
+         this.chainId = 0;
+         /**
+@@ -493,7 +493,7 @@ export class GetTokenRequest extends Message {
+ GetTokenRequest.runtime = proto3;
+ GetTokenRequest.typeName = "data.v1.GetTokenRequest";
+ GetTokenRequest.fields = proto3.util.newFieldList(() => [
+-    { no: 1, name: "chain_id", kind: "scalar", T: 13 /* ScalarType.UINT32 */ },
++    { no: 1, name: "chain_id", kind: "scalar", T: 1 /* ScalarType.DOUBLE */ /* patched: was UINT32, Supra chain id SUPRA_CHAIN_ID overflows uint32 */ },
+     { no: 2, name: "address", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+ ]);
+ /**
+@@ -529,7 +529,7 @@ export class GetPortfolioRequest extends Message {
+     constructor(data) {
+         super();
+         /**
+-         * @generated from field: repeated uint32 chain_ids = 2;
++         * @generated from field: repeated double chain_ids = 2;
+          */
+         this.chainIds = [];
+         proto3.util.initPartial(data, this);
+@@ -551,7 +551,7 @@ GetPortfolioRequest.runtime = proto3;
+ GetPortfolioRequest.typeName = "data.v1.GetPortfolioRequest";
+ GetPortfolioRequest.fields = proto3.util.newFieldList(() => [
+     { no: 1, name: "wallet_account", kind: "message", T: WalletAccount },
+-    { no: 2, name: "chain_ids", kind: "scalar", T: 13 /* ScalarType.UINT32 */, repeated: true },
++    { no: 2, name: "chain_ids", kind: "scalar", T: 1 /* ScalarType.DOUBLE */ /* patched: was UINT32, Supra chain id SUPRA_CHAIN_ID overflows uint32 */, repeated: true },
+     { no: 3, name: "modifier", kind: "message", T: PortfolioValueModifier, opt: true },
+     { no: 4, name: "multichain", kind: "scalar", T: 8 /* ScalarType.BOOL */, opt: true },
+     { no: 5, name: "use_substream_data", kind: "scalar", T: 8 /* ScalarType.BOOL */, opt: true },
+@@ -593,7 +593,7 @@ export class ListPortfoliosRequest extends Message {
+          */
+         this.walletAccounts = [];
+         /**
+-         * @generated from field: repeated uint32 chain_ids = 2;
++         * @generated from field: repeated double chain_ids = 2;
+          */
+         this.chainIds = [];
+         /**
+@@ -619,7 +619,7 @@ ListPortfoliosRequest.runtime = proto3;
+ ListPortfoliosRequest.typeName = "data.v1.ListPortfoliosRequest";
+ ListPortfoliosRequest.fields = proto3.util.newFieldList(() => [
+     { no: 1, name: "wallet_accounts", kind: "message", T: WalletAccount, repeated: true },
+-    { no: 2, name: "chain_ids", kind: "scalar", T: 13 /* ScalarType.UINT32 */, repeated: true },
++    { no: 2, name: "chain_ids", kind: "scalar", T: 1 /* ScalarType.DOUBLE */ /* patched: was UINT32, Supra chain id SUPRA_CHAIN_ID overflows uint32 */, repeated: true },
+     { no: 3, name: "modifiers", kind: "message", T: PortfolioValueModifier, repeated: true },
+ ]);
+ /**
+@@ -659,7 +659,7 @@ export class SubmitReportRequest extends Message {
+     constructor(data) {
+         super();
+         /**
+-         * @generated from field: uint32 chain_id = 1;
++         * @generated from field: double chain_id = 1;
+          */
+         this.chainId = 0;
+         /**
+@@ -692,7 +692,7 @@ export class SubmitReportRequest extends Message {
+ SubmitReportRequest.runtime = proto3;
+ SubmitReportRequest.typeName = "data.v1.SubmitReportRequest";
+ SubmitReportRequest.fields = proto3.util.newFieldList(() => [
+-    { no: 1, name: "chain_id", kind: "scalar", T: 13 /* ScalarType.UINT32 */ },
++    { no: 1, name: "chain_id", kind: "scalar", T: 1 /* ScalarType.DOUBLE */ /* patched: was UINT32, Supra chain id SUPRA_CHAIN_ID overflows uint32 */ },
+     { no: 2, name: "address", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+     { no: 3, name: "event", kind: "enum", T: proto3.getEnumType(TokenReportEventType) },
+     { no: 4, name: "details", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+@@ -768,7 +768,7 @@ SubmitDataReportRequest.fields = proto3.util.newFieldList(() => [
+     { no: 2, name: "tag", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+     { no: 3, name: "details", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
+     { no: 4, name: "wallet_address", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+-    { no: 5, name: "chain_id", kind: "scalar", T: 13 /* ScalarType.UINT32 */, opt: true },
++    { no: 5, name: "chain_id", kind: "scalar", T: 1 /* ScalarType.DOUBLE */ /* patched: was UINT32, Supra chain id SUPRA_CHAIN_ID overflows uint32 */, opt: true },
+     { no: 6, name: "token_address", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
+     { no: 7, name: "multichain", kind: "scalar", T: 8 /* ScalarType.BOOL */, opt: true },
+ ]);
+@@ -809,7 +809,7 @@ export class GetTransactionRequest extends Message {
+     constructor(data) {
+         super();
+         /**
+-         * @generated from field: uint32 chain_id = 1;
++         * @generated from field: double chain_id = 1;
+          */
+         this.chainId = 0;
+         /**
+@@ -834,7 +834,7 @@ export class GetTransactionRequest extends Message {
+ GetTransactionRequest.runtime = proto3;
+ GetTransactionRequest.typeName = "data.v1.GetTransactionRequest";
+ GetTransactionRequest.fields = proto3.util.newFieldList(() => [
+-    { no: 1, name: "chain_id", kind: "scalar", T: 13 /* ScalarType.UINT32 */ },
++    { no: 1, name: "chain_id", kind: "scalar", T: 1 /* ScalarType.DOUBLE */ /* patched: was UINT32, Supra chain id SUPRA_CHAIN_ID overflows uint32 */ },
+     { no: 2, name: "hash", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+     { no: 3, name: "address", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
+ ]);
+@@ -871,7 +871,7 @@ export class ListTransactionsRequest extends Message {
+     constructor(data) {
+         super();
+         /**
+-         * @generated from field: repeated uint32 chain_ids = 1;
++         * @generated from field: repeated double chain_ids = 1;
+          */
+         this.chainIds = [];
+         /**
+@@ -896,7 +896,7 @@ export class ListTransactionsRequest extends Message {
+ ListTransactionsRequest.runtime = proto3;
+ ListTransactionsRequest.typeName = "data.v1.ListTransactionsRequest";
+ ListTransactionsRequest.fields = proto3.util.newFieldList(() => [
+-    { no: 1, name: "chain_ids", kind: "scalar", T: 13 /* ScalarType.UINT32 */, repeated: true },
++    { no: 1, name: "chain_ids", kind: "scalar", T: 1 /* ScalarType.DOUBLE */ /* patched: was UINT32, Supra chain id SUPRA_CHAIN_ID overflows uint32 */, repeated: true },
+     { no: 2, name: "wallet_account", kind: "message", T: WalletAccount },
+     { no: 3, name: "fiat_on_ramp_params", kind: "message", T: FiatOnRampParams, opt: true },
+     { no: 4, name: "page_token", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
+@@ -1195,7 +1195,7 @@ export class GetPairRequest extends Message {
+     constructor(data) {
+         super();
+         /**
+-         * @generated from field: uint32 chain_id = 1;
++         * @generated from field: double chain_id = 1;
+          */
+         this.chainId = 0;
+         /**
+@@ -1220,7 +1220,7 @@ export class GetPairRequest extends Message {
+ GetPairRequest.runtime = proto3;
+ GetPairRequest.typeName = "data.v1.GetPairRequest";
+ GetPairRequest.fields = proto3.util.newFieldList(() => [
+-    { no: 1, name: "chain_id", kind: "scalar", T: 13 /* ScalarType.UINT32 */ },
++    { no: 1, name: "chain_id", kind: "scalar", T: 1 /* ScalarType.DOUBLE */ /* patched: was UINT32, Supra chain id SUPRA_CHAIN_ID overflows uint32 */ },
+     { no: 2, name: "pair_address", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+ ]);
+ /**
+@@ -1256,7 +1256,7 @@ export class GetPoolRequest extends Message {
+     constructor(data) {
+         super();
+         /**
+-         * @generated from field: uint32 chain_id = 1;
++         * @generated from field: double chain_id = 1;
+          */
+         this.chainId = 0;
+         /**
+@@ -1285,7 +1285,7 @@ export class GetPoolRequest extends Message {
+ GetPoolRequest.runtime = proto3;
+ GetPoolRequest.typeName = "data.v1.GetPoolRequest";
+ GetPoolRequest.fields = proto3.util.newFieldList(() => [
+-    { no: 1, name: "chain_id", kind: "scalar", T: 13 /* ScalarType.UINT32 */ },
++    { no: 1, name: "chain_id", kind: "scalar", T: 1 /* ScalarType.DOUBLE */ /* patched: was UINT32, Supra chain id SUPRA_CHAIN_ID overflows uint32 */ },
+     { no: 2, name: "pool_id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+     { no: 3, name: "protocol_version", kind: "enum", T: proto3.getEnumType(ProtocolVersion) },
+     { no: 4, name: "include_volume_30d", kind: "scalar", T: 8 /* ScalarType.BOOL */, opt: true },
+@@ -1327,7 +1327,7 @@ export class GetProtocolFeesRequest extends Message {
+     constructor(data) {
+         super();
+         /**
+-         * @generated from field: uint32 chain_id = 1;
++         * @generated from field: double chain_id = 1;
+          */
+         this.chainId = 0;
+         /**
+@@ -1360,7 +1360,7 @@ export class GetProtocolFeesRequest extends Message {
+ GetProtocolFeesRequest.runtime = proto3;
+ GetProtocolFeesRequest.typeName = "data.v1.GetProtocolFeesRequest";
+ GetProtocolFeesRequest.fields = proto3.util.newFieldList(() => [
+-    { no: 1, name: "chain_id", kind: "scalar", T: 13 /* ScalarType.UINT32 */ },
++    { no: 1, name: "chain_id", kind: "scalar", T: 1 /* ScalarType.DOUBLE */ /* patched: was UINT32, Supra chain id SUPRA_CHAIN_ID overflows uint32 */ },
+     { no: 2, name: "protocol_version", kind: "enum", T: proto3.getEnumType(ProtocolVersion) },
+     { no: 3, name: "pool_ids", kind: "scalar", T: 9 /* ScalarType.STRING */, repeated: true },
+ ]);
+@@ -1438,7 +1438,7 @@ export class GetPositionRequest extends Message {
+     constructor(data) {
+         super();
+         /**
+-         * @generated from field: uint32 chain_id = 1;
++         * @generated from field: double chain_id = 1;
+          */
+         this.chainId = 0;
+         /**
+@@ -1481,7 +1481,7 @@ export class GetPositionRequest extends Message {
+ GetPositionRequest.runtime = proto3;
+ GetPositionRequest.typeName = "data.v1.GetPositionRequest";
+ GetPositionRequest.fields = proto3.util.newFieldList(() => [
+-    { no: 1, name: "chain_id", kind: "scalar", T: 13 /* ScalarType.UINT32 */ },
++    { no: 1, name: "chain_id", kind: "scalar", T: 1 /* ScalarType.DOUBLE */ /* patched: was UINT32, Supra chain id SUPRA_CHAIN_ID overflows uint32 */ },
+     { no: 2, name: "protocol_version", kind: "enum", T: proto3.getEnumType(ProtocolVersion) },
+     { no: 3, name: "token_id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+     { no: 4, name: "pair_address", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+@@ -1522,7 +1522,7 @@ export class ListPoolsRequest extends Message {
+     constructor(data) {
+         super();
+         /**
+-         * @generated from field: uint32 chain_id = 1;
++         * @generated from field: double chain_id = 1;
+          */
+         this.chainId = 0;
+         /**
+@@ -1551,7 +1551,7 @@ export class ListPoolsRequest extends Message {
+ ListPoolsRequest.runtime = proto3;
+ ListPoolsRequest.typeName = "data.v1.ListPoolsRequest";
+ ListPoolsRequest.fields = proto3.util.newFieldList(() => [
+-    { no: 1, name: "chain_id", kind: "scalar", T: 13 /* ScalarType.UINT32 */ },
++    { no: 1, name: "chain_id", kind: "scalar", T: 1 /* ScalarType.DOUBLE */ /* patched: was UINT32, Supra chain id SUPRA_CHAIN_ID overflows uint32 */ },
+     { no: 2, name: "token0", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+     { no: 3, name: "token1", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
+     { no: 4, name: "protocol_versions", kind: "enum", T: proto3.getEnumType(ProtocolVersion), repeated: true },
+@@ -1607,7 +1607,7 @@ export class ListPositionsRequest extends Message {
+         /**
+          * default all chains
+          *
+-         * @generated from field: repeated uint32 chain_ids = 2;
++         * @generated from field: repeated double chain_ids = 2;
+          */
+         this.chainIds = [];
+         /**
+@@ -1641,7 +1641,7 @@ ListPositionsRequest.runtime = proto3;
+ ListPositionsRequest.typeName = "data.v1.ListPositionsRequest";
+ ListPositionsRequest.fields = proto3.util.newFieldList(() => [
+     { no: 1, name: "address", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+-    { no: 2, name: "chain_ids", kind: "scalar", T: 13 /* ScalarType.UINT32 */, repeated: true },
++    { no: 2, name: "chain_ids", kind: "scalar", T: 1 /* ScalarType.DOUBLE */ /* patched: was UINT32, Supra chain id SUPRA_CHAIN_ID overflows uint32 */, repeated: true },
+     { no: 3, name: "protocol_versions", kind: "enum", T: proto3.getEnumType(ProtocolVersion), repeated: true },
+     { no: 4, name: "position_statuses", kind: "enum", T: proto3.getEnumType(PositionStatus), repeated: true },
+     { no: 5, name: "page_size", kind: "scalar", T: 13 /* ScalarType.UINT32 */, opt: true },
+@@ -1696,7 +1696,7 @@ export class GetRewardsRequest extends Message {
+          */
+         this.walletAddress = "";
+         /**
+-         * @generated from field: repeated uint32 chain_ids = 2;
++         * @generated from field: repeated double chain_ids = 2;
+          */
+         this.chainIds = [];
+         proto3.util.initPartial(data, this);
+@@ -1718,7 +1718,7 @@ GetRewardsRequest.runtime = proto3;
+ GetRewardsRequest.typeName = "data.v1.GetRewardsRequest";
+ GetRewardsRequest.fields = proto3.util.newFieldList(() => [
+     { no: 1, name: "wallet_address", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+-    { no: 2, name: "chain_ids", kind: "scalar", T: 13 /* ScalarType.UINT32 */, repeated: true },
++    { no: 2, name: "chain_ids", kind: "scalar", T: 1 /* ScalarType.DOUBLE */ /* patched: was UINT32, Supra chain id SUPRA_CHAIN_ID overflows uint32 */, repeated: true },
+     { no: 3, name: "reload", kind: "scalar", T: 8 /* ScalarType.BOOL */, opt: true },
+ ]);
+ /**
+@@ -1767,7 +1767,7 @@ export class ListTopPoolsRequest extends Message {
+     constructor(data) {
+         super();
+         /**
+-         * @generated from field: repeated uint32 chain_ids = 1;
++         * @generated from field: repeated double chain_ids = 1;
+          */
+         this.chainIds = [];
+         /**
+@@ -1792,7 +1792,7 @@ export class ListTopPoolsRequest extends Message {
+ ListTopPoolsRequest.runtime = proto3;
+ ListTopPoolsRequest.typeName = "data.v1.ListTopPoolsRequest";
+ ListTopPoolsRequest.fields = proto3.util.newFieldList(() => [
+-    { no: 1, name: "chain_ids", kind: "scalar", T: 13 /* ScalarType.UINT32 */, repeated: true },
++    { no: 1, name: "chain_ids", kind: "scalar", T: 1 /* ScalarType.DOUBLE */ /* patched: was UINT32, Supra chain id SUPRA_CHAIN_ID overflows uint32 */, repeated: true },
+     { no: 2, name: "protocol_versions", kind: "enum", T: proto3.getEnumType(ProtocolVersion), repeated: true },
+     { no: 3, name: "order_by", kind: "enum", T: proto3.getEnumType(TopPoolsOrderBy), opt: true },
+     { no: 4, name: "ascending", kind: "scalar", T: 8 /* ScalarType.BOOL */, opt: true },
+@@ -1837,7 +1837,7 @@ export class ListTokensRequest extends Message {
+     constructor(data) {
+         super();
+         /**
+-         * @generated from field: repeated uint32 chain_ids = 1;
++         * @generated from field: repeated double chain_ids = 1;
+          */
+         this.chainIds = [];
+         proto3.util.initPartial(data, this);
+@@ -1858,7 +1858,7 @@ export class ListTokensRequest extends Message {
+ ListTokensRequest.runtime = proto3;
+ ListTokensRequest.typeName = "data.v1.ListTokensRequest";
+ ListTokensRequest.fields = proto3.util.newFieldList(() => [
+-    { no: 1, name: "chain_ids", kind: "scalar", T: 13 /* ScalarType.UINT32 */, repeated: true },
++    { no: 1, name: "chain_ids", kind: "scalar", T: 1 /* ScalarType.DOUBLE */ /* patched: was UINT32, Supra chain id SUPRA_CHAIN_ID overflows uint32 */, repeated: true },
+     { no: 2, name: "order_by", kind: "enum", T: proto3.getEnumType(TokensOrderBy), opt: true },
+     { no: 3, name: "ascending", kind: "scalar", T: 8 /* ScalarType.BOOL */, opt: true },
+     { no: 4, name: "page_size", kind: "scalar", T: 13 /* ScalarType.UINT32 */, opt: true },
+@@ -2047,7 +2047,7 @@ export class GetPortfolioChartRequest extends Message {
+     constructor(data) {
+         super();
+         /**
+-         * @generated from field: repeated uint32 chain_ids = 2;
++         * @generated from field: repeated double chain_ids = 2;
+          */
+         this.chainIds = [];
+         /**
+@@ -2093,7 +2093,7 @@ GetPortfolioChartRequest.runtime = proto3;
+ GetPortfolioChartRequest.typeName = "data.v1.GetPortfolioChartRequest";
+ GetPortfolioChartRequest.fields = proto3.util.newFieldList(() => [
+     { no: 1, name: "wallet_account", kind: "message", T: WalletAccount },
+-    { no: 2, name: "chain_ids", kind: "scalar", T: 13 /* ScalarType.UINT32 */, repeated: true },
++    { no: 2, name: "chain_ids", kind: "scalar", T: 1 /* ScalarType.DOUBLE */ /* patched: was UINT32, Supra chain id SUPRA_CHAIN_ID overflows uint32 */, repeated: true },
+     { no: 3, name: "chart_period", kind: "enum", T: proto3.getEnumType(ChartPeriod) },
+     { no: 4, name: "include_overrides", kind: "message", T: Contract, repeated: true },
+     { no: 5, name: "exclude_overrides", kind: "message", T: Contract, repeated: true },
+@@ -2199,7 +2199,7 @@ export class TokenPriceInput extends Message {
+     constructor(data) {
+         super();
+         /**
+-         * @generated from field: uint32 chain_id = 1;
++         * @generated from field: double chain_id = 1;
+          */
+         this.chainId = 0;
+         /**
+@@ -2224,7 +2224,7 @@ export class TokenPriceInput extends Message {
+ TokenPriceInput.runtime = proto3;
+ TokenPriceInput.typeName = "data.v1.TokenPriceInput";
+ TokenPriceInput.fields = proto3.util.newFieldList(() => [
+-    { no: 1, name: "chain_id", kind: "scalar", T: 13 /* ScalarType.UINT32 */ },
++    { no: 1, name: "chain_id", kind: "scalar", T: 1 /* ScalarType.DOUBLE */ /* patched: was UINT32, Supra chain id SUPRA_CHAIN_ID overflows uint32 */ },
+     { no: 2, name: "address", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+ ]);
+ /**
+@@ -2234,7 +2234,7 @@ export class TokenPrice extends Message {
+     constructor(data) {
+         super();
+         /**
+-         * @generated from field: uint32 chain_id = 1;
++         * @generated from field: double chain_id = 1;
+          */
+         this.chainId = 0;
+         /**
+@@ -2259,7 +2259,7 @@ export class TokenPrice extends Message {
+ TokenPrice.runtime = proto3;
+ TokenPrice.typeName = "data.v1.TokenPrice";
+ TokenPrice.fields = proto3.util.newFieldList(() => [
+-    { no: 1, name: "chain_id", kind: "scalar", T: 13 /* ScalarType.UINT32 */ },
++    { no: 1, name: "chain_id", kind: "scalar", T: 1 /* ScalarType.DOUBLE */ /* patched: was UINT32, Supra chain id SUPRA_CHAIN_ID overflows uint32 */ },
+     { no: 2, name: "address", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+     { no: 3, name: "price_usd", kind: "scalar", T: 1 /* ScalarType.DOUBLE */, opt: true },
+     { no: 4, name: "updated_at", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
+@@ -2336,7 +2336,7 @@ export class GetWalletProfitLossRequest extends Message {
+     constructor(data) {
+         super();
+         /**
+-         * @generated from field: repeated uint32 chain_ids = 2;
++         * @generated from field: repeated double chain_ids = 2;
+          */
+         this.chainIds = [];
+         proto3.util.initPartial(data, this);
+@@ -2358,7 +2358,7 @@ GetWalletProfitLossRequest.runtime = proto3;
+ GetWalletProfitLossRequest.typeName = "data.v1.GetWalletProfitLossRequest";
+ GetWalletProfitLossRequest.fields = proto3.util.newFieldList(() => [
+     { no: 1, name: "wallet_account", kind: "message", T: WalletAccount },
+-    { no: 2, name: "chain_ids", kind: "scalar", T: 13 /* ScalarType.UINT32 */, repeated: true },
++    { no: 2, name: "chain_ids", kind: "scalar", T: 1 /* ScalarType.DOUBLE */ /* patched: was UINT32, Supra chain id SUPRA_CHAIN_ID overflows uint32 */, repeated: true },
+     { no: 3, name: "since", kind: "scalar", T: 3 /* ScalarType.INT64 */, opt: true },
+     { no: 4, name: "till", kind: "scalar", T: 3 /* ScalarType.INT64 */, opt: true },
+     { no: 5, name: "modifier", kind: "message", T: PortfolioValueModifier, opt: true },
+@@ -2396,7 +2396,7 @@ export class GetWalletTokensProfitLossRequest extends Message {
+     constructor(data) {
+         super();
+         /**
+-         * @generated from field: repeated uint32 chain_ids = 2;
++         * @generated from field: repeated double chain_ids = 2;
+          */
+         this.chainIds = [];
+         /**
+@@ -2422,7 +2422,7 @@ GetWalletTokensProfitLossRequest.runtime = proto3;
+ GetWalletTokensProfitLossRequest.typeName = "data.v1.GetWalletTokensProfitLossRequest";
+ GetWalletTokensProfitLossRequest.fields = proto3.util.newFieldList(() => [
+     { no: 1, name: "wallet_account", kind: "message", T: WalletAccount },
+-    { no: 2, name: "chain_ids", kind: "scalar", T: 13 /* ScalarType.UINT32 */, repeated: true },
++    { no: 2, name: "chain_ids", kind: "scalar", T: 1 /* ScalarType.DOUBLE */ /* patched: was UINT32, Supra chain id SUPRA_CHAIN_ID overflows uint32 */, repeated: true },
+     { no: 3, name: "since", kind: "scalar", T: 3 /* ScalarType.INT64 */, opt: true },
+     { no: 4, name: "till", kind: "scalar", T: 3 /* ScalarType.INT64 */, opt: true },
+     { no: 5, name: "page_size", kind: "scalar", T: 13 /* ScalarType.UINT32 */, opt: true },
+@@ -2473,7 +2473,7 @@ export class GetWalletTokenProfitLossRequest extends Message {
+     constructor(data) {
+         super();
+         /**
+-         * @generated from field: uint32 chain_id = 2;
++         * @generated from field: double chain_id = 2;
+          */
+         this.chainId = 0;
+         /**
+@@ -2503,7 +2503,7 @@ GetWalletTokenProfitLossRequest.runtime = proto3;
+ GetWalletTokenProfitLossRequest.typeName = "data.v1.GetWalletTokenProfitLossRequest";
+ GetWalletTokenProfitLossRequest.fields = proto3.util.newFieldList(() => [
+     { no: 1, name: "wallet_account", kind: "message", T: WalletAccount },
+-    { no: 2, name: "chain_id", kind: "scalar", T: 13 /* ScalarType.UINT32 */ },
++    { no: 2, name: "chain_id", kind: "scalar", T: 1 /* ScalarType.DOUBLE */ /* patched: was UINT32, Supra chain id SUPRA_CHAIN_ID overflows uint32 */ },
+     { no: 3, name: "token_address", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+     { no: 4, name: "since", kind: "scalar", T: 3 /* ScalarType.INT64 */, opt: true },
+     { no: 5, name: "till", kind: "scalar", T: 3 /* ScalarType.INT64 */, opt: true },
+@@ -2548,7 +2548,7 @@ export class GetWalletBalancesRequest extends Message {
+     constructor(data) {
+         super();
+         /**
+-         * @generated from field: repeated uint32 chain_ids = 2;
++         * @generated from field: repeated double chain_ids = 2;
+          */
+         this.chainIds = [];
+         /**
+@@ -2574,7 +2574,7 @@ GetWalletBalancesRequest.runtime = proto3;
+ GetWalletBalancesRequest.typeName = "data.v1.GetWalletBalancesRequest";
+ GetWalletBalancesRequest.fields = proto3.util.newFieldList(() => [
+     { no: 1, name: "wallet_account", kind: "message", T: WalletAccount },
+-    { no: 2, name: "chain_ids", kind: "scalar", T: 13 /* ScalarType.UINT32 */, repeated: true },
++    { no: 2, name: "chain_ids", kind: "scalar", T: 1 /* ScalarType.DOUBLE */ /* patched: was UINT32, Supra chain id SUPRA_CHAIN_ID overflows uint32 */, repeated: true },
+     { no: 3, name: "modifier", kind: "message", T: PortfolioValueModifier, opt: true },
+     { no: 4, name: "include_categories", kind: "enum", T: proto3.getEnumType(WalletBalanceCategory), repeated: true },
+ ]);
+@@ -2615,7 +2615,7 @@ export class GetWalletsBalancesRequest extends Message {
+          */
+         this.walletAccounts = [];
+         /**
+-         * @generated from field: repeated uint32 chain_ids = 2;
++         * @generated from field: repeated double chain_ids = 2;
+          */
+         this.chainIds = [];
+         /**
+@@ -2645,7 +2645,7 @@ GetWalletsBalancesRequest.runtime = proto3;
+ GetWalletsBalancesRequest.typeName = "data.v1.GetWalletsBalancesRequest";
+ GetWalletsBalancesRequest.fields = proto3.util.newFieldList(() => [
+     { no: 1, name: "wallet_accounts", kind: "message", T: WalletAccount, repeated: true },
+-    { no: 2, name: "chain_ids", kind: "scalar", T: 13 /* ScalarType.UINT32 */, repeated: true },
++    { no: 2, name: "chain_ids", kind: "scalar", T: 1 /* ScalarType.DOUBLE */ /* patched: was UINT32, Supra chain id SUPRA_CHAIN_ID overflows uint32 */, repeated: true },
+     { no: 3, name: "modifiers", kind: "message", T: PortfolioValueModifier, repeated: true },
+     { no: 4, name: "include_categories", kind: "enum", T: proto3.getEnumType(WalletBalanceCategory), repeated: true },
+ ]);
+@@ -2686,7 +2686,7 @@ export class WalletBalance extends Message {
+     constructor(data) {
+         super();
+         /**
+-         * @generated from field: repeated uint32 failed_chain_ids = 6;
++         * @generated from field: repeated double failed_chain_ids = 6;
+          */
+         this.failedChainIds = [];
+         proto3.util.initPartial(data, this);
+@@ -2712,7 +2712,7 @@ WalletBalance.fields = proto3.util.newFieldList(() => [
+     { no: 3, name: "pools", kind: "message", T: BalanceComponent },
+     { no: 4, name: "wallet_account", kind: "message", T: WalletAccount },
+     { no: 5, name: "earn", kind: "message", T: BalanceComponent },
+-    { no: 6, name: "failed_chain_ids", kind: "scalar", T: 13 /* ScalarType.UINT32 */, repeated: true },
++    { no: 6, name: "failed_chain_ids", kind: "scalar", T: 1 /* ScalarType.DOUBLE */ /* patched: was UINT32, Supra chain id SUPRA_CHAIN_ID overflows uint32 */, repeated: true },
+ ]);
+ /**
+  * @generated from message data.v1.BalanceComponent
+@@ -2752,7 +2752,7 @@ export class ListRwasRequest extends Message {
+         /**
+          * Required, non-empty.
+          *
+-         * @generated from field: repeated uint32 chain_ids = 1;
++         * @generated from field: repeated double chain_ids = 1;
+          */
+         this.chainIds = [];
+         /**
+@@ -2780,7 +2780,7 @@ export class ListRwasRequest extends Message {
+ ListRwasRequest.runtime = proto3;
+ ListRwasRequest.typeName = "data.v1.ListRwasRequest";
+ ListRwasRequest.fields = proto3.util.newFieldList(() => [
+-    { no: 1, name: "chain_ids", kind: "scalar", T: 13 /* ScalarType.UINT32 */, repeated: true },
++    { no: 1, name: "chain_ids", kind: "scalar", T: 1 /* ScalarType.DOUBLE */ /* patched: was UINT32, Supra chain id SUPRA_CHAIN_ID overflows uint32 */, repeated: true },
+     { no: 2, name: "include_commodities", kind: "scalar", T: 8 /* ScalarType.BOOL */ },
+ ]);
+ /**
+@@ -2875,7 +2875,7 @@ export class IssuerToken extends Message {
+     constructor(data) {
+         super();
+         /**
+-         * @generated from field: uint32 chain_id = 1;
++         * @generated from field: double chain_id = 1;
+          */
+         this.chainId = 0;
+         /**
+@@ -2904,7 +2904,7 @@ export class IssuerToken extends Message {
+ IssuerToken.runtime = proto3;
+ IssuerToken.typeName = "data.v1.IssuerToken";
+ IssuerToken.fields = proto3.util.newFieldList(() => [
+-    { no: 1, name: "chain_id", kind: "scalar", T: 13 /* ScalarType.UINT32 */ },
++    { no: 1, name: "chain_id", kind: "scalar", T: 1 /* ScalarType.DOUBLE */ /* patched: was UINT32, Supra chain id SUPRA_CHAIN_ID overflows uint32 */ },
+     { no: 2, name: "address", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+     { no: 3, name: "issuer", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+ ]);
+@@ -2961,7 +2961,7 @@ export class ListRwaTokensRequest extends Message {
+         /**
+          * Required, non-empty.
+          *
+-         * @generated from field: repeated uint32 chain_ids = 2;
++         * @generated from field: repeated double chain_ids = 2;
+          */
+         this.chainIds = [];
+         /**
+@@ -2993,7 +2993,7 @@ ListRwaTokensRequest.runtime = proto3;
+ ListRwaTokensRequest.typeName = "data.v1.ListRwaTokensRequest";
+ ListRwaTokensRequest.fields = proto3.util.newFieldList(() => [
+     { no: 1, name: "category", kind: "enum", T: proto3.getEnumType(RwaCategory) },
+-    { no: 2, name: "chain_ids", kind: "scalar", T: 13 /* ScalarType.UINT32 */, repeated: true },
++    { no: 2, name: "chain_ids", kind: "scalar", T: 1 /* ScalarType.DOUBLE */ /* patched: was UINT32, Supra chain id SUPRA_CHAIN_ID overflows uint32 */, repeated: true },
+     { no: 3, name: "include_sparkline_1d", kind: "scalar", T: 8 /* ScalarType.BOOL */ },
+     { no: 4, name: "use_substream_data", kind: "scalar", T: 8 /* ScalarType.BOOL */ },
+ ]);
+@@ -3040,7 +3040,7 @@ export class ListRankedRwasRequest extends Message {
+         /**
+          * Required, non-empty.
+          *
+-         * @generated from field: repeated uint32 chain_ids = 2;
++         * @generated from field: repeated double chain_ids = 2;
+          */
+         this.chainIds = [];
+         /**
+@@ -3072,7 +3072,7 @@ ListRankedRwasRequest.runtime = proto3;
+ ListRankedRwasRequest.typeName = "data.v1.ListRankedRwasRequest";
+ ListRankedRwasRequest.fields = proto3.util.newFieldList(() => [
+     { no: 1, name: "category", kind: "enum", T: proto3.getEnumType(RwaCategory) },
+-    { no: 2, name: "chain_ids", kind: "scalar", T: 13 /* ScalarType.UINT32 */, repeated: true },
++    { no: 2, name: "chain_ids", kind: "scalar", T: 1 /* ScalarType.DOUBLE */ /* patched: was UINT32, Supra chain id SUPRA_CHAIN_ID overflows uint32 */, repeated: true },
+     { no: 3, name: "include_sparkline_1d", kind: "scalar", T: 8 /* ScalarType.BOOL */ },
+     { no: 4, name: "use_substream_data", kind: "scalar", T: 8 /* ScalarType.BOOL */ },
+ ]);
+@@ -3239,7 +3239,7 @@ export class RwaChainToken extends Message {
+     constructor(data) {
+         super();
+         /**
+-         * @generated from field: uint32 chain_id = 1;
++         * @generated from field: double chain_id = 1;
+          */
+         this.chainId = 0;
+         /**
+@@ -3264,7 +3264,7 @@ export class RwaChainToken extends Message {
+ RwaChainToken.runtime = proto3;
+ RwaChainToken.typeName = "data.v1.RwaChainToken";
+ RwaChainToken.fields = proto3.util.newFieldList(() => [
+-    { no: 1, name: "chain_id", kind: "scalar", T: 13 /* ScalarType.UINT32 */ },
++    { no: 1, name: "chain_id", kind: "scalar", T: 1 /* ScalarType.DOUBLE */ /* patched: was UINT32, Supra chain id SUPRA_CHAIN_ID overflows uint32 */ },
+     { no: 2, name: "address", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+ ]);
+ /**
+diff --git a/dist/data/v1/types_pb.js b/dist/data/v1/types_pb.js
+index df9289ddef23e7b6059e93dadc50d49891110fd1..a83e8b631aced50e5efbc61ebd25b2559ce54e3e 100644
+--- a/dist/data/v1/types_pb.js
++++ b/dist/data/v1/types_pb.js
+@@ -696,7 +696,7 @@ export class Token extends Message {
+     constructor(data) {
+         super();
+         /**
+-         * @generated from field: uint32 chain_id = 1;
++         * @generated from field: double chain_id = 1;
+          */
+         this.chainId = 0;
+         /**
+@@ -737,7 +737,7 @@ export class Token extends Message {
+ Token.runtime = proto3;
+ Token.typeName = "data.v1.Token";
+ Token.fields = proto3.util.newFieldList(() => [
+-    { no: 1, name: "chain_id", kind: "scalar", T: 13 /* ScalarType.UINT32 */ },
++    { no: 1, name: "chain_id", kind: "scalar", T: 1 /* ScalarType.DOUBLE */ /* patched: was UINT32, Supra chain id SUPRA_CHAIN_ID overflows uint32 */ },
+     { no: 2, name: "address", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+     { no: 3, name: "symbol", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+     { no: 4, name: "decimals", kind: "scalar", T: 13 /* ScalarType.UINT32 */ },
+@@ -1024,7 +1024,7 @@ export class PoolRef extends Message {
+     constructor(data) {
+         super();
+         /**
+-         * @generated from field: uint32 chain_id = 1;
++         * @generated from field: double chain_id = 1;
+          */
+         this.chainId = 0;
+         /**
+@@ -1049,7 +1049,7 @@ export class PoolRef extends Message {
+ PoolRef.runtime = proto3;
+ PoolRef.typeName = "data.v1.PoolRef";
+ PoolRef.fields = proto3.util.newFieldList(() => [
+-    { no: 1, name: "chain_id", kind: "scalar", T: 13 /* ScalarType.UINT32 */ },
++    { no: 1, name: "chain_id", kind: "scalar", T: 1 /* ScalarType.DOUBLE */ /* patched: was UINT32, Supra chain id SUPRA_CHAIN_ID overflows uint32 */ },
+     { no: 2, name: "pool_id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+     { no: 3, name: "position_id", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
+ ]);
+@@ -1161,7 +1161,7 @@ export class ChainBalance extends Message {
+     constructor(data) {
+         super();
+         /**
+-         * @generated from field: uint32 chain_id = 1;
++         * @generated from field: double chain_id = 1;
+          */
+         this.chainId = 0;
+         /**
+@@ -1198,7 +1198,7 @@ export class ChainBalance extends Message {
+ ChainBalance.runtime = proto3;
+ ChainBalance.typeName = "data.v1.ChainBalance";
+ ChainBalance.fields = proto3.util.newFieldList(() => [
+-    { no: 1, name: "chain_id", kind: "scalar", T: 13 /* ScalarType.UINT32 */ },
++    { no: 1, name: "chain_id", kind: "scalar", T: 1 /* ScalarType.DOUBLE */ /* patched: was UINT32, Supra chain id SUPRA_CHAIN_ID overflows uint32 */ },
+     { no: 2, name: "address", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+     { no: 3, name: "decimals", kind: "scalar", T: 13 /* ScalarType.UINT32 */ },
+     { no: 4, name: "amount", kind: "message", T: Amount },
+@@ -1339,7 +1339,7 @@ export class ChainToken extends Message {
+     constructor(data) {
+         super();
+         /**
+-         * @generated from field: uint32 chain_id = 1;
++         * @generated from field: double chain_id = 1;
+          */
+         this.chainId = 0;
+         /**
+@@ -1372,7 +1372,7 @@ export class ChainToken extends Message {
+ ChainToken.runtime = proto3;
+ ChainToken.typeName = "data.v1.ChainToken";
+ ChainToken.fields = proto3.util.newFieldList(() => [
+-    { no: 1, name: "chain_id", kind: "scalar", T: 13 /* ScalarType.UINT32 */ },
++    { no: 1, name: "chain_id", kind: "scalar", T: 1 /* ScalarType.DOUBLE */ /* patched: was UINT32, Supra chain id SUPRA_CHAIN_ID overflows uint32 */ },
+     { no: 2, name: "address", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+     { no: 3, name: "decimals", kind: "scalar", T: 13 /* ScalarType.UINT32 */ },
+     { no: 4, name: "is_bridged", kind: "scalar", T: 8 /* ScalarType.BOOL */ },
+@@ -1490,7 +1490,7 @@ export class Contract extends Message {
+     constructor(data) {
+         super();
+         /**
+-         * @generated from field: uint32 chain_id = 1;
++         * @generated from field: double chain_id = 1;
+          */
+         this.chainId = 0;
+         /**
+@@ -1515,7 +1515,7 @@ export class Contract extends Message {
+ Contract.runtime = proto3;
+ Contract.typeName = "data.v1.Contract";
+ Contract.fields = proto3.util.newFieldList(() => [
+-    { no: 1, name: "chain_id", kind: "scalar", T: 13 /* ScalarType.UINT32 */ },
++    { no: 1, name: "chain_id", kind: "scalar", T: 1 /* ScalarType.DOUBLE */ /* patched: was UINT32, Supra chain id SUPRA_CHAIN_ID overflows uint32 */ },
+     { no: 2, name: "address", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+ ]);
+ /**
+@@ -1525,7 +1525,7 @@ export class Nft extends Message {
+     constructor(data) {
+         super();
+         /**
+-         * @generated from field: uint32 chain_id = 1;
++         * @generated from field: double chain_id = 1;
+          */
+         this.chainId = 0;
+         /**
+@@ -1574,7 +1574,7 @@ export class Nft extends Message {
+ Nft.runtime = proto3;
+ Nft.typeName = "data.v1.Nft";
+ Nft.fields = proto3.util.newFieldList(() => [
+-    { no: 1, name: "chain_id", kind: "scalar", T: 13 /* ScalarType.UINT32 */ },
++    { no: 1, name: "chain_id", kind: "scalar", T: 1 /* ScalarType.DOUBLE */ /* patched: was UINT32, Supra chain id SUPRA_CHAIN_ID overflows uint32 */ },
+     { no: 2, name: "address", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+     { no: 3, name: "token_id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+     { no: 4, name: "name", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+@@ -1623,7 +1623,7 @@ export class OnChainTransaction extends Message {
+     constructor(data) {
+         super();
+         /**
+-         * @generated from field: uint32 chain_id = 1;
++         * @generated from field: double chain_id = 1;
+          */
+         this.chainId = 0;
+         /**
+@@ -1680,7 +1680,7 @@ export class OnChainTransaction extends Message {
+ OnChainTransaction.runtime = proto3;
+ OnChainTransaction.typeName = "data.v1.OnChainTransaction";
+ OnChainTransaction.fields = proto3.util.newFieldList(() => [
+-    { no: 1, name: "chain_id", kind: "scalar", T: 13 /* ScalarType.UINT32 */ },
++    { no: 1, name: "chain_id", kind: "scalar", T: 1 /* ScalarType.DOUBLE */ /* patched: was UINT32, Supra chain id SUPRA_CHAIN_ID overflows uint32 */ },
+     { no: 2, name: "block_number", kind: "scalar", T: 13 /* ScalarType.UINT32 */ },
+     { no: 3, name: "timestamp_millis", kind: "scalar", T: 4 /* ScalarType.UINT64 */ },
+     { no: 4, name: "transaction_hash", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+@@ -1821,7 +1821,7 @@ export class UniswapXTransaction extends Message {
+     constructor(data) {
+         super();
+         /**
+-         * @generated from field: uint32 chain_id = 1;
++         * @generated from field: double chain_id = 1;
+          */
+         this.chainId = 0;
+         /**
+@@ -1870,7 +1870,7 @@ export class UniswapXTransaction extends Message {
+ UniswapXTransaction.runtime = proto3;
+ UniswapXTransaction.typeName = "data.v1.UniswapXTransaction";
+ UniswapXTransaction.fields = proto3.util.newFieldList(() => [
+-    { no: 1, name: "chain_id", kind: "scalar", T: 13 /* ScalarType.UINT32 */ },
++    { no: 1, name: "chain_id", kind: "scalar", T: 1 /* ScalarType.DOUBLE */ /* patched: was UINT32, Supra chain id SUPRA_CHAIN_ID overflows uint32 */ },
+     { no: 2, name: "timestamp_millis", kind: "scalar", T: 4 /* ScalarType.UINT64 */ },
+     { no: 3, name: "offerer", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+     { no: 4, name: "order_hash", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+@@ -1890,7 +1890,7 @@ export class FiatOnRampTransaction extends Message {
+     constructor(data) {
+         super();
+         /**
+-         * @generated from field: uint32 chain_id = 1;
++         * @generated from field: double chain_id = 1;
+          */
+         this.chainId = 0;
+         /**
+@@ -1951,7 +1951,7 @@ export class FiatOnRampTransaction extends Message {
+ FiatOnRampTransaction.runtime = proto3;
+ FiatOnRampTransaction.typeName = "data.v1.FiatOnRampTransaction";
+ FiatOnRampTransaction.fields = proto3.util.newFieldList(() => [
+-    { no: 1, name: "chain_id", kind: "scalar", T: 13 /* ScalarType.UINT32 */ },
++    { no: 1, name: "chain_id", kind: "scalar", T: 1 /* ScalarType.DOUBLE */ /* patched: was UINT32, Supra chain id SUPRA_CHAIN_ID overflows uint32 */ },
+     { no: 2, name: "timestamp_millis", kind: "scalar", T: 4 /* ScalarType.UINT64 */ },
+     { no: 3, name: "wallet_address", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+     { no: 4, name: "token", kind: "message", T: Token },
+@@ -2135,7 +2135,7 @@ EarnPlanMetadata.typeName = "data.v1.EarnPlanMetadata";
+ EarnPlanMetadata.fields = proto3.util.newFieldList(() => [
+     { no: 1, name: "action", kind: "enum", T: proto3.getEnumType(EarnPlanAction) },
+     { no: 2, name: "vault", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
+-    { no: 3, name: "chain_id", kind: "scalar", T: 13 /* ScalarType.UINT32 */, opt: true },
++    { no: 3, name: "chain_id", kind: "scalar", T: 1 /* ScalarType.DOUBLE */ /* patched: was UINT32, Supra chain id SUPRA_CHAIN_ID overflows uint32 */, opt: true },
+ ]);
+ /**
+  * @generated from message data.v1.PlanActivity
+@@ -2181,7 +2181,7 @@ PlanActivity.fields = proto3.util.newFieldList(() => [
+     { no: 6, name: "token_out_amount", kind: "message", T: Amount, opt: true },
+     { no: 7, name: "status", kind: "enum", T: proto3.getEnumType(PlanStepStatus) },
+     { no: 8, name: "transaction_hash", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
+-    { no: 9, name: "chain_id", kind: "scalar", T: 13 /* ScalarType.UINT32 */, opt: true },
++    { no: 9, name: "chain_id", kind: "scalar", T: 1 /* ScalarType.DOUBLE */ /* patched: was UINT32, Supra chain id SUPRA_CHAIN_ID overflows uint32 */, opt: true },
+     { no: 10, name: "gas_fee", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
+ ]);
+ /**
+@@ -2290,7 +2290,7 @@ export class Pool extends Message {
+     constructor(data) {
+         super();
+         /**
+-         * @generated from field: uint32 chain_id = 1;
++         * @generated from field: double chain_id = 1;
+          */
+         this.chainId = 0;
+         /**
+@@ -2327,7 +2327,7 @@ export class Pool extends Message {
+ Pool.runtime = proto3;
+ Pool.typeName = "data.v1.Pool";
+ Pool.fields = proto3.util.newFieldList(() => [
+-    { no: 1, name: "chain_id", kind: "scalar", T: 13 /* ScalarType.UINT32 */ },
++    { no: 1, name: "chain_id", kind: "scalar", T: 1 /* ScalarType.DOUBLE */ /* patched: was UINT32, Supra chain id SUPRA_CHAIN_ID overflows uint32 */ },
+     { no: 2, name: "pool_id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+     { no: 3, name: "token0", kind: "message", T: Token },
+     { no: 4, name: "token1", kind: "message", T: Token },
+@@ -2642,7 +2642,7 @@ export class ChainTokenProfitLoss extends Message {
+     constructor(data) {
+         super();
+         /**
+-         * @generated from field: uint32 chain_id = 1;
++         * @generated from field: double chain_id = 1;
+          */
+         this.chainId = 0;
+         /**
+@@ -2679,7 +2679,7 @@ export class ChainTokenProfitLoss extends Message {
+ ChainTokenProfitLoss.runtime = proto3;
+ ChainTokenProfitLoss.typeName = "data.v1.ChainTokenProfitLoss";
+ ChainTokenProfitLoss.fields = proto3.util.newFieldList(() => [
+-    { no: 1, name: "chain_id", kind: "scalar", T: 13 /* ScalarType.UINT32 */ },
++    { no: 1, name: "chain_id", kind: "scalar", T: 1 /* ScalarType.DOUBLE */ /* patched: was UINT32, Supra chain id SUPRA_CHAIN_ID overflows uint32 */ },
+     { no: 2, name: "token_address", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+     { no: 3, name: "average_cost_usd", kind: "scalar", T: 1 /* ScalarType.DOUBLE */ },
+     { no: 4, name: "unrealized_return_usd", kind: "scalar", T: 1 /* ScalarType.DOUBLE */ },
+diff --git a/dist/data/v2/api_pb.js b/dist/data/v2/api_pb.js
+index d5f5f75b8ae9fb9b95f06aca652f302861ef2118..aedcd2afe174f776ba6b38e9987db18cb57a7689 100644
+--- a/dist/data/v2/api_pb.js
++++ b/dist/data/v2/api_pb.js
+@@ -141,7 +141,7 @@ export class GetTokenMarketsMultiChainRequest extends Message {
+          * asset's canonical chain, like the OHLC/price charts). EVM-only, matching
+          * the rest of the markets endpoints.
+          *
+-         * @generated from field: repeated uint32 chain_ids = 4;
++         * @generated from field: repeated double chain_ids = 4;
+          */
+         this.chainIds = [];
+         proto3.util.initPartial(data, this);
+@@ -165,7 +165,7 @@ GetTokenMarketsMultiChainRequest.fields = proto3.util.newFieldList(() => [
+     { no: 1, name: "multichain_ids", kind: "message", T: MultichainIdList, oneof: "identifier" },
+     { no: 2, name: "tokens", kind: "message", T: TokenIdentifierList, oneof: "identifier" },
+     { no: 3, name: "duration", kind: "enum", T: proto3.getEnumType(HistoryDuration) },
+-    { no: 4, name: "chain_ids", kind: "scalar", T: 13 /* ScalarType.UINT32 */, repeated: true },
++    { no: 4, name: "chain_ids", kind: "scalar", T: 1 /* ScalarType.DOUBLE */ /* patched: was UINT32, Supra chain id SUPRA_CHAIN_ID overflows uint32 */, repeated: true },
+ ]);
+ /**
+  * @generated from message data.v2.GetTokenMarketsMultiChainResponse
+@@ -376,7 +376,7 @@ export class GetTokenHistoryVolumeRequest extends Message {
+          * asset's group. Ignored for the single_chain target. Solana volume is
+          * included only when its chain id appears here (or the filter is empty).
+          *
+-         * @generated from field: repeated uint32 chain_ids = 4;
++         * @generated from field: repeated double chain_ids = 4;
+          */
+         this.chainIds = [];
+         proto3.util.initPartial(data, this);
+@@ -400,7 +400,7 @@ GetTokenHistoryVolumeRequest.fields = proto3.util.newFieldList(() => [
+     { no: 1, name: "single_chain", kind: "message", T: TokenIdentifier, oneof: "target" },
+     { no: 2, name: "multichain", kind: "message", T: MultichainTarget, oneof: "target" },
+     { no: 3, name: "duration", kind: "enum", T: proto3.getEnumType(HistoryDuration) },
+-    { no: 4, name: "chain_ids", kind: "scalar", T: 13 /* ScalarType.UINT32 */, repeated: true },
++    { no: 4, name: "chain_ids", kind: "scalar", T: 1 /* ScalarType.DOUBLE */ /* patched: was UINT32, Supra chain id SUPRA_CHAIN_ID overflows uint32 */, repeated: true },
+ ]);
+ /**
+  * @generated from message data.v2.GetTokenHistoryVolumeResponse
+@@ -596,7 +596,7 @@ export class GetTokenHistoryTVLRequest extends Message {
+          * asset's group. Ignored for the single_chain target. Solana TVL is
+          * included only when its chain id appears here (or the filter is empty).
+          *
+-         * @generated from field: repeated uint32 chain_ids = 4;
++         * @generated from field: repeated double chain_ids = 4;
+          */
+         this.chainIds = [];
+         proto3.util.initPartial(data, this);
+@@ -620,7 +620,7 @@ GetTokenHistoryTVLRequest.fields = proto3.util.newFieldList(() => [
+     { no: 1, name: "single_chain", kind: "message", T: TokenIdentifier, oneof: "target" },
+     { no: 2, name: "multichain", kind: "message", T: MultichainTarget, oneof: "target" },
+     { no: 3, name: "duration", kind: "enum", T: proto3.getEnumType(HistoryDuration) },
+-    { no: 4, name: "chain_ids", kind: "scalar", T: 13 /* ScalarType.UINT32 */, repeated: true },
++    { no: 4, name: "chain_ids", kind: "scalar", T: 1 /* ScalarType.DOUBLE */ /* patched: was UINT32, Supra chain id SUPRA_CHAIN_ID overflows uint32 */, repeated: true },
+ ]);
+ /**
+  * @generated from message data.v2.GetTokenHistoryTVLResponse
+@@ -820,7 +820,7 @@ export class GetTokenRequest extends Message {
+     constructor(data) {
+         super();
+         /**
+-         * @generated from field: uint32 chain_id = 1;
++         * @generated from field: double chain_id = 1;
+          */
+         this.chainId = 0;
+         /**
+@@ -845,7 +845,7 @@ export class GetTokenRequest extends Message {
+ GetTokenRequest.runtime = proto3;
+ GetTokenRequest.typeName = "data.v2.GetTokenRequest";
+ GetTokenRequest.fields = proto3.util.newFieldList(() => [
+-    { no: 1, name: "chain_id", kind: "scalar", T: 13 /* ScalarType.UINT32 */ },
++    { no: 1, name: "chain_id", kind: "scalar", T: 1 /* ScalarType.DOUBLE */ /* patched: was UINT32, Supra chain id SUPRA_CHAIN_ID overflows uint32 */ },
+     { no: 2, name: "address", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+ ]);
+ /**
+@@ -881,7 +881,7 @@ export class TokenIdentifier extends Message {
+     constructor(data) {
+         super();
+         /**
+-         * @generated from field: uint32 chain_id = 1;
++         * @generated from field: double chain_id = 1;
+          */
+         this.chainId = 0;
+         /**
+@@ -906,7 +906,7 @@ export class TokenIdentifier extends Message {
+ TokenIdentifier.runtime = proto3;
+ TokenIdentifier.typeName = "data.v2.TokenIdentifier";
+ TokenIdentifier.fields = proto3.util.newFieldList(() => [
+-    { no: 1, name: "chain_id", kind: "scalar", T: 13 /* ScalarType.UINT32 */ },
++    { no: 1, name: "chain_id", kind: "scalar", T: 1 /* ScalarType.DOUBLE */ /* patched: was UINT32, Supra chain id SUPRA_CHAIN_ID overflows uint32 */ },
+     { no: 2, name: "address", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+ ]);
+ /**
+@@ -1007,7 +1007,7 @@ GetTokenMultiChainRequest.typeName = "data.v2.GetTokenMultiChainRequest";
+ GetTokenMultiChainRequest.fields = proto3.util.newFieldList(() => [
+     { no: 1, name: "multichain_id", kind: "scalar", T: 9 /* ScalarType.STRING */, oneof: "identifier" },
+     { no: 2, name: "token", kind: "message", T: TokenIdentifier, oneof: "identifier" },
+-    { no: 3, name: "canonical_chain_id", kind: "scalar", T: 13 /* ScalarType.UINT32 */, opt: true },
++    { no: 3, name: "canonical_chain_id", kind: "scalar", T: 1 /* ScalarType.DOUBLE */ /* patched: was UINT32, Supra chain id SUPRA_CHAIN_ID overflows uint32 */, opt: true },
+ ]);
+ /**
+  * @generated from message data.v2.GetTokenMultiChainResponse
+@@ -1065,7 +1065,7 @@ GetTokensMultiChainRequest.typeName = "data.v2.GetTokensMultiChainRequest";
+ GetTokensMultiChainRequest.fields = proto3.util.newFieldList(() => [
+     { no: 1, name: "multichain_ids", kind: "message", T: MultichainIdList, oneof: "identifier" },
+     { no: 2, name: "tokens", kind: "message", T: TokenIdentifierList, oneof: "identifier" },
+-    { no: 3, name: "canonical_chain_id", kind: "scalar", T: 13 /* ScalarType.UINT32 */, opt: true },
++    { no: 3, name: "canonical_chain_id", kind: "scalar", T: 1 /* ScalarType.DOUBLE */ /* patched: was UINT32, Supra chain id SUPRA_CHAIN_ID overflows uint32 */, opt: true },
+ ]);
+ /**
+  * @generated from message data.v2.MultichainIdList
+@@ -1171,7 +1171,7 @@ export class ListEarnVaultsRequest extends Message {
+     constructor(data) {
+         super();
+         /**
+-         * @generated from field: repeated uint32 chain_ids = 1;
++         * @generated from field: repeated double chain_ids = 1;
+          */
+         this.chainIds = [];
+         proto3.util.initPartial(data, this);
+@@ -1192,7 +1192,7 @@ export class ListEarnVaultsRequest extends Message {
+ ListEarnVaultsRequest.runtime = proto3;
+ ListEarnVaultsRequest.typeName = "data.v2.ListEarnVaultsRequest";
+ ListEarnVaultsRequest.fields = proto3.util.newFieldList(() => [
+-    { no: 1, name: "chain_ids", kind: "scalar", T: 13 /* ScalarType.UINT32 */, repeated: true },
++    { no: 1, name: "chain_ids", kind: "scalar", T: 1 /* ScalarType.DOUBLE */ /* patched: was UINT32, Supra chain id SUPRA_CHAIN_ID overflows uint32 */, repeated: true },
+     { no: 2, name: "page_size", kind: "scalar", T: 13 /* ScalarType.UINT32 */, opt: true },
+     { no: 3, name: "page_token", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
+ ]);
+@@ -1238,7 +1238,7 @@ export class ListEarnPositionsRequest extends Message {
+          */
+         this.walletAddress = "";
+         /**
+-         * @generated from field: repeated uint32 chain_ids = 2;
++         * @generated from field: repeated double chain_ids = 2;
+          */
+         this.chainIds = [];
+         proto3.util.initPartial(data, this);
+@@ -1260,7 +1260,7 @@ ListEarnPositionsRequest.runtime = proto3;
+ ListEarnPositionsRequest.typeName = "data.v2.ListEarnPositionsRequest";
+ ListEarnPositionsRequest.fields = proto3.util.newFieldList(() => [
+     { no: 1, name: "wallet_address", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+-    { no: 2, name: "chain_ids", kind: "scalar", T: 13 /* ScalarType.UINT32 */, repeated: true },
++    { no: 2, name: "chain_ids", kind: "scalar", T: 1 /* ScalarType.DOUBLE */ /* patched: was UINT32, Supra chain id SUPRA_CHAIN_ID overflows uint32 */, repeated: true },
+     { no: 3, name: "page_size", kind: "scalar", T: 13 /* ScalarType.UINT32 */, opt: true },
+     { no: 4, name: "page_token", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
+ ]);
+@@ -1310,7 +1310,7 @@ export class GetEarnPositionRequest extends Message {
+          */
+         this.vaultAddress = "";
+         /**
+-         * @generated from field: uint32 chain_id = 3;
++         * @generated from field: double chain_id = 3;
+          */
+         this.chainId = 0;
+         proto3.util.initPartial(data, this);
+@@ -1333,7 +1333,7 @@ GetEarnPositionRequest.typeName = "data.v2.GetEarnPositionRequest";
+ GetEarnPositionRequest.fields = proto3.util.newFieldList(() => [
+     { no: 1, name: "wallet_address", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+     { no: 2, name: "vault_address", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+-    { no: 3, name: "chain_id", kind: "scalar", T: 13 /* ScalarType.UINT32 */ },
++    { no: 3, name: "chain_id", kind: "scalar", T: 1 /* ScalarType.DOUBLE */ /* patched: was UINT32, Supra chain id SUPRA_CHAIN_ID overflows uint32 */ },
+ ]);
+ /**
+  * @generated from message data.v2.GetEarnPositionResponse
+@@ -1430,7 +1430,7 @@ export class ListLaunchesRequest extends Message {
+         /**
+          * empty = all supported chains
+          *
+-         * @generated from field: repeated uint32 chain_ids = 2;
++         * @generated from field: repeated double chain_ids = 2;
+          */
+         this.chainIds = [];
+         /**
+@@ -1464,7 +1464,7 @@ ListLaunchesRequest.runtime = proto3;
+ ListLaunchesRequest.typeName = "data.v2.ListLaunchesRequest";
+ ListLaunchesRequest.fields = proto3.util.newFieldList(() => [
+     { no: 1, name: "launchpad_id", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
+-    { no: 2, name: "chain_ids", kind: "scalar", T: 13 /* ScalarType.UINT32 */, repeated: true },
++    { no: 2, name: "chain_ids", kind: "scalar", T: 1 /* ScalarType.DOUBLE */ /* patched: was UINT32, Supra chain id SUPRA_CHAIN_ID overflows uint32 */, repeated: true },
+     { no: 3, name: "sort_by", kind: "enum", T: proto3.getEnumType(LaunchesOrderBy) },
+     { no: 4, name: "page", kind: "message", T: PageRequest, opt: true },
+     { no: 5, name: "launchpad_ids", kind: "scalar", T: 9 /* ScalarType.STRING */, repeated: true },
+@@ -1515,7 +1515,7 @@ export class GetLaunchHoldersRequest extends Message {
+     constructor(data) {
+         super();
+         /**
+-         * @generated from field: uint32 chain_id = 1;
++         * @generated from field: double chain_id = 1;
+          */
+         this.chainId = 0;
+         /**
+@@ -1540,7 +1540,7 @@ export class GetLaunchHoldersRequest extends Message {
+ GetLaunchHoldersRequest.runtime = proto3;
+ GetLaunchHoldersRequest.typeName = "data.v2.GetLaunchHoldersRequest";
+ GetLaunchHoldersRequest.fields = proto3.util.newFieldList(() => [
+-    { no: 1, name: "chain_id", kind: "scalar", T: 13 /* ScalarType.UINT32 */ },
++    { no: 1, name: "chain_id", kind: "scalar", T: 1 /* ScalarType.DOUBLE */ /* patched: was UINT32, Supra chain id SUPRA_CHAIN_ID overflows uint32 */ },
+     { no: 2, name: "token_address", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+ ]);
+ /**
+@@ -1558,7 +1558,7 @@ export class GetLaunchActivityStatsRequest extends Message {
+     constructor(data) {
+         super();
+         /**
+-         * @generated from field: uint32 chain_id = 1;
++         * @generated from field: double chain_id = 1;
+          */
+         this.chainId = 0;
+         /**
+@@ -1583,7 +1583,7 @@ export class GetLaunchActivityStatsRequest extends Message {
+ GetLaunchActivityStatsRequest.runtime = proto3;
+ GetLaunchActivityStatsRequest.typeName = "data.v2.GetLaunchActivityStatsRequest";
+ GetLaunchActivityStatsRequest.fields = proto3.util.newFieldList(() => [
+-    { no: 1, name: "chain_id", kind: "scalar", T: 13 /* ScalarType.UINT32 */ },
++    { no: 1, name: "chain_id", kind: "scalar", T: 1 /* ScalarType.DOUBLE */ /* patched: was UINT32, Supra chain id SUPRA_CHAIN_ID overflows uint32 */ },
+     { no: 2, name: "token_address", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+ ]);
+ /**
+@@ -1754,7 +1754,7 @@ export class GetLaunchClaimsRequest extends Message {
+     constructor(data) {
+         super();
+         /**
+-         * @generated from field: uint32 chain_id = 1;
++         * @generated from field: double chain_id = 1;
+          */
+         this.chainId = 0;
+         /**
+@@ -1779,7 +1779,7 @@ export class GetLaunchClaimsRequest extends Message {
+ GetLaunchClaimsRequest.runtime = proto3;
+ GetLaunchClaimsRequest.typeName = "data.v2.GetLaunchClaimsRequest";
+ GetLaunchClaimsRequest.fields = proto3.util.newFieldList(() => [
+-    { no: 1, name: "chain_id", kind: "scalar", T: 13 /* ScalarType.UINT32 */ },
++    { no: 1, name: "chain_id", kind: "scalar", T: 1 /* ScalarType.DOUBLE */ /* patched: was UINT32, Supra chain id SUPRA_CHAIN_ID overflows uint32 */ },
+     { no: 2, name: "token_address", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+ ]);
+ /**
+@@ -1931,7 +1931,7 @@ export class GetTokenTopTradersRequest extends Message {
+     constructor(data) {
+         super();
+         /**
+-         * @generated from field: uint32 chain_id = 1;
++         * @generated from field: double chain_id = 1;
+          */
+         this.chainId = 0;
+         /**
+@@ -1956,7 +1956,7 @@ export class GetTokenTopTradersRequest extends Message {
+ GetTokenTopTradersRequest.runtime = proto3;
+ GetTokenTopTradersRequest.typeName = "data.v2.GetTokenTopTradersRequest";
+ GetTokenTopTradersRequest.fields = proto3.util.newFieldList(() => [
+-    { no: 1, name: "chain_id", kind: "scalar", T: 13 /* ScalarType.UINT32 */ },
++    { no: 1, name: "chain_id", kind: "scalar", T: 1 /* ScalarType.DOUBLE */ /* patched: was UINT32, Supra chain id SUPRA_CHAIN_ID overflows uint32 */ },
+     { no: 2, name: "token_address", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+     { no: 3, name: "limit", kind: "scalar", T: 5 /* ScalarType.INT32 */, opt: true },
+ ]);
+@@ -2154,7 +2154,7 @@ export class CheckLaunchNameTickerRequest extends Message {
+     constructor(data) {
+         super();
+         /**
+-         * @generated from field: uint32 chain_id = 1;
++         * @generated from field: double chain_id = 1;
+          */
+         this.chainId = 0;
+         /**
+@@ -2188,7 +2188,7 @@ export class CheckLaunchNameTickerRequest extends Message {
+ CheckLaunchNameTickerRequest.runtime = proto3;
+ CheckLaunchNameTickerRequest.typeName = "data.v2.CheckLaunchNameTickerRequest";
+ CheckLaunchNameTickerRequest.fields = proto3.util.newFieldList(() => [
+-    { no: 1, name: "chain_id", kind: "scalar", T: 13 /* ScalarType.UINT32 */ },
++    { no: 1, name: "chain_id", kind: "scalar", T: 1 /* ScalarType.DOUBLE */ /* patched: was UINT32, Supra chain id SUPRA_CHAIN_ID overflows uint32 */ },
+     { no: 2, name: "name", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+     { no: 3, name: "symbol", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+ ]);
+@@ -2235,7 +2235,7 @@ export class RecentlyLaunchedToken extends Message {
+     constructor(data) {
+         super();
+         /**
+-         * @generated from field: uint32 chain_id = 1;
++         * @generated from field: double chain_id = 1;
+          */
+         this.chainId = 0;
+         /**
+@@ -2280,7 +2280,7 @@ export class RecentlyLaunchedToken extends Message {
+ RecentlyLaunchedToken.runtime = proto3;
+ RecentlyLaunchedToken.typeName = "data.v2.RecentlyLaunchedToken";
+ RecentlyLaunchedToken.fields = proto3.util.newFieldList(() => [
+-    { no: 1, name: "chain_id", kind: "scalar", T: 13 /* ScalarType.UINT32 */ },
++    { no: 1, name: "chain_id", kind: "scalar", T: 1 /* ScalarType.DOUBLE */ /* patched: was UINT32, Supra chain id SUPRA_CHAIN_ID overflows uint32 */ },
+     { no: 2, name: "token_address", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+     { no: 3, name: "name", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+     { no: 4, name: "symbol", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+@@ -2293,7 +2293,7 @@ export class ListTokensRequest extends Message {
+     constructor(data) {
+         super();
+         /**
+-         * @generated from field: repeated uint32 chain_ids = 1;
++         * @generated from field: repeated double chain_ids = 1;
+          */
+         this.chainIds = [];
+         /**
+@@ -2321,7 +2321,7 @@ export class ListTokensRequest extends Message {
+ ListTokensRequest.runtime = proto3;
+ ListTokensRequest.typeName = "data.v2.ListTokensRequest";
+ ListTokensRequest.fields = proto3.util.newFieldList(() => [
+-    { no: 1, name: "chain_ids", kind: "scalar", T: 13 /* ScalarType.UINT32 */, repeated: true },
++    { no: 1, name: "chain_ids", kind: "scalar", T: 1 /* ScalarType.DOUBLE */ /* patched: was UINT32, Supra chain id SUPRA_CHAIN_ID overflows uint32 */, repeated: true },
+     { no: 2, name: "sort", kind: "message", T: TokensSort, opt: true },
+     { no: 3, name: "filter", kind: "message", T: TokenListFilter, opt: true },
+     { no: 4, name: "page", kind: "message", T: PageRequest, opt: true },
+@@ -2371,7 +2371,7 @@ export class ListPoolsRequest extends Message {
+         /**
+          * required
+          *
+-         * @generated from field: repeated uint32 chain_ids = 1;
++         * @generated from field: repeated double chain_ids = 1;
+          */
+         this.chainIds = [];
+         proto3.util.initPartial(data, this);
+@@ -2392,7 +2392,7 @@ export class ListPoolsRequest extends Message {
+ ListPoolsRequest.runtime = proto3;
+ ListPoolsRequest.typeName = "data.v2.ListPoolsRequest";
+ ListPoolsRequest.fields = proto3.util.newFieldList(() => [
+-    { no: 1, name: "chain_ids", kind: "scalar", T: 13 /* ScalarType.UINT32 */, repeated: true },
++    { no: 1, name: "chain_ids", kind: "scalar", T: 1 /* ScalarType.DOUBLE */ /* patched: was UINT32, Supra chain id SUPRA_CHAIN_ID overflows uint32 */, repeated: true },
+     { no: 2, name: "sort", kind: "message", T: PoolsSort, opt: true },
+     { no: 3, name: "filter", kind: "message", T: PoolListFilter, opt: true },
+     { no: 4, name: "page", kind: "message", T: PageRequest, opt: true },
+@@ -2446,7 +2446,7 @@ export class GetWalletNftsRequest extends Message {
+         /**
+          * required; empty/missing returns 400
+          *
+-         * @generated from field: repeated uint32 chain_ids = 2;
++         * @generated from field: repeated double chain_ids = 2;
+          */
+         this.chainIds = [];
+         proto3.util.initPartial(data, this);
+@@ -2468,7 +2468,7 @@ GetWalletNftsRequest.runtime = proto3;
+ GetWalletNftsRequest.typeName = "data.v2.GetWalletNftsRequest";
+ GetWalletNftsRequest.fields = proto3.util.newFieldList(() => [
+     { no: 1, name: "owner_address", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+-    { no: 2, name: "chain_ids", kind: "scalar", T: 13 /* ScalarType.UINT32 */, repeated: true },
++    { no: 2, name: "chain_ids", kind: "scalar", T: 1 /* ScalarType.DOUBLE */ /* patched: was UINT32, Supra chain id SUPRA_CHAIN_ID overflows uint32 */, repeated: true },
+     { no: 3, name: "include_spam", kind: "scalar", T: 8 /* ScalarType.BOOL */, opt: true },
+     { no: 4, name: "page", kind: "message", T: PageRequest, opt: true },
+ ]);
+@@ -2566,7 +2566,7 @@ export class ListTransactionsRequest extends Message {
+         /**
+          * required
+          *
+-         * @generated from field: repeated uint32 chain_ids = 1;
++         * @generated from field: repeated double chain_ids = 1;
+          */
+         this.chainIds = [];
+         proto3.util.initPartial(data, this);
+@@ -2587,7 +2587,7 @@ export class ListTransactionsRequest extends Message {
+ ListTransactionsRequest.runtime = proto3;
+ ListTransactionsRequest.typeName = "data.v2.ListTransactionsRequest";
+ ListTransactionsRequest.fields = proto3.util.newFieldList(() => [
+-    { no: 1, name: "chain_ids", kind: "scalar", T: 13 /* ScalarType.UINT32 */, repeated: true },
++    { no: 1, name: "chain_ids", kind: "scalar", T: 1 /* ScalarType.DOUBLE */ /* patched: was UINT32, Supra chain id SUPRA_CHAIN_ID overflows uint32 */, repeated: true },
+     { no: 2, name: "filter", kind: "message", T: TransactionListFilter, opt: true },
+     { no: 3, name: "page", kind: "message", T: PageRequest, opt: true },
+ ]);
+diff --git a/dist/data/v2/earn_pb.js b/dist/data/v2/earn_pb.js
+index 90b8d527172392344d7c79444af2861b59509a8f..a6e476a526c6eaafcd7307da69a30ad4f972a644 100644
+--- a/dist/data/v2/earn_pb.js
++++ b/dist/data/v2/earn_pb.js
+@@ -63,7 +63,7 @@ export class EarnVault extends Message {
+          */
+         this.address = "";
+         /**
+-         * @generated from field: uint32 chain_id = 2;
++         * @generated from field: double chain_id = 2;
+          */
+         this.chainId = 0;
+         /**
+@@ -135,7 +135,7 @@ EarnVault.runtime = proto3;
+ EarnVault.typeName = "data.v2.EarnVault";
+ EarnVault.fields = proto3.util.newFieldList(() => [
+     { no: 1, name: "address", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+-    { no: 2, name: "chain_id", kind: "scalar", T: 13 /* ScalarType.UINT32 */ },
++    { no: 2, name: "chain_id", kind: "scalar", T: 1 /* ScalarType.DOUBLE */ /* patched: was UINT32, Supra chain id SUPRA_CHAIN_ID overflows uint32 */ },
+     { no: 3, name: "name", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+     { no: 4, name: "symbol", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+     { no: 5, name: "underlying_token", kind: "message", T: Token },
+diff --git a/dist/data/v2/types_pb.js b/dist/data/v2/types_pb.js
+index 4b80380cb3df798bd07cc833ecc1780c836ef48b..d7e09a45ac4ea20c17c1d285cd98b5a8c3258871 100644
+--- a/dist/data/v2/types_pb.js
++++ b/dist/data/v2/types_pb.js
+@@ -672,7 +672,7 @@ export class ChainTokenRankStats extends Message {
+     constructor(data) {
+         super();
+         /**
+-         * @generated from field: uint32 chain_id = 1;
++         * @generated from field: double chain_id = 1;
+          */
+         this.chainId = 0;
+         proto3.util.initPartial(data, this);
+@@ -693,7 +693,7 @@ export class ChainTokenRankStats extends Message {
+ ChainTokenRankStats.runtime = proto3;
+ ChainTokenRankStats.typeName = "data.v2.ChainTokenRankStats";
+ ChainTokenRankStats.fields = proto3.util.newFieldList(() => [
+-    { no: 1, name: "chain_id", kind: "scalar", T: 13 /* ScalarType.UINT32 */ },
++    { no: 1, name: "chain_id", kind: "scalar", T: 1 /* ScalarType.DOUBLE */ /* patched: was UINT32, Supra chain id SUPRA_CHAIN_ID overflows uint32 */ },
+     { no: 2, name: "stats", kind: "message", T: TokenRankStats },
+ ]);
+ /**
+@@ -820,7 +820,7 @@ export class TokenMarket extends Message {
+     constructor(data) {
+         super();
+         /**
+-         * @generated from field: uint32 chain_id = 1;
++         * @generated from field: double chain_id = 1;
+          */
+         this.chainId = 0;
+         /**
+@@ -845,7 +845,7 @@ export class TokenMarket extends Message {
+ TokenMarket.runtime = proto3;
+ TokenMarket.typeName = "data.v2.TokenMarket";
+ TokenMarket.fields = proto3.util.newFieldList(() => [
+-    { no: 1, name: "chain_id", kind: "scalar", T: 13 /* ScalarType.UINT32 */ },
++    { no: 1, name: "chain_id", kind: "scalar", T: 1 /* ScalarType.DOUBLE */ /* patched: was UINT32, Supra chain id SUPRA_CHAIN_ID overflows uint32 */ },
+     { no: 2, name: "address", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+     { no: 3, name: "stats", kind: "message", T: TokenMarketStats },
+ ]);
+@@ -1161,7 +1161,7 @@ export class Pool extends Message {
+     constructor(data) {
+         super();
+         /**
+-         * @generated from field: uint32 chain_id = 1;
++         * @generated from field: double chain_id = 1;
+          */
+         this.chainId = 0;
+         /**
+@@ -1198,7 +1198,7 @@ export class Pool extends Message {
+ Pool.runtime = proto3;
+ Pool.typeName = "data.v2.Pool";
+ Pool.fields = proto3.util.newFieldList(() => [
+-    { no: 1, name: "chain_id", kind: "scalar", T: 13 /* ScalarType.UINT32 */ },
++    { no: 1, name: "chain_id", kind: "scalar", T: 1 /* ScalarType.DOUBLE */ /* patched: was UINT32, Supra chain id SUPRA_CHAIN_ID overflows uint32 */ },
+     { no: 2, name: "pool_id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+     { no: 3, name: "token0", kind: "message", T: Token },
+     { no: 4, name: "token1", kind: "message", T: Token },
+@@ -1421,7 +1421,7 @@ export class UniswapTransaction extends Message {
+     constructor(data) {
+         super();
+         /**
+-         * @generated from field: uint32 chain_id = 1;
++         * @generated from field: double chain_id = 1;
+          */
+         this.chainId = 0;
+         /**
+@@ -1478,7 +1478,7 @@ export class UniswapTransaction extends Message {
+ UniswapTransaction.runtime = proto3;
+ UniswapTransaction.typeName = "data.v2.UniswapTransaction";
+ UniswapTransaction.fields = proto3.util.newFieldList(() => [
+-    { no: 1, name: "chain_id", kind: "scalar", T: 13 /* ScalarType.UINT32 */ },
++    { no: 1, name: "chain_id", kind: "scalar", T: 1 /* ScalarType.DOUBLE */ /* patched: was UINT32, Supra chain id SUPRA_CHAIN_ID overflows uint32 */ },
+     { no: 2, name: "tx_hash", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+     { no: 3, name: "timestamp_ms", kind: "scalar", T: 3 /* ScalarType.INT64 */ },
+     { no: 4, name: "event_type", kind: "enum", T: proto3.getEnumType(TransactionEventType) },
+@@ -1496,7 +1496,7 @@ export class Token extends Message {
+     constructor(data) {
+         super();
+         /**
+-         * @generated from field: uint32 chain_id = 1;
++         * @generated from field: double chain_id = 1;
+          */
+         this.chainId = 0;
+         /**
+@@ -1537,7 +1537,7 @@ export class Token extends Message {
+ Token.runtime = proto3;
+ Token.typeName = "data.v2.Token";
+ Token.fields = proto3.util.newFieldList(() => [
+-    { no: 1, name: "chain_id", kind: "scalar", T: 13 /* ScalarType.UINT32 */ },
++    { no: 1, name: "chain_id", kind: "scalar", T: 1 /* ScalarType.DOUBLE */ /* patched: was UINT32, Supra chain id SUPRA_CHAIN_ID overflows uint32 */ },
+     { no: 2, name: "address", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+     { no: 3, name: "symbol", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+     { no: 4, name: "decimals", kind: "scalar", T: 13 /* ScalarType.UINT32 */ },
+@@ -1633,7 +1633,7 @@ export class LaunchToken extends Message {
+     constructor(data) {
+         super();
+         /**
+-         * @generated from field: uint32 chain_id = 1;
++         * @generated from field: double chain_id = 1;
+          */
+         this.chainId = 0;
+         /**
+@@ -1666,7 +1666,7 @@ export class LaunchToken extends Message {
+ LaunchToken.runtime = proto3;
+ LaunchToken.typeName = "data.v2.LaunchToken";
+ LaunchToken.fields = proto3.util.newFieldList(() => [
+-    { no: 1, name: "chain_id", kind: "scalar", T: 13 /* ScalarType.UINT32 */ },
++    { no: 1, name: "chain_id", kind: "scalar", T: 1 /* ScalarType.DOUBLE */ /* patched: was UINT32, Supra chain id SUPRA_CHAIN_ID overflows uint32 */ },
+     { no: 2, name: "address", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+     { no: 3, name: "symbol", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+     { no: 4, name: "name", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+@@ -1991,7 +1991,7 @@ export class Nft extends Message {
+     constructor(data) {
+         super();
+         /**
+-         * @generated from field: uint32 chain_id = 1;
++         * @generated from field: double chain_id = 1;
+          */
+         this.chainId = 0;
+         /**
+@@ -2041,7 +2041,7 @@ export class Nft extends Message {
+ Nft.runtime = proto3;
+ Nft.typeName = "data.v2.Nft";
+ Nft.fields = proto3.util.newFieldList(() => [
+-    { no: 1, name: "chain_id", kind: "scalar", T: 13 /* ScalarType.UINT32 */ },
++    { no: 1, name: "chain_id", kind: "scalar", T: 1 /* ScalarType.DOUBLE */ /* patched: was UINT32, Supra chain id SUPRA_CHAIN_ID overflows uint32 */ },
+     { no: 2, name: "contract_address", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+     { no: 3, name: "token_id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+     { no: 4, name: "name", kind: "scalar", T: 9 /* ScalarType.STRING */ },

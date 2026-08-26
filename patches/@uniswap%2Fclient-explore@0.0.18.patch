@@ -1,0 +1,22 @@
+diff --git a/dist/uniswap/explore/v1/service_pb.js b/dist/uniswap/explore/v1/service_pb.js
+index 26ba2055835c8ecc97f620035fdd724f7bc6d2fd..f8809b12da65ab34150388f07bbf7b2392b76a70 100644
+--- a/dist/uniswap/explore/v1/service_pb.js
++++ b/dist/uniswap/explore/v1/service_pb.js
+@@ -893,7 +893,7 @@ export class ChainToken extends Message {
+     constructor(data) {
+         super();
+         /**
+-         * @generated from field: int32 chain_id = 1;
++         * @generated from field: double chain_id = 1;
+          */
+         this.chainId = 0;
+         /**
+@@ -918,7 +918,7 @@ export class ChainToken extends Message {
+ ChainToken.runtime = proto3;
+ ChainToken.typeName = "uniswap.explore.v1.ChainToken";
+ ChainToken.fields = proto3.util.newFieldList(() => [
+-    { no: 1, name: "chain_id", kind: "scalar", T: 5 /* ScalarType.INT32 */ },
++    { no: 1, name: "chain_id", kind: "scalar", T: 1 /* ScalarType.DOUBLE */ /* patched: was INT32, Supra chain id SUPRA_CHAIN_ID overflows int32 */ },
+     { no: 2, name: "address", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+     { no: 3, name: "decimals", kind: "scalar", T: 5 /* ScalarType.INT32 */, opt: true },
+     { no: 4, name: "is_bridged", kind: "scalar", T: 8 /* ScalarType.BOOL */, opt: true },

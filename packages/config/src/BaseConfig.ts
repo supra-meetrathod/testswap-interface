@@ -71,6 +71,14 @@ export const BaseConfigValues = {
   includePrototypeFeatures: process.env.INCLUDE_PROTOTYPE_FEATURES,
 
   // URL Overrides
+  // Base URL for supraswap-gateway-service (this fork's own backend for Supra
+  // chain data: GraphQL Token query, ExploreStatsService, GetPortfolio).
+  // Deliberately NOT in BaseEnvFieldRules' Production-forbidden list below —
+  // unlike Uniswap's other *Override fields (dev/staging escape hatches with
+  // a real prod fallback), this fork has no other backend to fall back to;
+  // it must be set in every environment, prod included. See
+  // supraswap-gateway-service/PLAN.md "Frontend env wiring".
+  supraBackendUrlOverride: process.env.SUPRA_BACKEND_URL,
   amplitudeProxyUrlOverride: process.env.AMPLITUDE_PROXY_URL_OVERRIDE,
   apiBaseUrlOverride: process.env.API_BASE_URL_OVERRIDE,
   apiBaseUrlV2Override: process.env.API_BASE_URL_V2_OVERRIDE,
@@ -147,6 +155,9 @@ export const BaseConfigSchema = z.object({
   includePrototypeFeatures: boolFromString.describe('Are prototype features included'),
 
   // URL Overrides
+  supraBackendUrlOverride: optionalString.describe(
+    "Base URL for supraswap-gateway-service — this fork's own backend for Supra chain data",
+  ),
   amplitudeProxyUrlOverride: optionalString.describe('Override URL for Amplitude proxy'),
   apiBaseUrlOverride: optionalString.describe('Override URL for API base v1'),
   apiBaseUrlV2Override: optionalString.describe('Override URL for API base v2'),
@@ -171,6 +182,7 @@ export type BaseConfig = z.infer<typeof BaseConfigSchema>
  */
 export const BaseEnvFieldRules: EnvFieldRules<BaseConfig> = {
   [Environment.Production]: {
+    // supraBackendUrlOverride intentionally absent — see its comment above.
     forbidden: [
       'amplitudeProxyUrlOverride',
       'apiBaseUrlOverride',

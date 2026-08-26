@@ -194,6 +194,11 @@ export const networkColors = {
     light: '#3667F6',
     dark: '#3667F6',
   },
+  // Official brand color per https://supra.com/brand/
+  supra: {
+    light: '#DD1438',
+    dark: '#DD1438',
+  },
 }
 
 const sporeLight = {
@@ -377,6 +382,12 @@ export const colorsLight = {
   chain_57073: networkColors.ink.light,
   chain_501000101: networkColors.solana.light,
   chain_143: networkColors.monad.light,
+  // Literal key, not a `chain_${SUPRA_CHAIN_ID}` template — every other entry
+  // here (including chain_501000101, the same "non-standard large id" case)
+  // uses a literal too; a computed key doesn't survive as a literal into the
+  // built theme config's type, so `chain_953497288926` never actually landed
+  // in ThemeKeys, breaking every UseSporeColorsReturn lookup for this chain.
+  chain_953497288926: networkColors.supra.light,
 
   // Testnets
   chain_11155111: networkColors.ethereum.light,
@@ -474,6 +485,7 @@ export const colorsDark = {
   chain_57073: networkColors.ink.dark,
   chain_501000101: networkColors.solana.dark,
   chain_143: networkColors.monad.dark,
+  chain_953497288926: networkColors.supra.dark,
 
   // Testnets
   chain_11155111: networkColors.ethereum.dark,

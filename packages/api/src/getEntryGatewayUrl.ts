@@ -51,6 +51,14 @@ interface GetEntryGatewayUrlOptions {
 export function getEntryGatewayUrl(options?: GetEntryGatewayUrlOptions): string {
   const config = getConfig()
 
+  // supraBackendUrlOverride wins unconditionally, even over an env-pinned call
+  // (e.g. entryGatewayProdPostTransport forcing Production) — this fork has no
+  // real entry-gateway to fall back to for Supra, so "pin to prod" would just
+  // mean "always fail for Supra" otherwise. See BaseConfig.ts's comment.
+  if (config.supraBackendUrlOverride) {
+    return config.supraBackendUrlOverride
+  }
+
   // Use proxy path if enabled (local dev, Vercel previews, or explicit opt-in).
   // This must take precedence over backend URL overrides so browser clients do
   // not bypass the same-origin proxy and reintroduce CORS issues. Env-pinned

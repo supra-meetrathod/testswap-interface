@@ -201,7 +201,8 @@
   },
   "sync": {
     "applyChanges": true,
-    "globalGenerators": ["@universe/uniswap-nx:tsconfig-sync"]
+    "globalGenerators": ["@universe/uniswap-nx:tsconfig-sync"],
+    "disabledTaskSyncGenerators": ["@universe/uniswap-nx:tsconfig-sync"]
   },
   "parallel": 6,
   "defaultProject": "@universe/web",
