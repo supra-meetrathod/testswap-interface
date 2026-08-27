@@ -16,6 +16,7 @@ import { OPTIMISM_CHAIN_INFO } from 'uniswap/src/features/chains/evm/info/optimi
 import { POLYGON_CHAIN_INFO } from 'uniswap/src/features/chains/evm/info/polygon'
 import { ROBINHOOD_CHAIN_INFO } from 'uniswap/src/features/chains/evm/info/robinhood'
 import { SONEIUM_CHAIN_INFO } from 'uniswap/src/features/chains/evm/info/soneium'
+import { SUPRA_CHAIN_INFO } from 'uniswap/src/features/chains/evm/info/supra'
 import { TEMPO_CHAIN_INFO } from 'uniswap/src/features/chains/evm/info/tempo'
 import { UNICHAIN_CHAIN_INFO, UNICHAIN_SEPOLIA_CHAIN_INFO } from 'uniswap/src/features/chains/evm/info/unichain'
 import { WORLD_CHAIN_INFO } from 'uniswap/src/features/chains/evm/info/worldchain'
@@ -394,6 +395,7 @@ export const WRAPPED_NATIVE_CURRENCY: { [chainId: number]: Token | undefined } =
     'WSOL',
     'Wrapped SOL',
   ),
+  [UniverseChainId.Supra]: SUPRA_CHAIN_INFO.tokens.WSUPRA,
 }
 
 class NativeCurrencyImpl extends NativeCurrency {

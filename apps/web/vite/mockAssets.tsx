@@ -52,6 +52,7 @@ vi.mock('ui/src/assets', () => ({
   ZORA_LOGO: 'zora-logo.png',
   ZKSYNC_LOGO: 'zksync-logo.png',
   SOLANA_LOGO: 'solana-logo.png',
+  SUPRA_LOGO: 'supra-logo.png',
   ARC_LOGO: 'arc-logo.png',
   INK_LOGO: 'ink-logo.png',
   LINEA_LOGO: 'linea-logo.png',

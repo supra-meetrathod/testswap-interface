@@ -1,0 +1,44 @@
+diff --git a/dist/uniswap/liquidity/v1/types_pb.js b/dist/uniswap/liquidity/v1/types_pb.js
+index 5a1aa3bbaa1269d3786431daccf53400a7f5757d..78a8c2ac051cdb88d89e509b532bf3ca3f75ab61 100644
+--- a/dist/uniswap/liquidity/v1/types_pb.js
++++ b/dist/uniswap/liquidity/v1/types_pb.js
+@@ -320,7 +320,7 @@ export class TransactionRequest extends Message {
+          */
+         this.value = "";
+         /**
+-         * @generated from field: uint32 chain_id = 5;
++         * @generated from field: double chain_id = 5;
+          */
+         this.chainId = 0;
+         proto3.util.initPartial(data, this);
+@@ -345,7 +345,7 @@ TransactionRequest.fields = proto3.util.newFieldList(() => [
+     { no: 2, name: "from", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+     { no: 3, name: "data", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+     { no: 4, name: "value", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+-    { no: 5, name: "chain_id", kind: "scalar", T: 13 /* ScalarType.UINT32 */ },
++    { no: 5, name: "chain_id", kind: "scalar", T: 1 /* ScalarType.DOUBLE */ /* patched: was UINT32, Supra chain id 953497288926 overflows uint32 */ },
+     { no: 6, name: "gas_limit", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
+     { no: 7, name: "max_fee_per_gas", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
+     { no: 8, name: "max_priority_fee_per_gas", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
+diff --git a/dist/uniswap/liquidity/v2/api_pb.js b/dist/uniswap/liquidity/v2/api_pb.js
+index 8a14680440ddb9259fa460f540f75c06023304f5..6422d0e0e2557ae22f0f0de6adbf3e7bd45bd35a 100644
+--- a/dist/uniswap/liquidity/v2/api_pb.js
++++ b/dist/uniswap/liquidity/v2/api_pb.js
+@@ -202,7 +202,7 @@ export class KycRequiredWarning extends Message {
+          */
+         this.tokenAddress = "";
+         /**
+-         * @generated from field: uint32 chain_id = 3;
++         * @generated from field: double chain_id = 3;
+          */
+         this.chainId = 0;
+         proto3.util.initPartial(data, this);
+@@ -225,7 +225,7 @@ KycRequiredWarning.typeName = "uniswap.liquidity.v2.KycRequiredWarning";
+ KycRequiredWarning.fields = proto3.util.newFieldList(() => [
+     { no: 1, name: "kyc_url", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+     { no: 2, name: "token_address", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+-    { no: 3, name: "chain_id", kind: "scalar", T: 13 /* ScalarType.UINT32 */ },
++    { no: 3, name: "chain_id", kind: "scalar", T: 1 /* ScalarType.DOUBLE */ /* patched: was UINT32, Supra chain id 953497288926 overflows uint32 */ },
+ ]);
+ /**
+  * @generated from message uniswap.liquidity.v2.CreateClassicPositionRequest

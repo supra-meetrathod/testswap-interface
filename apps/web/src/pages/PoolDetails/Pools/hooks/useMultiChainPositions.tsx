@@ -1,5 +1,5 @@
 import { BigNumber } from '@ethersproject/bignumber'
-import { CurrencyAmount, Token, V3_CORE_FACTORY_ADDRESSES } from '@uniswap/sdk-core'
+import { CurrencyAmount, Token } from '@uniswap/sdk-core'
 import { computePoolAddress, Pool, Position } from '@uniswap/v3-sdk'
 import { v3PoolStateAbi } from '@universe/chains'
 import { ensure0xHex } from '@universe/encoding'
@@ -10,6 +10,7 @@ import { UniverseChainId } from 'uniswap/src/features/chains/types'
 import { logger } from 'utilities/src/logger/logger'
 import { DEFAULT_ERC20_DECIMALS } from 'utilities/src/tokens/constants'
 import { decodeFunctionResult, encodeFunctionData, toBigInt } from '~/chains'
+import { getV3FactoryAddress } from '~/features/Liquidity/utils/getV3FactoryAddress'
 import {
   PositionInfo,
   useCachedPositions,
@@ -162,6 +163,19 @@ export function useMultiChainPositions(account: string): UseMultiChainPositionsD
         chainId,
       )
 
+      // Every position in this batch shares `chainId`, so the factory address is resolved once
+      // up front - if this chain has no known V3 factory address, none of its positions can be
+      // priced, so bail out clearly instead of computing garbage pool addresses per-position.
+      const factoryAddress = getV3FactoryAddress(chainId)
+      if (!factoryAddress) {
+        // Stable message — Datadog error tracking counts occurrences of this exact string.
+        logger.error(new Error('No V3 factory address known for chain'), {
+          tags: { file: 'useMultiChainPositions.tsx', function: 'fetchPositionInfo' },
+          extra: { chainId },
+        })
+        return []
+      }
+
       const calls: Call[] = []
       const poolPairs: [Token, Token][] = []
       positionDetails.forEach((details) => {
@@ -170,7 +184,6 @@ export function useMultiChainPositions(account: string): UseMultiChainPositionsD
 
         let poolAddress = poolAddressCache.get(details, chainId)
         if (!poolAddress) {
-          const factoryAddress = V3_CORE_FACTORY_ADDRESSES[chainId]
           poolAddress = computePoolAddress({
             factoryAddress,
             tokenA,
