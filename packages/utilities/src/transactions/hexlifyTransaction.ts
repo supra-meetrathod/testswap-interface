@@ -15,9 +15,10 @@ function formatAsHexString(input?: BigNumberish): string | undefined {
  * This function is idempotent so it's safe to call more than once on a singular transaction request
  */
 export function hexlifyTransaction(transferTxRequest: TransactionRequest): TransactionRequest {
-  const { value, nonce, gasLimit, gasPrice, maxPriorityFeePerGas, maxFeePerGas } = transferTxRequest
+  const { value, nonce, gasLimit, gasPrice, maxPriorityFeePerGas, maxFeePerGas, chainId } = transferTxRequest
   return {
     ...transferTxRequest,
+    ...(chainId !== undefined ? { chainId: formatAsHexString(chainId) } : {}),
     ...(nonce !== undefined ? { nonce: formatAsHexString(nonce) } : {}),
     ...(value !== undefined ? { value: formatAsHexString(value) } : {}),
     ...(gasLimit !== undefined ? { gasLimit: formatAsHexString(gasLimit) } : {}),
@@ -32,5 +33,5 @@ export function hexlifyTransaction(transferTxRequest: TransactionRequest): Trans
           maxFeePerGas: formatAsHexString(maxFeePerGas),
         }
       : {}),
-  }
+  } as TransactionRequest
 }

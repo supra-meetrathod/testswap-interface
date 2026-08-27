@@ -1,5 +1,5 @@
 import { ProtocolVersion } from '@uniswap/client-data-api/dist/data/v1/poolTypes_pb'
-import { Currency, Token, V3_CORE_FACTORY_ADDRESSES } from '@uniswap/sdk-core'
+import { Currency, Token } from '@uniswap/sdk-core'
 import { FeeAmount, TICK_SPACINGS, tickToPrice as tickToPriceV3, Pool as V3Pool } from '@uniswap/v3-sdk'
 import { tickToPrice as tickToPriceV4, Pool as V4Pool } from '@uniswap/v4-sdk'
 import { GraphQLApi } from '@universe/api'
@@ -15,6 +15,7 @@ import { logger } from 'utilities/src/logger/logger'
 import { TickData, Ticks } from '~/data/AllV3TicksQuery'
 import { computeSurroundingTicks, TickProcessed } from '~/features/Liquidity/utils/computeSurroundingTicks'
 import { getTokenOrZeroAddress } from '~/features/Liquidity/utils/currency'
+import { getV3FactoryAddress } from '~/features/Liquidity/utils/getV3FactoryAddress'
 import { poolEnabledProtocolVersion } from '~/features/Liquidity/utils/protocolVersion'
 import { useMultichainContext } from '~/state/multichain/useMultichainContext'
 import { PositionField } from '~/types/position'
@@ -121,7 +122,7 @@ export function useAllPoolTicks({
     const { TOKEN0, TOKEN1 } = sdkCurrencies
     const v3PoolAddress =
       TOKEN0 && TOKEN1 && feeAmount && version === ProtocolVersion.V3
-        ? V3Pool.getAddress(TOKEN0.wrapped, TOKEN1.wrapped, feeAmount, undefined, V3_CORE_FACTORY_ADDRESSES[chainId])
+        ? V3Pool.getAddress(TOKEN0.wrapped, TOKEN1.wrapped, feeAmount, undefined, getV3FactoryAddress(chainId))
         : undefined
 
     const v4PoolId =

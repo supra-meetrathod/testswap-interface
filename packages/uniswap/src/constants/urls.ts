@@ -269,6 +269,7 @@ export function getUniswapServiceUrls(overrides: UniswapUrlOverrides): UniswapSe
       : overrides.graphqlUrlOverride || getCloudflareApiBaseUrl({ flow: TrafficFlows.GraphQL, postfix: 'v1/graphql' }),
 
     liquidityServiceUrl:
+      overrides.supraBackendUrlOverride ||
       overrides.liquidityServiceUrlOverride ||
       (isE2eTestEnv()
         ? PROD_LIQUIDITY_SERVICE_URL

@@ -23,12 +23,19 @@ import { ElementName } from 'uniswap/src/features/telemetry/constants'
 
 // Confirmed non-standard RPC (subgraph/plan.md, Phase 2 Step 1): tx-hash
 // lookups only resolve via a non-standard `indexing_hash` field, eth_getLogs
-// is capped at 100 blocks, eth_call only works at block tag "latest". The
-// indexer works around this with a proxy (subgraph/graph-node-supra/rpc-proxy/proxy.py)
-// that isn't deployed anywhere the frontend can reach yet — swap this for that
-// proxy's URL before shipping swap/send flows on Supra (see todo.md).
-// Origin is also allow-listed in apps/web/public/dev-csp.json connectSrc — keep in sync if this changes.
-export const SUPRA_RPC_URL = 'http://91.134.205.161:27001/rpc/v1/eth'
+// is capped at 100 blocks, eth_call only works at block tag "latest".
+// Routed through supraswap-gateway-service's own /rpc/:chainId proxy
+// (src/rpc/proxy.ts), which already applies these fixes for reads and is
+// the only thing the wallet can actually reach right now — pointing this at
+// the raw node directly (http://91.134.205.161:27001/rpc/v1/eth) made the
+// wallet's own eth_sendTransaction broadcast fail with a generic -32603
+// "Internal JSON-RPC error" for the create-position flow, since MetaMask's
+// SDK talks to whatever's in rpcUrls straight from the extension, bypassing
+// SUPRA_BACKEND_URL entirely. Swap this for a real deployed proxy URL before
+// shipping outside local dev (see todo.md's RPC blocker).
+// Origin is derived from SUPRA_BACKEND_URL and auto-allow-listed by
+// apps/web/vite/vite.plugins.ts's CSP wiring — no dev-csp.json edit needed.
+export const SUPRA_RPC_URL = 'http://192.168.109.169:3021/rpc/953497288926'
 
 // Confirmed live on Supra (subgraph/plan.md, Phase 2 Step 3 end-to-end test): a
 // pool was created, a position minted, and a swap executed against these
