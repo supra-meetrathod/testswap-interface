@@ -301,10 +301,16 @@ function* submitTransactionAsync(params: HandleOnChainStepParams): SagaGenerator
   const signer = yield* call(getSigner, address)
 
   try {
-    const hexlifiedTransactionRequest = hexlifyTransaction(step.txRequest)
+    const { gasLimit, ...hexlifiedTransactionRequest } = hexlifyTransaction(step.txRequest)
 
+    // eth_sendTransaction's JSON-RPC parameter is `gas`; `gasLimit` is ethers'
+    // internal name for it. Passing the ethers-shaped object through verbatim
+    // meant wallets saw no gas limit at all and silently substituted their own
+    // raw estimate — discarding the buffered limit computed for this calldata
+    // (see supraswap-gateway-service's liquidityService.ts) and reverting
+    // create-pool txs out-of-gas on chain.
     const response = yield* call([signer.provider, 'send'], 'eth_sendTransaction', [
-      { from: address, ...hexlifiedTransactionRequest },
+      { from: address, ...hexlifiedTransactionRequest, ...(gasLimit !== undefined ? { gas: gasLimit } : {}) },
     ])
 
     if (!isValidHexString(response)) {

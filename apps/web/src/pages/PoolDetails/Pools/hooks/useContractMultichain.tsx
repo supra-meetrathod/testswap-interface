@@ -33,6 +33,14 @@ export function useContractMultichain<T extends BaseContract>({
 
     return relevantChains.reduce((acc: ContractMap<T>, chainId) => {
       const isSupported = isSupportedChain(chainId) && isEVMChain(chainId)
+      // Some chains genuinely have no real deployment for a given contract
+      // (e.g. Supra has no Uniswap-own Multicall deployment) — skip rather
+      // than construct a contract instance at an empty/guessed address,
+      // which throws (`getContract`'s `Invalid 'address' parameter`).
+      const address = addressMap[chainId]
+      if (!address) {
+        return acc
+      }
 
       const provider =
         walletProvider && account.chainId === chainId
@@ -41,7 +49,7 @@ export function useContractMultichain<T extends BaseContract>({
             ? getRpcProvider(chainId)
             : undefined
       if (provider) {
-        acc[chainId] = getContract({ address: addressMap[chainId] ?? '', ABI, provider }) as T
+        acc[chainId] = getContract({ address, ABI, provider }) as T
       }
       return acc
     }, {})

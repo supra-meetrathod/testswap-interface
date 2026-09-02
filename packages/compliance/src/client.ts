@@ -56,6 +56,19 @@ export async function screenAddress(
 }
 
 /**
+ * `ChainId` is a closed proto enum (int32) covering only the upstream chains
+ * this compliance provider knows about. Supra's chain id (~9.5e11) is both
+ * outside int32 range and has no entry in this enum, so casting it directly
+ * fails `fromJson` on the gateway with a 400 before the request ever reaches
+ * the (fail-open) handler. Unknown chains fall back to `CHAIN_ID_UNSPECIFIED`,
+ * same as `toScreenInput`'s optional-chainId default — routes to the default
+ * provider instead of breaking the request.
+ */
+function toComplianceChainId(chainId: number): ChainId {
+  return chainId in ChainId ? (chainId as ChainId) : ChainId.CHAIN_ID_UNSPECIFIED
+}
+
+/**
  * Bulk deny-list check for a single token. The endpoint accepts up to 100
  * tokens per call, but we keep calls scoped to one token so each result is
  * cached on its own `chainId:address` key.
@@ -72,7 +85,7 @@ export async function fetchFeatureGatedToken(
   { chainId, address }: ComplianceTokenInput,
 ): Promise<TokenRef | undefined> {
   const response = await client.featureGatedTokens({
-    tokens: [new TokenRef({ chainId: chainId as ChainId, address })],
+    tokens: [new TokenRef({ chainId: toComplianceChainId(chainId), address })],
     includeNonBlockingReasons: true,
   })
   return response.tokens[0]
