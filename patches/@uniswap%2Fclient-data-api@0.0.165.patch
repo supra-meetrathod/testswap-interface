@@ -1326,3 +1326,61 @@ index 4b80380cb3df798bd07cc833ecc1780c836ef48b..d7e09a45ac4ea20c17c1d285cd98b5a8
      { no: 2, name: "contract_address", kind: "scalar", T: 9 /* ScalarType.STRING */ },
      { no: 3, name: "token_id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
      { no: 4, name: "name", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+diff --git a/dist/data/v1/poolTypes_pb.js b/dist/data/v1/poolTypes_pb.js
+index 648c8fbbf5843026e219d8ece8e35cf2bdbd9957..701408a79ab628f42c9fe6c3c8c4368fb0445f9c 100644
+--- a/dist/data/v1/poolTypes_pb.js
++++ b/dist/data/v1/poolTypes_pb.js
+@@ -68,7 +68,7 @@
+     constructor(data) {
+         super();
+         /**
+-         * @generated from field: uint32 chain_id = 1;
++         * @generated from field: double chain_id = 1;
+          */
+         this.chainId = 0;
+         /**
+@@ -109,7 +109,7 @@
+ Token.runtime = proto3;
+ Token.typeName = "pools.v1.Token";
+ Token.fields = proto3.util.newFieldList(() => [
+-    { no: 1, name: "chain_id", kind: "scalar", T: 13 /* ScalarType.UINT32 */ },
++    { no: 1, name: "chain_id", kind: "scalar", T: 1 /* ScalarType.DOUBLE */ /* patched: was UINT32, Supra chain id SUPRA_CHAIN_ID overflows uint32 */ },
+     { no: 2, name: "address", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+     { no: 3, name: "symbol", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+     { no: 4, name: "decimals", kind: "scalar", T: 13 /* ScalarType.UINT32 */ },
+@@ -369,7 +369,7 @@
+     constructor(data) {
+         super();
+         /**
+-         * @generated from field: uint32 chain_id = 1;
++         * @generated from field: double chain_id = 1;
+          */
+         this.chainId = 0;
+         /**
+@@ -418,7 +418,7 @@
+ Position.runtime = proto3;
+ Position.typeName = "pools.v1.Position";
+ Position.fields = proto3.util.newFieldList(() => [
+-    { no: 1, name: "chain_id", kind: "scalar", T: 13 /* ScalarType.UINT32 */ },
++    { no: 1, name: "chain_id", kind: "scalar", T: 1 /* ScalarType.DOUBLE */ /* patched: was UINT32, Supra chain id SUPRA_CHAIN_ID overflows uint32 */ },
+     { no: 2, name: "protocol_version", kind: "enum", T: proto3.getEnumType(ProtocolVersion) },
+     { no: 3, name: "v2_pair", kind: "message", T: PairPosition, oneof: "position" },
+     { no: 4, name: "v3_position", kind: "message", T: PoolPosition, oneof: "position" },
+@@ -534,7 +534,7 @@
+          */
+         this.protocolVersion = ProtocolVersion.UNSPECIFIED;
+         /**
+-         * @generated from field: uint32 chain_id = 11;
++         * @generated from field: double chain_id = 11;
+          */
+         this.chainId = 0;
+         /**
+@@ -585,7 +585,7 @@
+     { no: 8, name: "tick_spacing", kind: "scalar", T: 5 /* ScalarType.INT32 */ },
+     { no: 9, name: "hooks", kind: "message", T: Hook, opt: true },
+     { no: 10, name: "protocol_version", kind: "enum", T: proto3.getEnumType(ProtocolVersion) },
+-    { no: 11, name: "chain_id", kind: "scalar", T: 13 /* ScalarType.UINT32 */ },
++    { no: 11, name: "chain_id", kind: "scalar", T: 1 /* ScalarType.DOUBLE */ /* patched: was UINT32, Supra chain id SUPRA_CHAIN_ID overflows uint32 */ },
+     { no: 12, name: "is_dynamic_fee", kind: "scalar", T: 8 /* ScalarType.BOOL */ },
+     { no: 13, name: "total_liquidity_usd", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+     { no: 14, name: "apr", kind: "scalar", T: 2 /* ScalarType.FLOAT */ },

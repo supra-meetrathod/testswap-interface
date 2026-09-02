@@ -1,3 +1,6 @@
+diff --git a/node_modules/@uniswap/client-liquidity/.bun-tag-50628bd8ebe87486 b/.bun-tag-50628bd8ebe87486
+new file mode 100644
+index 0000000000000000000000000000000000000000..e69de29bb2d1d6434b8b29ae775ad8c2e48c5391
 diff --git a/dist/uniswap/liquidity/v1/types_pb.js b/dist/uniswap/liquidity/v1/types_pb.js
 index 5a1aa3bbaa1269d3786431daccf53400a7f5757d..78a8c2ac051cdb88d89e509b532bf3ca3f75ab61 100644
 --- a/dist/uniswap/liquidity/v1/types_pb.js
@@ -42,3 +45,43 @@ index 8a14680440ddb9259fa460f540f75c06023304f5..6422d0e0e2557ae22f0f0de6adbf3e7b
  ]);
  /**
   * @generated from message uniswap.liquidity.v2.CreateClassicPositionRequest
+diff --git a/dist/uniswap/liquidity/v2/types_pb.js b/dist/uniswap/liquidity/v2/types_pb.js
+index 7549341510487be55664c5e024419fc20d395ba9..fe84c7f5c96f8763824ba73179a15324160816f1 100644
+--- a/dist/uniswap/liquidity/v2/types_pb.js
++++ b/dist/uniswap/liquidity/v2/types_pb.js
+@@ -934,7 +934,7 @@ export class PoolSummary extends Message {
+          */
+         this.poolIdentifier = "";
+         /**
+-         * @generated from field: int32 chain_id = 2;
++         * @generated from field: double chain_id = 2;
+          */
+         this.chainId = 0;
+         /**
+@@ -994,7 +994,7 @@ PoolSummary.runtime = proto3;
+ PoolSummary.typeName = "uniswap.liquidity.v2.PoolSummary";
+ PoolSummary.fields = proto3.util.newFieldList(() => [
+     { no: 1, name: "pool_identifier", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+-    { no: 2, name: "chain_id", kind: "scalar", T: 5 /* ScalarType.INT32 */ },
++    { no: 2, name: "chain_id", kind: "scalar", T: 1 /* ScalarType.DOUBLE */ /* patched: was INT32, Supra chain id 953497288926 overflows int32 */ },
+     { no: 3, name: "protocol_version", kind: "enum", T: proto3.getEnumType(Protocols) },
+     { no: 4, name: "token0_address", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+     { no: 5, name: "token1_address", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+@@ -1153,7 +1153,7 @@ export class PoolListCursor extends Message {
+          */
+         this.poolIdentifier = "";
+         /**
+-         * @generated from field: int32 chain_id = 3;
++         * @generated from field: double chain_id = 3;
+          */
+         this.chainId = 0;
+         proto3.util.initPartial(data, this);
+@@ -1176,7 +1176,7 @@ PoolListCursor.typeName = "uniswap.liquidity.v2.PoolListCursor";
+ PoolListCursor.fields = proto3.util.newFieldList(() => [
+     { no: 1, name: "sort_value", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+     { no: 2, name: "pool_identifier", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+-    { no: 3, name: "chain_id", kind: "scalar", T: 5 /* ScalarType.INT32 */ },
++    { no: 3, name: "chain_id", kind: "scalar", T: 1 /* ScalarType.DOUBLE */ /* patched: was INT32, Supra chain id 953497288926 overflows int32 */ },
+ ]);
+ /**
+  * Identifies one pool. address_or_id is the pair/pool address for V2/V3

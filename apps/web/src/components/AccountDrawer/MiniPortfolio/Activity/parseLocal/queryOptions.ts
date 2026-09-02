@@ -23,11 +23,11 @@ export function getTransactionToActivityQueryOptions({
   return queryOptions({
     queryKey: [ReactQueryCacheKey.TransactionToActivity, transaction, isEarnActivityDisplayEnabled],
     queryFn: async () =>
-      transactionToActivity({
+      (await transactionToActivity({
         details: transaction,
         formatNumber,
         isEarnActivityDisplayEnabled,
-      }),
+      })) ?? null,
   })
 }
 
@@ -42,6 +42,6 @@ export function getFORTransactionToActivityQueryOptions({
 }) {
   return queryOptions({
     queryKey: [ReactQueryCacheKey.TransactionToActivity, transaction],
-    queryFn: async () => forTransactionToActivity({ transaction, formatNumber, formatFiatPrice }),
+    queryFn: async () => (await forTransactionToActivity({ transaction, formatNumber, formatFiatPrice })) ?? null,
   })
 }

@@ -28,7 +28,11 @@ export function useTokenComplianceStatus(token: ComplianceTokenInput | undefined
   const isOverridden = token !== undefined && override !== undefined
   const { data, isLoading } = useQuery({
     queryKey: [ReactQueryCacheKey.Compliance, 'featureGatedToken', token?.chainId, token?.address],
-    queryFn: token && !isOverridden ? () => fetchFeatureGatedToken(client, token) : skipToken,
+    // react-query forbids a queryFn resolving to `undefined` (throws "Query data
+    // cannot be undefined") — fetchFeatureGatedToken returns `undefined` for a
+    // clean (non-gated) token per its API contract, so coerce to `null` here
+    // rather than changing that contract.
+    queryFn: token && !isOverridden ? async () => (await fetchFeatureGatedToken(client, token)) ?? null : skipToken,
     staleTime: FIVE_MINUTES_MS,
   })
   if (isOverridden) {
