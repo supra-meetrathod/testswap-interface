@@ -53,6 +53,7 @@ const PoolDetails = lazy(() => import('~/pages/PoolDetails'))
 const TokenDetails = lazy(() => import('~/pages/TokenDetails/TokenDetailsPage'))
 const ExtensionPasskeyAuthPopUp = lazy(() => import('~/pages/ExtensionPasskeyAuthPopUp'))
 const PasskeyManagement = lazy(() => import('~/pages/PasskeyManagement'))
+const Faucet = lazy(() => import('~/pages/Faucet'))
 const ExtensionUninstall = lazy(() => import('~/pages/ExtensionUninstall/ExtensionUninstall'))
 const Portfolio = lazy(() => import('~/pages/Portfolio/Portfolio'))
 const ToucanToken = lazy(() => import('~/pages/Explore/ToucanToken'))
@@ -231,6 +232,15 @@ export const routes: RouteDefinition[] = [
     path: '/limit',
     getElement: () => <SwapPage />,
     getTitle: () => i18n.t('title.placeLimit'),
+  }),
+  createRouteDefinition({
+    path: '/faucet',
+    getElement: () => (
+      <Suspense fallback={null}>
+        <Faucet />
+      </Suspense>
+    ),
+    getTitle: () => i18n.t('common.faucet'),
   }),
   createRouteDefinition({
     path: '/buy',

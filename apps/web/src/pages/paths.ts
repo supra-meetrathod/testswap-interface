@@ -19,6 +19,7 @@ export const paths = [
   '/swap',
   '/buy',
   '/limit',
+  '/faucet',
   '/limits',
   '/buy',
   '/onramp-return',

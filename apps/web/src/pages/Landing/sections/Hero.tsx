@@ -129,7 +129,9 @@ export function Hero({ scrollToRef, transition }: HeroProps) {
             <Trans
               i18nKey="hero.subtitle"
               values={{ amount: chains.length }}
-              components={{ highlight: <Text variant="body1" $short={{ variant: 'body2' }} color="$accent1" /> }}
+              components={{
+                highlight: <Text key="highlight" variant="body1" $short={{ variant: 'body2' }} color="$accent1" />,
+              }}
             />
           </Text>
         </RiseIn>

@@ -11,6 +11,7 @@ export function PrivacyPolicyNotice() {
         components={{
           termsLink: (
             <ExternalLink
+              key="termsLink"
               href={UniswapStaticUrls.termsOfServiceUrl}
               color="$neutral3"
               fontSize="$micro"
@@ -19,6 +20,7 @@ export function PrivacyPolicyNotice() {
           ),
           privacyLink: (
             <ExternalLink
+              key="privacyLink"
               href={UniswapStaticUrls.privacyPolicyUrl}
               color="$neutral3"
               fontSize="$micro"

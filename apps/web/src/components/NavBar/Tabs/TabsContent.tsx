@@ -51,7 +51,11 @@ export const useTabsContent = (): TabsSection[] => {
     {
       title: t('common.trade'),
       href: '/swap',
-      isActive: pathname.startsWith('/swap') || pathname.startsWith('/limit') || pathname.startsWith('/send'),
+      isActive:
+        pathname.startsWith('/swap') ||
+        pathname.startsWith('/limit') ||
+        pathname.startsWith('/send') ||
+        pathname.startsWith('/faucet'),
       icon: <CoinConvert color="$accent1" size="$icon.24" />,
       elementName: ElementName.NavbarTradeTab,
       items: [
@@ -82,6 +86,13 @@ export const useTabsContent = (): TabsSection[] => {
           href: '/sell',
           internal: true,
           elementName: ElementName.NavbarTradeDropdownSell,
+        },
+        {
+          label: t('common.faucet'),
+          icon: <CoinConvert size="$icon.24" color="$neutral2" />,
+          href: '/faucet',
+          internal: true,
+          elementName: ElementName.NavbarTradeDropdownFaucet,
         },
       ],
     },
