@@ -25,6 +25,8 @@ function buildApp({ fetchSpy, onResolveEntryGateway }: BuildAppOptions = {}) {
     getWebSocketUrl: () => 'https://websockets.backend-prod.api.uniswap.org',
     getTrustedClientIp: () => undefined,
     getEmbedFrameAncestors: () => undefined,
+    // Unrelated to the password gate — see functions/passwordProtection.test.ts.
+    isPasswordProtectionEnabled: () => false,
   })
 }
 

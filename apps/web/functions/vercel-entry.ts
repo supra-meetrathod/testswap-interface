@@ -1,6 +1,7 @@
 // Vercel serverless function entry point (bundled by build-vercel.ts)
 import { handle } from '@hono/node-server/vercel'
 import { createApp, ENTRY_GATEWAY_URLS, WEBSOCKET_URLS } from 'functions/app'
+import { resolveIsPasswordProtectionEnabled, resolvePasswordProtectionPassword } from 'functions/passwordProtection'
 
 // Note: upgradeWebSocket is not provided because Vercel serverless functions
 // do not support long-lived WebSocket connections. On Vercel staging,
@@ -23,6 +24,8 @@ const app = createApp({
   getWebSocketUrl: () => process.env.WEBSOCKET_URL || WEBSOCKET_URLS.staging,
   getTrustedClientIp: (c) => c.req.header('x-real-ip'),
   getEmbedFrameAncestors: () => process.env.EMBED_FRAME_ANCESTORS,
+  isPasswordProtectionEnabled: () => resolveIsPasswordProtectionEnabled(process.env.PASSWORD_PROTECTION_ENABLED),
+  getPasswordProtectionPassword: () => resolvePasswordProtectionPassword(process.env.PASSWORD_PROTECTION_PASSWORD),
 })
 
 export default handle(app)

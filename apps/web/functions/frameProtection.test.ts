@@ -22,6 +22,8 @@ function buildApp({ embedFrameAncestors }: BuildAppOptions = {}) {
     getWebSocketUrl: () => 'https://websockets.backend-prod.api.uniswap.org',
     getTrustedClientIp: () => undefined,
     getEmbedFrameAncestors: () => embedFrameAncestors,
+    // Unrelated to the password gate — see functions/passwordProtection.test.ts.
+    isPasswordProtectionEnabled: () => false,
   })
 }
 

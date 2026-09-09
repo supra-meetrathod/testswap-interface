@@ -5,6 +5,11 @@ import { serve } from '@hono/node-server'
 import { serveStatic } from '@hono/node-server/serve-static'
 import { createApp, ENTRY_GATEWAY_URLS, WEBSOCKET_URLS } from 'functions/app'
 import { FRAME_PROTECTION_HEADERS } from 'functions/frameProtection'
+import {
+  createPasswordProtectionMiddleware,
+  resolveIsPasswordProtectionEnabled,
+  resolvePasswordProtectionPassword,
+} from 'functions/passwordProtection'
 import { Hono } from 'hono'
 import { compress } from 'hono/compress'
 
@@ -118,6 +123,8 @@ const app = createApp({
   },
   getWebSocketUrl: () => process.env.WEBSOCKET_URL || WEBSOCKET_URLS[DEFAULT_ENV],
   getEmbedFrameAncestors: () => process.env.EMBED_FRAME_ANCESTORS,
+  isPasswordProtectionEnabled: () => resolveIsPasswordProtectionEnabled(process.env.PASSWORD_PROTECTION_ENABLED),
+  getPasswordProtectionPassword: () => resolvePasswordProtectionPassword(process.env.PASSWORD_PROTECTION_PASSWORD),
   // ── Trusted client IP ──────────────────────────────────────────────────
   // A header is trustworthy ONLY if the proxy directly in front of this origin
   // sets/overwrites it AND the backend ALB security group makes that proxy the
@@ -216,6 +223,16 @@ const htmlStaticHandler = serveStatic({
 const root = new Hono()
 // Register /health before compress() so the every-few-seconds ALB probe isn't gzipped.
 root.get('/health', (c) => c.text('ok'))
+// The password gate must run before the static-file middleware below — those
+// serve JS/CSS/image assets straight off disk and never reach app.fetch (and
+// therefore never reach createApp's own copy of this middleware).
+root.use(
+  '*',
+  createPasswordProtectionMiddleware({
+    isEnabled: () => resolveIsPasswordProtectionEnabled(process.env.PASSWORD_PROTECTION_ENABLED),
+    getPassword: () => resolvePasswordProtectionPassword(process.env.PASSWORD_PROTECTION_PASSWORD),
+  }),
+)
 root.use('*', compress())
 // compress() sets Content-Encoding but no Vary, so a shared cache could hand a
 // gzip body to an identity client. Key every compressible response on the header.

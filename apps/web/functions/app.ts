@@ -11,11 +11,14 @@ import { tokenImageHandler } from 'functions/api/image/tokens'
 import { metaTagInjectionMiddleware } from 'functions/components/metaTagInjector'
 import { rewriteProxiedCookies } from 'functions/cookie-utils'
 import { resolveFramePolicy } from 'functions/frameProtection'
+import { DEFAULT_PASSWORD_PROTECTION_PASSWORD, createPasswordProtectionMiddleware } from 'functions/passwordProtection'
 import { Context, Hono } from 'hono'
 import { proxy } from 'hono/proxy'
 
 type Bindings = {
   ASSETS?: { fetch: typeof fetch } // Only present on Cloudflare Workers
+  PASSWORD_PROTECTION_ENABLED?: string
+  PASSWORD_PROTECTION_PASSWORD?: string
 }
 
 /**
@@ -51,6 +54,13 @@ interface AppConfig {
    * embed surface on the same strict frame policy as every other route.
    */
   getEmbedFrameAncestors: (c: Context) => string | undefined
+  /**
+   * Site-wide password gate config (see functions/passwordProtection.ts).
+   * Both default to "protection on" when omitted, so an entry point that
+   * doesn't wire these up fails closed rather than open.
+   */
+  isPasswordProtectionEnabled?: (c: Context) => boolean
+  getPasswordProtectionPassword?: (c: Context) => string
 }
 
 // ── Shared constants ─────────────────────────────────────────────────
@@ -102,8 +112,21 @@ export function createApp({
   getWebSocketUrl,
   getTrustedClientIp,
   getEmbedFrameAncestors,
+  isPasswordProtectionEnabled = () => true,
+  getPasswordProtectionPassword = () => DEFAULT_PASSWORD_PROTECTION_PASSWORD,
 }: AppConfig) {
   const app = new Hono<{ Bindings: Bindings }>()
+
+  // ── Site-wide password gate ─────────────────────────────────────────────
+  // Runs before every other route so an unauthenticated visitor never sees
+  // the SPA shell, static assets, or BFF proxy responses.
+  app.use(
+    '*',
+    createPasswordProtectionMiddleware({
+      isEnabled: isPasswordProtectionEnabled,
+      getPassword: getPasswordProtectionPassword,
+    }),
+  )
 
   // ── OG image routes ────────────────────────────────────────────────────
   app.get('/api/image/tokens/:networkName/:tokenAddress', cacheControl(604800), tokenImageHandler)
@@ -201,11 +224,20 @@ export function createApp({
     // API routes should not be processed by meta tag injection
     if (url.pathname.startsWith('/api/')) {
       await next()
-      return applyFramePolicy(c.res)
+      // Hono's dispatch only adopts a handler's *return value* as the response when
+      // `c.res` hasn't already been set during that handler's execution (see hono's
+      // compose()). `next()` above sets `c.res` itself, so with the password gate now
+      // running ahead of this catch-all (making this a multi-middleware chain instead
+      // of the single-handler fast path), a bare `return` here would get silently
+      // discarded and the pre-frame-policy response would ship instead. Assign
+      // explicitly so the frame-protected response always wins.
+      c.res = applyFramePolicy(c.res)
+      return c.res
     }
 
     // For non-API routes, use meta tag injection middleware
-    return applyFramePolicy(await metaTagInjectionMiddleware(c, next))
+    c.res = applyFramePolicy(await metaTagInjectionMiddleware(c, next))
+    return c.res
   })
 
   return app
