@@ -1,5 +1,6 @@
 // Cloudflare Workers entry point
 import { createApp, ENTRY_GATEWAY_URLS, WEBSOCKET_URLS } from 'functions/app'
+import { resolveIsPasswordProtectionEnabled, resolvePasswordProtectionPassword } from 'functions/passwordProtection'
 
 const app = createApp({
   fetchSpaHtml: (c) => c.env.ASSETS.fetch(c.req.raw),
@@ -12,6 +13,10 @@ const app = createApp({
   getWebSocketUrl: (c) => c.env?.WEBSOCKET_URL || WEBSOCKET_URLS.production,
   getTrustedClientIp: (c) => c.req.header('cf-connecting-ip'),
   getEmbedFrameAncestors: (c) => c.env?.EMBED_FRAME_ANCESTORS,
+  // Real deployments must set PASSWORD_PROTECTION_PASSWORD via
+  // `wrangler secret put PASSWORD_PROTECTION_PASSWORD`, not a plaintext `vars` entry.
+  isPasswordProtectionEnabled: (c) => resolveIsPasswordProtectionEnabled(c.env?.PASSWORD_PROTECTION_ENABLED),
+  getPasswordProtectionPassword: (c) => resolvePasswordProtectionPassword(c.env?.PASSWORD_PROTECTION_PASSWORD),
 })
 
 // oxlint-disable-next-line import/no-unused-modules
