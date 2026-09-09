@@ -290,6 +290,7 @@ export enum ElementName {
 
   // Navbar Trade Dropdown
   NavbarTradeDropdownBuy = 'navbar-trade-dropdown-buy',
+  NavbarTradeDropdownFaucet = 'navbar-trade-dropdown-faucet',
   NavbarTradeDropdownLimit = 'navbar-trade-dropdown-limit',
   NavbarTradeDropdownSell = 'navbar-trade-dropdown-sell',
   NavbarTradeDropdownSwap = 'navbar-trade-dropdown-swap',

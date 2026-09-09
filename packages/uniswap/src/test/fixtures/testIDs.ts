@@ -424,6 +424,12 @@ export const TestID = {
   WCDappNetworks: 'wc-dapp-networks',
   StepHeaderBack: 'step-header-back',
   StepHeaderClose: 'step-header-close',
+  FaucetAmountInput: 'faucet-amount-input',
+  FaucetError: 'faucet-error',
+  FaucetMax: 'faucet-max',
+  FaucetSubmit: 'faucet-submit',
+  FaucetTokenOption: 'faucet-token-option',
+  FaucetTokenSelector: 'faucet-token-selector',
   Web3StatusConnected: 'web3-status-connected',
   // alphabetize additional values.
 } as const

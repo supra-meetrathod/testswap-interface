@@ -7,6 +7,7 @@ export enum InterfacePageName {
   ExplorePage = 'explore-page',
   ExtensionPasskeySignInPage = 'extension-passkey-sign-in-page',
   ExtensionUninstall = 'extension-uninstall',
+  FaucetPage = 'faucet-page',
   LandingPage = 'landing-page',
   LaunchAuctionAuctionDetails = 'launch-auction-auction-details',
   LaunchAuctionPage = 'launch-auction-page',

@@ -48,6 +48,7 @@ export const ModalName = {
   CreatePosition: 'create-position-modal',
   ConfirmDisableSmartWalletScreen: 'confirm-disable-smart-wallet-screen',
   CurrencySearch: 'currency-search-modal',
+  FaucetTokenSelector: 'faucet-token-selector-modal',
   DataApiOutage: 'data-api-outage-modal',
   DappRequest: 'dapp-request',
   DappScanInfo: 'dapp-scan-info-modal',
