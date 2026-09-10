@@ -2,7 +2,7 @@ import { useEffect, useMemo, useRef } from 'react'
 import { useDispatch } from 'react-redux'
 import { useNavigate, useParams } from 'react-router'
 import { Platform } from 'uniswap/src/features/platforms/types/Platform'
-import { setIsTestnetModeEnabled } from 'uniswap/src/features/settings/slice'
+import { DEFAULT_IS_TESTNET_MODE_ENABLED, setIsTestnetModeEnabled } from 'uniswap/src/features/settings/slice'
 import { ModalName } from 'uniswap/src/features/telemetry/constants'
 import { useEvent } from 'utilities/src/react/hooks'
 import { MenuStateVariant, useSetMenu } from '~/components/AccountDrawer/menuState'
@@ -60,7 +60,7 @@ export function handleRouteToPasskeyManagement({
       navigate('/swap')
       return
     }
-    dispatch(setIsTestnetModeEnabled(false))
+    dispatch(setIsTestnetModeEnabled(DEFAULT_IS_TESTNET_MODE_ENABLED))
     disconnect()
     return
   }

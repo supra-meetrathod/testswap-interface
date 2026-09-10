@@ -1,4 +1,9 @@
-import { SUPRA_WSUPRA_ADDRESS } from 'uniswap/src/features/chains/evm/info/supra'
+import {
+  SUPRA_FAUCET_USDC_ADDRESS,
+  SUPRA_FAUCET_WBTC_ADDRESS,
+  SUPRA_FAUCET_WETH_ADDRESS,
+  SUPRA_WSUPRA_ADDRESS,
+} from 'uniswap/src/features/chains/evm/info/supra'
 import { normalizeTokenAddressForCache } from 'uniswap/src/utils/currencyId'
 
 export enum FaucetAction {
@@ -16,6 +21,18 @@ export enum FaucetAction {
    * below rather than a rebuild.
    */
   Mint = 'mint',
+  /**
+   * Obtained by calling the token's own permissionless `mint(address,uint256)`. Takes an
+   * amount like `Wrap` does, but nothing is spent from the user's balance — the supply is
+   * simply minted, so the only cost is gas.
+   *
+   * Distinct from `Mint` above, which is the amount-less `faucet(address)`. The two are not
+   * interchangeable: the capped-mint tokens have no `faucet(address)` and it reverts on
+   * them, so picking the wrong one burns a fee for nothing.
+   *
+   * Capped at `SUPRA_FAUCET_MAX_MINT_WHOLE_TOKENS` whole tokens per call.
+   */
+  MintAmount = 'mintAmount',
 }
 
 export interface FaucetToken {
@@ -56,9 +73,27 @@ export const SUPRA_FAUCET_TOKENS: readonly FaucetToken[] = [
     name: 'Wrapped Supra',
     action: FaucetAction.Wrap,
   },
+  {
+    address: SUPRA_FAUCET_WBTC_ADDRESS,
+    symbol: 'WBTC',
+    name: 'Wrapped Bitcoin',
+    action: FaucetAction.MintAmount,
+  },
+  {
+    address: SUPRA_FAUCET_WETH_ADDRESS,
+    symbol: 'WETH',
+    name: 'Wrapped Ether',
+    action: FaucetAction.MintAmount,
+  },
+  {
+    address: SUPRA_FAUCET_USDC_ADDRESS,
+    symbol: 'sUSDC',
+    name: 'Supra USDC',
+    action: FaucetAction.MintAmount,
+  },
 ]
 
-/** Only one token is supported today, so it is also the default selection. */
+/** WSUPRA leads the list and is the default selection. */
 export const DEFAULT_FAUCET_TOKEN: FaucetToken = SUPRA_FAUCET_TOKENS[0]
 
 /**

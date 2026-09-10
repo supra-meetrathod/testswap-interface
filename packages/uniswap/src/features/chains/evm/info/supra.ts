@@ -32,11 +32,8 @@ import { ElementName } from 'uniswap/src/features/telemetry/constants'
 // SDK talks to whatever's in rpcUrls straight from the extension, bypassing
 // SUPRA_BACKEND_URL entirely. Swap this for a real deployed proxy URL before
 // shipping outside local dev (see todo.md's RPC blocker).
-// Origin is derived from SUPRA_BACKEND_URL and auto-allow-listed by
-// apps/web/vite/vite.plugins.ts's CSP wiring — no dev-csp.json edit needed.
-// For local development prefer localhost proxy (CSP allows http://localhost:3021).
-// In production replace this with the deployed proxy origin.
-export const SUPRA_RPC_URL = 'http://localhost:3021/rpc/953497288926'
+const SUPRA_GATEWAY_URL = (process.env['SUPRA_BACKEND_URL'] ?? 'http://localhost:3021').replace(/\/+$/, '')
+export const SUPRA_RPC_URL = `${SUPRA_GATEWAY_URL}/rpc/953497288926`
 
 // Confirmed live on Supra (subgraph/plan.md, Phase 2 Step 3 end-to-end test): a
 // pool was created, a position minted, and a swap executed against these
@@ -52,6 +49,10 @@ export const SUPRA_V3_FACTORY_ADDRESS = '0x4e0a7f99D36Afac98F4Dd16E889888285ECa8
 export const SUPRA_NFT_POSITION_MANAGER_ADDRESS = '0xEFADf49EDE9aA6255F0c6F1E7094E4C8E53A222D'
 export const SUPRA_WSUPRA_ADDRESS = '0xcdf5f2a6af87b04584e26aa9646b60ce1c369e55'
 export const SUPRA_ERC20_HANDLER_ADDRESS = '0x659e9AADaF17CEFc487c14EB867046560125bCa8'
+
+export const SUPRA_FAUCET_WBTC_ADDRESS = '0x66B5Fa687AA2ED10AA9bD6efeEA8A169Bb524472'
+export const SUPRA_FAUCET_WETH_ADDRESS = '0x52d09d539Fe0f33EB36778eC7C9757E9467ECe5b'
+export const SUPRA_FAUCET_USDC_ADDRESS = '0x10c38fa148FBde71a8d0DC2017DbaB527Dc763E6'
 export const SUPRA_BRIDGED_WETH_ADDRESS = '0xc7143d5ba86553c06f5730c8dc9f8187a621a8d4'
 export const SUPRA_BRIDGED_WBTC_ADDRESS = '0x8fc8cfb7f7362e44e472c690a6e025b80e406458'
 

@@ -430,6 +430,7 @@ export const TestID = {
   FaucetSubmit: 'faucet-submit',
   FaucetTokenOption: 'faucet-token-option',
   FaucetTokenSelector: 'faucet-token-selector',
+  FaucetWrappedBalance: 'faucet-wrapped-balance',
   Web3StatusConnected: 'web3-status-connected',
   // alphabetize additional values.
 } as const

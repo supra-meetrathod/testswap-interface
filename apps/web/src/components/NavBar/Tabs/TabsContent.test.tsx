@@ -15,9 +15,25 @@ vi.mock('~/pages/Portfolio/Header/hooks/usePortfolioRoutes', () => ({
   usePortfolioRoutes: vi.fn(),
 }))
 
+// The faucet menu entry is gated on testnet mode, so tests drive it directly.
+let mockIsTestnetModeEnabled = true
+vi.mock('uniswap/src/features/chains/hooks/useEnabledChains', () => ({
+  useEnabledChains: () => ({
+    chains: [],
+    gqlChains: [],
+    defaultChainId: 1,
+    isTestnetModeEnabled: mockIsTestnetModeEnabled,
+  }),
+}))
+
 function getTabState(elementName: ElementName): boolean | undefined {
   const { result } = renderHook(() => useTabsContent())
   return result.current.find((tab) => tab.elementName === elementName)?.isActive
+}
+
+function hasDropdownItem(elementName: ElementName): boolean {
+  const { result } = renderHook(() => useTabsContent())
+  return result.current.some((tab) => tab.items?.some((item) => item.elementName === elementName))
 }
 
 describe('useTabsContent', () => {
@@ -31,6 +47,37 @@ describe('useTabsContent', () => {
       externalAddress: undefined,
       isExternalWallet: false,
     })
+    mockIsTestnetModeEnabled = true
+  })
+
+  // The faucet dispenses tokens that only exist on Supra, a testnet chain, so outside
+  // testnet mode the page has nothing to offer. The nav entry has to match the /faucet
+  // route's own `enabled` guard or the menu would link to a 404.
+  it('offers the faucet in the Trade menu while testnet mode is on', () => {
+    expect(hasDropdownItem(ElementName.NavbarTradeDropdownFaucet)).toBe(true)
+  })
+
+  it('hides the faucet from the Trade menu when testnet mode is off', () => {
+    mockIsTestnetModeEnabled = false
+
+    expect(hasDropdownItem(ElementName.NavbarTradeDropdownFaucet)).toBe(false)
+    // The rest of the Trade menu is untouched.
+    expect(hasDropdownItem(ElementName.NavbarTradeDropdownSwap)).toBe(true)
+  })
+
+  it('does not light up the Trade tab on /faucet when testnet mode is off', () => {
+    mockIsTestnetModeEnabled = false
+    window.history.pushState({}, '', '/faucet')
+
+    // The route is disabled there, so /faucet redirects to not-found — highlighting Trade
+    // would point at a tab the user cannot reach.
+    expect(getTabState(ElementName.NavbarTradeTab)).toBe(false)
+  })
+
+  it('lights up the Trade tab on /faucet while testnet mode is on', () => {
+    window.history.pushState({}, '', '/faucet')
+
+    expect(getTabState(ElementName.NavbarTradeTab)).toBe(true)
   })
 
   it('should keep Pool active on create-position pages without a Portfolio entry point', () => {

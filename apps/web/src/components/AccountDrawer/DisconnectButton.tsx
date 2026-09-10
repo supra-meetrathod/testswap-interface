@@ -8,7 +8,7 @@ import { Power } from 'ui/src/components/icons/Power'
 import { SwitchArrows } from 'ui/src/components/icons/SwitchArrows'
 import { type AppTFunction } from 'ui/src/i18n/types'
 import { Platform } from 'uniswap/src/features/platforms/types/Platform'
-import { setIsTestnetModeEnabled } from 'uniswap/src/features/settings/slice'
+import { DEFAULT_IS_TESTNET_MODE_ENABLED, setIsTestnetModeEnabled } from 'uniswap/src/features/settings/slice'
 import { ElementName } from 'uniswap/src/features/telemetry/constants'
 import { sendAnalyticsEvent } from 'uniswap/src/features/telemetry/send'
 import { TestID } from 'uniswap/src/test/fixtures/testIDs'
@@ -34,7 +34,7 @@ export function useOnDisconnect() {
     if (connectedWithEmbeddedWallet) {
       signOutWithPasskey()
     }
-    dispatch(setIsTestnetModeEnabled(false))
+    dispatch(setIsTestnetModeEnabled(DEFAULT_IS_TESTNET_MODE_ENABLED))
     disconnect()
     accountDrawer.close()
   })

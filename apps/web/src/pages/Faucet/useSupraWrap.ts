@@ -9,6 +9,7 @@ import { getRpcProvider } from '~/constants/providers'
 import { useAccount } from '~/hooks/useAccount'
 import { useSelectChain } from '~/hooks/useSelectChain'
 import {
+  FAUCET_BALANCE_QUERY_OPTIONS,
   supraWrapHandlerAbi,
   WRAP_GAS_LIMIT_BUFFER_PERCENT,
   WRAP_GAS_LIMIT_FALLBACK,
@@ -49,7 +50,7 @@ export function useSupraWrapBalances(): SupraWrapBalances {
   } = useBalance({
     address: accountAddress,
     chainId: UniverseChainId.Supra,
-    query: { enabled: Boolean(accountAddress) },
+    query: { enabled: Boolean(accountAddress), ...FAUCET_BALANCE_QUERY_OPTIONS },
   })
 
   const {
@@ -62,7 +63,7 @@ export function useSupraWrapBalances(): SupraWrapBalances {
     abi: erc20Abi,
     functionName: 'balanceOf',
     args: accountAddress ? [accountAddress] : undefined,
-    query: { enabled: Boolean(accountAddress) },
+    query: { enabled: Boolean(accountAddress), ...FAUCET_BALANCE_QUERY_OPTIONS },
   })
 
   const refetch = useEvent(() => {

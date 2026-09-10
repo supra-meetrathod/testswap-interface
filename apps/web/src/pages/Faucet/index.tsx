@@ -13,9 +13,11 @@ import { NumberType } from 'utilities/src/format/types'
 import { formatUnits, parseUnits } from '~/chains'
 import { useAccountDrawer } from '~/components/AccountDrawer/MiniPortfolio/hooks'
 import { useAccount } from '~/hooks/useAccount'
-import { WrapDirection } from '~/pages/Faucet/constants'
+import { SUPRA_FAUCET_MAX_MINT_WHOLE_TOKENS, WrapDirection } from '~/pages/Faucet/constants'
 import { FaucetTokenSelector } from '~/pages/Faucet/FaucetTokenSelector'
+import { MintAmountPanel } from '~/pages/Faucet/MintAmountPanel'
 import { DEFAULT_FAUCET_TOKEN, FaucetAction, type FaucetToken } from '~/pages/Faucet/tokens'
+import type { FormatNumberOrString } from '~/pages/Faucet/types'
 import { useSupraFaucetMint, useSupraFaucetToken } from '~/pages/Faucet/useSupraFaucetToken'
 import { useSupraFaucetTokens } from '~/pages/Faucet/useSupraFaucetTokens'
 import {
@@ -92,9 +94,7 @@ export function FaucetPage(): JSX.Element {
         <Flex gap="$gap4">
           <Text variant="heading2">{t('common.faucet')}</Text>
           <Text variant="body2" color="$neutral2">
-            {selectedToken.action === FaucetAction.Wrap
-              ? `Choose a token and an amount to receive. ${selectedToken.symbol} is minted by wrapping the same amount of native ${NATIVE_SYMBOL} 1:1.`
-              : `Claim test ${selectedToken.symbol} on Supra. The amount is fixed by the contract — you only pay gas.`}
+            {faucetDescription(selectedToken)}
           </Text>
         </Flex>
 
@@ -104,17 +104,30 @@ export function FaucetPage(): JSX.Element {
           </Text>
         )}
 
-        {selectedToken.action === FaucetAction.Wrap ? (
-          // Keyed on the token so switching resets the typed amount rather than carrying a
-          // figure entered against a different token's balance.
+        {/* Every amount-taking panel is keyed on the token so switching resets the typed
+            amount rather than carrying over a figure entered against a different token's
+            balance — or, worse, a different token's decimals. */}
+        {selectedToken.action === FaucetAction.Wrap && (
           <WrapFaucetPanel
             key={selectedToken.address}
+            token={selectedToken}
             selector={selector}
             isConnected={account.isConnected}
             connectButton={connectButton}
             formatNumberOrString={formatNumberOrString}
           />
-        ) : (
+        )}
+        {selectedToken.action === FaucetAction.MintAmount && (
+          <MintAmountPanel
+            key={selectedToken.address}
+            token={selectedToken}
+            selector={selector}
+            isConnected={account.isConnected}
+            connectButton={connectButton}
+            formatNumberOrString={formatNumberOrString}
+          />
+        )}
+        {selectedToken.action === FaucetAction.Mint && (
           <MintPanel
             token={selectedToken}
             selector={selector}
@@ -128,18 +141,34 @@ export function FaucetPage(): JSX.Element {
   )
 }
 
-type FormatNumberOrString = ReturnType<typeof useLocalizationContext>['formatNumberOrString']
+/**
+ * What the user is about to do, which differs per mechanism — see `FaucetAction`.
+ *
+ * A `Record` keyed on the enum rather than a switch: TypeScript rejects it if a new
+ * `FaucetAction` is added without a description, so a new mechanism can't ship silently
+ * describing itself as one of the others.
+ */
+function faucetDescription(token: FaucetToken): string {
+  const descriptions: Record<FaucetAction, string> = {
+    [FaucetAction.Wrap]: `Choose a token and an amount to receive. ${token.symbol} is minted by wrapping the same amount of native ${NATIVE_SYMBOL} 1:1.`,
+    [FaucetAction.MintAmount]: `Choose a token and an amount to receive. ${token.symbol} is minted straight to your wallet — you only pay gas, up to ${SUPRA_FAUCET_MAX_MINT_WHOLE_TOKENS} ${token.symbol} per claim.`,
+    [FaucetAction.Mint]: `Claim test ${token.symbol} on Supra. The amount is fixed by the contract — you only pay gas.`,
+  }
+  return descriptions[token.action]
+}
 
 /**
  * Amount-based faucet panel. The requested amount of `token` is wrapped out of the wallet's
  * native SUPRA, so it is the native balance that constrains the request.
  */
 function WrapFaucetPanel({
+  token,
   selector,
   isConnected,
   connectButton,
   formatNumberOrString,
 }: {
+  token: FaucetToken
   selector: JSX.Element
   isConnected: boolean
   connectButton: JSX.Element
@@ -231,6 +260,9 @@ function WrapFaucetPanel({
             {selector}
           </Flex>
         </Flex>
+        <Text testID={TestID.FaucetWrappedBalance} variant="body3" color="$neutral3" textAlign="right">
+          {`${t('explore.earn.vault.balance.tab')}: ${formatBalance(balances.wrapped)} ${token.symbol}`}
+        </Text>
         <Flex row alignItems="center" gap="$spacing12">
           <Text flex={1} variant="body3" color="$neutral2">
             {`${formatBalance(spendableBalance)} ${NATIVE_SYMBOL}`}

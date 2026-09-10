@@ -96,3 +96,25 @@ export const supraFaucetMintAbi = [
  * gas is refunded, so over-provisioning is free.
  */
 export const MINT_GAS_LIMIT_FALLBACK = 200_000n
+export const supraFaucetAmountMintAbi = [
+  {
+    type: 'function',
+    name: 'mint',
+    stateMutability: 'nonpayable',
+    inputs: [
+      { name: 'to', type: 'address' },
+      { name: 'amount', type: 'uint256' },
+    ],
+    outputs: [],
+  },
+] as const
+
+export const SUPRA_FAUCET_MAX_MINT_WHOLE_TOKENS = 1000n
+
+export const FAUCET_BALANCE_QUERY_OPTIONS = {
+  staleTime: 0,
+  gcTime: 0,
+  refetchOnMount: 'always',
+  refetchOnWindowFocus: true,
+  refetchOnReconnect: true,
+} as const

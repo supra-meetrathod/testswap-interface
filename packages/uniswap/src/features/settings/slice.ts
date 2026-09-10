@@ -1,5 +1,5 @@
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit'
-import { isMobileApp } from '@universe/environment'
+import { isMobileApp, isWebApp } from '@universe/environment'
 import { FiatCurrency } from 'uniswap/src/features/fiatCurrency/constants'
 import { Language } from 'uniswap/src/features/language/constants'
 import { getCurrentLanguageFromNavigator } from 'uniswap/src/features/language/utils'
@@ -23,13 +23,15 @@ export interface UserSettingsState {
   enableCustomGasFeeEntry: boolean
 }
 
+export const DEFAULT_IS_TESTNET_MODE_ENABLED = isWebApp
+
 export const initialUserSettingsState: UserSettingsState = {
   currentLanguage: isMobileApp ? getWalletDeviceLanguage() : getCurrentLanguageFromNavigator(),
   currentCurrency: FiatCurrency.UnitedStatesDollar,
   hideSmallBalances: true,
   hideSpamTokens: true,
   hideReportedActivity: true,
-  isTestnetModeEnabled: false,
+  isTestnetModeEnabled: DEFAULT_IS_TESTNET_MODE_ENABLED,
   hapticsEnabled: true,
   deviceAccessTimeout: DEFAULT_DEVICE_ACCESS_TIMEOUT,
   enableCustomGasFeeEntry: false,

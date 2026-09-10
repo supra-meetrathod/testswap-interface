@@ -3,6 +3,7 @@ import { FeatureFlags, useFeatureFlag } from '@universe/gating'
 import { lazy, Suspense, useMemo } from 'react'
 import { matchPath, Navigate, Route, Routes, useLocation } from 'react-router'
 import { CHROME_EXTENSION_UNINSTALL_URL_PATH } from 'uniswap/src/constants/urls'
+import { useEnabledChains } from 'uniswap/src/features/chains/hooks/useEnabledChains'
 import { WRAPPED_SOL_ADDRESS_SOLANA } from 'uniswap/src/features/chains/svm/defaults'
 import i18n from 'uniswap/src/i18n'
 import { isEmbedPath } from '~/pages/embedPaths'
@@ -70,6 +71,7 @@ export function useRouterConfig(): RouterConfig {
   const { hash } = useLocation()
   const isAddLiquidityRevampEnabled = useFeatureFlag(FeatureFlags.AddLiquidityRevamp)
   const isEmbeddedWalletEnabled = useFeatureFlag(FeatureFlags.EmbeddedWallet)
+  const { isTestnetModeEnabled } = useEnabledChains()
 
   return useMemo(
     () => ({
@@ -77,8 +79,9 @@ export function useRouterConfig(): RouterConfig {
       hash,
       isAddLiquidityRevampEnabled,
       isEmbeddedWalletEnabled,
+      isTestnetModeEnabled,
     }),
-    [browserRouterEnabled, hash, isAddLiquidityRevampEnabled, isEmbeddedWalletEnabled],
+    [browserRouterEnabled, hash, isAddLiquidityRevampEnabled, isEmbeddedWalletEnabled, isTestnetModeEnabled],
   )
 }
 
@@ -241,6 +244,7 @@ export const routes: RouteDefinition[] = [
       </Suspense>
     ),
     getTitle: () => i18n.t('common.faucet'),
+    enabled: (args) => Boolean(args.isTestnetModeEnabled),
   }),
   createRouteDefinition({
     path: '/buy',
