@@ -12,6 +12,7 @@ import { Rocket } from 'ui/src/components/icons/Rocket'
 import { SwapDotted } from 'ui/src/components/icons/SwapDotted'
 import { Wallet } from 'ui/src/components/icons/Wallet'
 import Badge, { BadgeVariant } from 'uniswap/src/components/badge/Badge'
+import { useEnabledChains } from 'uniswap/src/features/chains/hooks/useEnabledChains'
 import { ElementName } from 'uniswap/src/features/telemetry/constants'
 import { MenuItem } from '~/components/NavBar/CompanyMenu/Content'
 import { PageType } from '~/hooks/useIsPage'
@@ -44,6 +45,9 @@ export const useTabsContent = (): TabsSection[] => {
   const isPortfolioDefiTabEnabled = useFeatureFlag(FeatureFlags.PortfolioDefiTab)
   const portfolioPoolsBalancesEnabled = useFeatureFlag(FeatureFlags.PortfolioPoolsBalances)
   const isAddLiquidityRevamp = useFeatureFlag(FeatureFlags.AddLiquidityRevamp)
+  // The faucet is testnet-only; kept in lockstep with the /faucet route's own `enabled`
+  // guard in RouteDefinitions so the menu never links somewhere that 404s.
+  const { isTestnetModeEnabled } = useEnabledChains()
   const entryPoint = resolveEntryPoint({ search, state })
   const isPortfolioPoolsEntryPointActive = entryPoint.kind === EntryPointKind.PortfolioPools
 
@@ -55,7 +59,7 @@ export const useTabsContent = (): TabsSection[] => {
         pathname.startsWith('/swap') ||
         pathname.startsWith('/limit') ||
         pathname.startsWith('/send') ||
-        pathname.startsWith('/faucet'),
+        (isTestnetModeEnabled && pathname.startsWith('/faucet')),
       icon: <CoinConvert color="$accent1" size="$icon.24" />,
       elementName: ElementName.NavbarTradeTab,
       items: [
@@ -87,13 +91,17 @@ export const useTabsContent = (): TabsSection[] => {
           internal: true,
           elementName: ElementName.NavbarTradeDropdownSell,
         },
-        {
-          label: t('common.faucet'),
-          icon: <CoinConvert size="$icon.24" color="$neutral2" />,
-          href: '/faucet',
-          internal: true,
-          elementName: ElementName.NavbarTradeDropdownFaucet,
-        },
+        ...(isTestnetModeEnabled
+          ? [
+              {
+                label: t('common.faucet'),
+                icon: <CoinConvert size="$icon.24" color="$neutral2" />,
+                href: '/faucet',
+                internal: true,
+                elementName: ElementName.NavbarTradeDropdownFaucet,
+              },
+            ]
+          : []),
       ],
     },
     {

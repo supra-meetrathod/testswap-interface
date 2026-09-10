@@ -25,8 +25,7 @@
         { "env": "SKIP_CONFIG_PULL" },
         { "runtime": "date -u +%Y-%m-%dT%H" },
         "ciCacheBust"
-      ],
-      "outputs": ["{projectRoot}/.env"]
+      ]
     },
     "build:production": {
       "dependsOn": ["^prepare", "prepare"],

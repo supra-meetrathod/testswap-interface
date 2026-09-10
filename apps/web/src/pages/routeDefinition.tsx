@@ -6,6 +6,8 @@ export interface RouterConfig {
   hash?: string
   isAddLiquidityRevampEnabled?: boolean
   isEmbeddedWalletEnabled?: boolean
+  /** Testnet mode, from `useEnabledChains`. Gates testnet-only routes such as /faucet. */
+  isTestnetModeEnabled?: boolean
 }
 
 // SEO titles and descriptions sourced from https://docs.google.com/spreadsheets/d/1_6vSxGgmsx6QGEZ4mdHppv1VkuiJEro3Y_IopxUHGB4/edit#gid=0

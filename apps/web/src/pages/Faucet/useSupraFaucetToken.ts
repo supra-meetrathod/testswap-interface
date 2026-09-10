@@ -7,7 +7,13 @@ import { assume0xAddress, encodeFunctionData, erc20Abi } from '~/chains'
 import { getRpcProvider } from '~/constants/providers'
 import { useAccount } from '~/hooks/useAccount'
 import { useSelectChain } from '~/hooks/useSelectChain'
-import { MINT_GAS_LIMIT_FALLBACK, supraFaucetMintAbi, WRAP_GAS_LIMIT_BUFFER_PERCENT } from '~/pages/Faucet/constants'
+import {
+  FAUCET_BALANCE_QUERY_OPTIONS,
+  MINT_GAS_LIMIT_FALLBACK,
+  supraFaucetAmountMintAbi,
+  supraFaucetMintAbi,
+  WRAP_GAS_LIMIT_BUFFER_PERCENT,
+} from '~/pages/Faucet/constants'
 import type { FaucetToken } from '~/pages/Faucet/tokens'
 
 export interface FaucetTokenState {
@@ -36,7 +42,6 @@ export function useSupraFaucetToken(token: FaucetToken): FaucetTokenState {
     chainId: UniverseChainId.Supra,
     abi: erc20Abi,
     functionName: 'decimals',
-    // Decimals are immutable, so this never needs refetching within a session.
     query: { staleTime: Infinity, gcTime: Infinity },
   })
 
@@ -50,7 +55,7 @@ export function useSupraFaucetToken(token: FaucetToken): FaucetTokenState {
     abi: erc20Abi,
     functionName: 'balanceOf',
     args: accountAddress ? [accountAddress] : undefined,
-    query: { enabled: Boolean(accountAddress) },
+    query: { enabled: Boolean(accountAddress), ...FAUCET_BALANCE_QUERY_OPTIONS },
   })
 
   const refetch = useEvent(() => {
@@ -158,8 +163,93 @@ export function useSupraFaucetMint({
 }
 
 /**
- * Gas limit for `faucet(address)`, estimated against Supra's node and buffered, falling back
+ * Submits `mint(address,uint256)` on a capped-mint faucet token, minting `amount` to the
+ * connected wallet.
+ */
+export function useSupraFaucetAmountMint({
+  token,
+  amount,
+  onTransactionConfirmed,
+}: {
+  token: FaucetToken
+  /** Amount in base units, or undefined when the input is empty or unparseable. */
+  amount: bigint | undefined
+  onTransactionConfirmed?: () => void
+}): FaucetMintState {
+  const account = useAccount()
+  const accountAddress = assume0xAddress(account.address)
+  const selectChain = useSelectChain()
+  const { sendTransactionAsync, isPending: isWaitingForWallet } = useSendTransaction()
+  const [submittedTxHash, setSubmittedTxHash] = useState<`0x${string}` | undefined>(undefined)
+  const [error, setError] = useState<Error | undefined>(undefined)
+
+  const { isLoading: isConfirming, isSuccess: isConfirmed } = useWaitForTransactionReceipt({
+    hash: submittedTxHash,
+    chainId: UniverseChainId.Supra,
+    query: { enabled: Boolean(submittedTxHash) },
+  })
+
+  const handleConfirmed = useEvent(() => {
+    setSubmittedTxHash(undefined)
+    onTransactionConfirmed?.()
+  })
+  useEffect(() => {
+    if (isConfirmed && submittedTxHash) {
+      handleConfirmed()
+    }
+  }, [isConfirmed, submittedTxHash, handleConfirmed])
+
+  const onSubmit = useEvent(async () => {
+    if (!accountAddress || !amount || amount <= 0n) {
+      return
+    }
+    setError(undefined)
+    try {
+      const switched = await selectChain(UniverseChainId.Supra)
+      if (!switched) {
+        setError(new Error('Failed to switch networks to Supra'))
+        return
+      }
+
+      const to = assume0xAddress(token.address)
+      // `mint` credits its first argument, so the recipient is the sender.
+      const data = encodeFunctionData({
+        abi: supraFaucetAmountMintAbi,
+        functionName: 'mint',
+        args: [accountAddress, amount],
+      })
+
+      const hash = await sendTransactionAsync({
+        to,
+        data,
+        chainId: UniverseChainId.Supra,
+        gas: await estimateMintGasLimit({ from: accountAddress, to, data }),
+      })
+      setSubmittedTxHash(hash)
+    } catch (e) {
+      const submissionError = e instanceof Error ? e : new Error(`Failed to mint ${token.symbol}`)
+      setError(submissionError)
+      logger.error(submissionError, {
+        tags: { file: 'useSupraFaucetToken', function: 'useSupraFaucetAmountMint' },
+        extra: { token: token.address, symbol: token.symbol, amount: amount.toString() },
+      })
+    }
+  })
+
+  return {
+    onSubmit,
+    isPending: isWaitingForWallet || isConfirming,
+    isWaitingForWallet,
+    error,
+  }
+}
+
+/**
+ * Gas limit for either mint call, estimated against Supra's node and buffered, falling back
  * to a fixed limit when the node can't be reached. Mirrors `estimateWrapGasLimit`.
+ *
+ * Shared by `faucet(address)` and `mint(address,uint256)`: both write a cold balance slot
+ * plus `totalSupply` and emit a Transfer, so they cost the same order of gas.
  */
 async function estimateMintGasLimit({
   from,
