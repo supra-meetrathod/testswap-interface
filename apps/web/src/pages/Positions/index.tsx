@@ -30,6 +30,7 @@ import { PositionsHeroHeader } from '~/features/Liquidity/PositionsHeroHeader'
 import { PositionsListSection } from '~/features/Liquidity/PositionsListSection'
 import { PositionsSummaryChips } from '~/features/Liquidity/PositionsSummaryChips'
 import { PositionsTable, PositionsTableLoader } from '~/features/Liquidity/PositionsTable'
+import { useConnectionStatus } from '~/features/accounts/store/hooks'
 import { useAccount } from '~/hooks/useAccount'
 import { ClosedPositionsCTA } from '~/pages/Positions/components/ClosedPositionsCTA'
 import { EmptyPositionsDiscoveryView } from '~/pages/Positions/components/EmptyPositionsDiscoveryView'
@@ -160,6 +161,13 @@ export function Pool() {
   const account = useAccount()
   const { t } = useTranslation()
   const { address, isConnected } = account
+  // Cold-reload race: wagmi's mount-reconnect is async (localStorage read + connector.connect()),
+  // so `isConnected`/`address` stay false/undefined for up to ~7s after reload even though a
+  // reconnect is in flight. Without this, the page briefly renders disconnected/empty-state UI
+  // instead of a loader. `isConnecting` already folds in wagmi's reconnecting state plus the
+  // mount-reconnect-pending window (see `useMountReconnectPending`/`connectionQueryIsPending`).
+  const { isConnecting } = useConnectionStatus()
+  const isReconnecting = isConnecting && !isConnected
 
   const isLPIncentivesEnabled = useFeatureFlag(FeatureFlags.LpIncentives) && isConnected
   const isMultiTokenLpIncentivesEnabled = useFeatureFlag(FeatureFlags.MultiTokenLpIncentives)
@@ -233,6 +241,9 @@ export function Pool() {
   })
 
   const hasPositions = visiblePositions.length > 0 || hiddenPositions.length > 0
+  // Treat an in-flight wallet reconnect the same as an in-flight positions fetch, so the page
+  // shows a loading skeleton instead of a "connect wallet"/empty-positions state during the race.
+  const isLoadingPositionsOrReconnecting = isLoadingPositions || isReconnecting
   const showLpIncentives = shouldShowLpIncentives({
     isLPIncentivesEnabled,
     isMultiTokenLpIncentivesEnabled,
@@ -244,7 +255,7 @@ export function Pool() {
   })
   const { isEmptyPositionsState, showDiscoveryEmptyState } = getPositionsViewState({
     isConnected,
-    isLoadingPositions,
+    isLoadingPositions: isLoadingPositionsOrReconnecting,
     hasErrorWithoutData,
     connectedWithoutEVM,
     hasPositions,
@@ -305,7 +316,7 @@ export function Pool() {
             </>
           ) : hasErrorWithoutData && isConnected ? (
             <ErrorPositionsView onRetry={refetch} />
-          ) : !isLoadingPositions ? (
+          ) : !isLoadingPositionsOrReconnecting ? (
             hasPositions ? (
               isV2EndpointsPositionsEnabled ? (
                 <PositionsTable
