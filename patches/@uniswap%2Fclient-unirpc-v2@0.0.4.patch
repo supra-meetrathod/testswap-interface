@@ -1,0 +1,13 @@
+diff --git a/dist/uniswap/unirpc/v2/service_pb.js b/dist/uniswap/unirpc/v2/service_pb.js
+index c552bff..10b3e7d 100644
+--- a/dist/uniswap/unirpc/v2/service_pb.js
++++ b/dist/uniswap/unirpc/v2/service_pb.js
+@@ -517,7 +517,7 @@ export class EstimateGasFeeRequest extends Message {
+ EstimateGasFeeRequest.runtime = proto3;
+ EstimateGasFeeRequest.typeName = "uniswap.unirpc.v2.EstimateGasFeeRequest";
+ EstimateGasFeeRequest.fields = proto3.util.newFieldList(() => [
+-    { no: 1, name: "chain_id", kind: "scalar", T: 5 /* ScalarType.INT32 */, opt: true },
++    { no: 1, name: "chain_id", kind: "scalar", T: 1 /* ScalarType.DOUBLE */, opt: true },
+     { no: 2, name: "from", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
+     { no: 3, name: "to", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
+     { no: 4, name: "data", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },

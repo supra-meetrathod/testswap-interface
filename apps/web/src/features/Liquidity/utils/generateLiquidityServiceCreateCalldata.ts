@@ -203,8 +203,15 @@ function validateCreatePositionInput(input: RawCreatePositionInput): ValidatedCr
     simulateTransaction,
     needsApprovals,
     isApprovalSimEnabled: input.isApprovalSimEnabled,
-    token0Address: getTokenOrZeroAddress(displayCurrencies.TOKEN0),
-    token1Address: getTokenOrZeroAddress(displayCurrencies.TOKEN1),
+    // V2/V3 pools reject a zero-address token (V3Factory.createPool requires
+    // token0 != address(0)) — native currency must be wrapped first. Only V4
+    // pools use the zero-address sentinel for native currency.
+    token0Address: getTokenOrZeroAddress(
+      protocolVersion === ProtocolVersion.V4 ? displayCurrencies.TOKEN0 : displayCurrencies.TOKEN0?.wrapped,
+    ),
+    token1Address: getTokenOrZeroAddress(
+      protocolVersion === ProtocolVersion.V4 ? displayCurrencies.TOKEN1 : displayCurrencies.TOKEN1?.wrapped,
+    ),
     nativeTokenBalance,
     poolId: input.poolId,
   }

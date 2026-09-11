@@ -1,8 +1,5 @@
-diff --git a/node_modules/@uniswap/client-liquidity/.bun-tag-50628bd8ebe87486 b/.bun-tag-50628bd8ebe87486
-new file mode 100644
-index 0000000000000000000000000000000000000000..e69de29bb2d1d6434b8b29ae775ad8c2e48c5391
 diff --git a/dist/uniswap/liquidity/v1/types_pb.js b/dist/uniswap/liquidity/v1/types_pb.js
-index 5a1aa3bbaa1269d3786431daccf53400a7f5757d..78a8c2ac051cdb88d89e509b532bf3ca3f75ab61 100644
+index 5a1aa3b..e10e54f 100644
 --- a/dist/uniswap/liquidity/v1/types_pb.js
 +++ b/dist/uniswap/liquidity/v1/types_pb.js
 @@ -320,7 +320,7 @@ export class TransactionRequest extends Message {
@@ -23,8 +20,26 @@ index 5a1aa3bbaa1269d3786431daccf53400a7f5757d..78a8c2ac051cdb88d89e509b532bf3ca
      { no: 6, name: "gas_limit", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
      { no: 7, name: "max_fee_per_gas", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
      { no: 8, name: "max_priority_fee_per_gas", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
+@@ -1271,7 +1271,7 @@ export class PoolInformation extends Message {
+          */
+         this.tokenAddressB = "";
+         /**
+-         * @generated from field: int32 chain_id = 8;
++         * @generated from field: double chain_id = 8;
+          */
+         this.chainId = 0;
+         /**
+@@ -1307,7 +1307,7 @@ PoolInformation.fields = proto3.util.newFieldList(() => [
+     { no: 5, name: "tick_spacing", kind: "scalar", T: 5 /* ScalarType.INT32 */, opt: true },
+     { no: 6, name: "fee", kind: "scalar", T: 5 /* ScalarType.INT32 */, opt: true },
+     { no: 7, name: "hook_address", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
+-    { no: 8, name: "chain_id", kind: "scalar", T: 5 /* ScalarType.INT32 */ },
++    { no: 8, name: "chain_id", kind: "scalar", T: 1 /* ScalarType.DOUBLE */ /* patched: was INT32, Supra chain id 953497288926 overflows int32 */ },
+     { no: 9, name: "token_amount_A", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
+     { no: 10, name: "token_amount_B", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
+     { no: 11, name: "token_decimals_A", kind: "scalar", T: 9 /* ScalarType.STRING */ },
 diff --git a/dist/uniswap/liquidity/v2/api_pb.js b/dist/uniswap/liquidity/v2/api_pb.js
-index 8a14680440ddb9259fa460f540f75c06023304f5..6422d0e0e2557ae22f0f0de6adbf3e7bd45bd35a 100644
+index 8a14680..6422d0e 100644
 --- a/dist/uniswap/liquidity/v2/api_pb.js
 +++ b/dist/uniswap/liquidity/v2/api_pb.js
 @@ -202,7 +202,7 @@ export class KycRequiredWarning extends Message {
@@ -46,7 +61,7 @@ index 8a14680440ddb9259fa460f540f75c06023304f5..6422d0e0e2557ae22f0f0de6adbf3e7b
  /**
   * @generated from message uniswap.liquidity.v2.CreateClassicPositionRequest
 diff --git a/dist/uniswap/liquidity/v2/types_pb.js b/dist/uniswap/liquidity/v2/types_pb.js
-index 7549341510487be55664c5e024419fc20d395ba9..fe84c7f5c96f8763824ba73179a15324160816f1 100644
+index 7549341..fe84c7f 100644
 --- a/dist/uniswap/liquidity/v2/types_pb.js
 +++ b/dist/uniswap/liquidity/v2/types_pb.js
 @@ -934,7 +934,7 @@ export class PoolSummary extends Message {
