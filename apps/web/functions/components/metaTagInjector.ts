@@ -235,14 +235,14 @@ export async function metaTagInjectionMiddleware(c: Context, next: Next): Promis
     } else if (pathname === '/launches') {
       // English on purpose (like the default card below): crawlers read OG tags once per URL and don't reliably send Accept-Language.
       data = {
-        title: 'Token launches on Uniswap',
+        title: 'Token launches on SupraSwap',
         image: defaultImageUri(requestURL.origin),
         url: canonicalUrl,
         description: 'Discover and trade new token launches across launchpads, all in one place.',
       }
     } else {
       data = {
-        title: 'Uniswap Interface',
+        title: 'SupraSwap',
         image: defaultImageUri(requestURL.origin),
         url: canonicalUrl,
         description:

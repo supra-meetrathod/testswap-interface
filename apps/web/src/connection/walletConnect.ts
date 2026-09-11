@@ -49,10 +49,10 @@ export function makeWcParams({ relayUrl }: { relayUrl?: string } = {}) {
     projectId: WALLET_CONNECT_PROJECT_ID,
     ...(relayUrl ? { relayUrl } : {}),
     metadata: {
-      name: 'Uniswap',
-      description: 'Uniswap Interface',
-      url: 'https://app.uniswap.org',
-      icons: ['https://app.uniswap.org/favicon.png'],
+      name: 'SupraSwap',
+      description: 'SupraSwap',
+      url: window.location.origin,
+      icons: [`${window.location.origin}/favicon.png`],
     },
     qrModalOptions: {
       themeVariables: {

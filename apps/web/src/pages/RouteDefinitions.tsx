@@ -421,7 +421,7 @@ export const routes: RouteDefinition[] = [
   }),
   createRouteDefinition({
     path: '/preview',
-    getTitle: () => 'Uniswap Preview',
+    getTitle: () => 'SupraSwap Preview',
     getElement: () => (
       <Suspense fallback={null}>
         <BetaPage />

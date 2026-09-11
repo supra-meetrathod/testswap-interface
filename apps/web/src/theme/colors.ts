@@ -118,11 +118,14 @@ export const colors = {
   surface3_hovered_dark: colorsDark.surface3Hovered,
   surface4_dark: colorsDark.surface4,
   surface5_dark: colorsDark.surface5,
-  accent1_dark: colorsDark.accent1,
-  accent1Hovered_dark: colorsDark.accent1Hovered,
-  accent2_dark: colorsDark.accent2,
-  accent2Hovered_dark: colorsDark.accent2Hovered,
-  accent2Solid_dark: colorsDark.accent2Solid,
+  // SupraSwap brand accent (official brand color per https://supra.com/brand/), overridden here
+  // rather than in the shared `ui/src/theme/color/colors.ts` tokens so mobile/extension keep
+  // Uniswap's pink accent untouched.
+  accent1_dark: '#FF3B57',
+  accent1Hovered_dark: '#E0102E',
+  accent2_dark: 'rgba(255, 59, 87, 0.08)',
+  accent2Hovered_dark: 'rgba(255, 59, 87, 0.12)',
+  accent2Solid_dark: '#2A1519',
   accent3_dark: colorsDark.accent3,
   neutral1_light: colorsLight.neutral1,
   neutral1Hovered_light: colorsLight.neutral1Hovered,
@@ -139,11 +142,11 @@ export const colors = {
   surface3_hovered_light: colorsLight.surface3Hovered,
   surface4_light: colorsLight.surface4,
   surface5_light: colorsLight.surface5,
-  accent1_light: colorsLight.accent1,
-  accent1Hovered_light: colorsLight.accent1Hovered,
-  accent2_light: colorsLight.accent2,
-  accent2Hovered_light: colorsLight.accent2Hovered,
-  accent2Solid_light: colorsLight.accent2Solid,
+  accent1_light: '#DD1438',
+  accent1Hovered_light: '#B8102E',
+  accent2_light: 'rgba(221, 20, 56, 0.08)',
+  accent2Hovered_light: 'rgba(221, 20, 56, 0.12)',
+  accent2Solid_light: '#FDEBEE',
   accent3_light: colorsLight.accent3,
   success_light: colorsLight.statusSuccess,
   success_dark: colorsDark.statusSuccess,
@@ -188,7 +191,7 @@ const commonTheme = {
   chain_7777777: colors.neutral1_light,
   promotional: colors.magenta300,
 
-  brandedGradient: 'linear-gradient(139.57deg, #FF79C9 4.35%, #FFB8E2 96.44%);',
+  brandedGradient: 'linear-gradient(139.57deg, #FF3B57 4.35%, #DD1438 96.44%);',
   promotionalGradient: colors.accent1_light,
 }
 
