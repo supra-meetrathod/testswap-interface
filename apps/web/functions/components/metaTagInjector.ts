@@ -8,6 +8,7 @@ import getToken from 'functions/utils/getToken'
 import { Context, Next } from 'hono'
 import { encode } from 'html-entities'
 import { withTimeout } from 'uniswap/src/utils/polling'
+import { BRAND } from '../../../../brand.config'
 import { paths } from '~/pages/paths'
 import { MetaTagInjectorInput } from '~/shared-cloud/metatags'
 
@@ -69,7 +70,7 @@ function parsePositionPath(
 }
 
 function defaultImageUri(origin: string): string {
-  return origin + '/images/1200x630_Rich_Link_Preview_Image.png'
+  return origin + BRAND.webAssets.socialCardImage
 }
 
 // oxlint-disable-next-line max-params
@@ -235,18 +236,17 @@ export async function metaTagInjectionMiddleware(c: Context, next: Next): Promis
     } else if (pathname === '/launches') {
       // English on purpose (like the default card below): crawlers read OG tags once per URL and don't reliably send Accept-Language.
       data = {
-        title: 'Token launches on SupraSwap',
+        title: BRAND.descriptions.launchesTitle,
         image: defaultImageUri(requestURL.origin),
         url: canonicalUrl,
-        description: 'Discover and trade new token launches across launchpads, all in one place.',
+        description: BRAND.descriptions.launches,
       }
     } else {
       data = {
-        title: 'SupraSwap',
+        title: BRAND.products.webApp,
         image: defaultImageUri(requestURL.origin),
         url: canonicalUrl,
-        description:
-          'Swap crypto on Ethereum, Base, Arbitrum, Polygon, Unichain and more. The DeFi platform trusted by millions.',
+        description: BRAND.descriptions.webMetaCrawler,
       }
     }
 

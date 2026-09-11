@@ -17,7 +17,7 @@ import tsconfigPaths from 'vite-tsconfig-paths'
 import { createEntryGatewayProxies } from './vite/entry-gateway-proxy'
 import { generateAssetsIgnorePlugin } from './vite/generateAssetsIgnorePlugin.js'
 import { resolveEnvConfigs } from './vite/resolveEnvConfigs'
-import { cspMetaTagPlugin } from './vite/vite.plugins.js'
+import { brandHtmlPlugin, cspMetaTagPlugin } from './vite/vite.plugins.js'
 
 // process.env.APP_ID is injected into the browser bundle via envDefines below and set
 // here for the Node-side Tamagui static extractor — resolveEnvConfigs() returns an env
@@ -359,6 +359,7 @@ export default defineConfig(({ mode, command, isPreview }) => {
         skip: (dir) => dir.includes('files'),
       }),
       env.SKIP_CSP ? undefined : cspMetaTagPlugin(mode, env),
+      brandHtmlPlugin(),
       svgr({
         svgrOptions: {
           icon: false,

@@ -1,6 +1,7 @@
 import fs from 'fs'
 import path from 'path'
 import type { Plugin, ResolvedConfig } from 'vite'
+import { BRAND } from '../../../brand.config'
 
 const CSP_DIRECTIVE_MAP: Record<string, string> = {
   defaultSrc: 'default-src',
@@ -142,6 +143,32 @@ export function cspMetaTagPlugin(mode?: string, envValues?: Record<string, strin
         /<!-- CSP will be injected here -->/,
         `<meta http-equiv="Content-Security-Policy" content="${escapedContent}">`,
       )
+    },
+  }
+}
+
+function hexToRgbTuple(hex: string): string {
+  const match = /^#([0-9a-f]{2})([0-9a-f]{2})([0-9a-f]{2})$/i.exec(hex)
+  if (!match) {
+    throw new Error(`brandHtmlPlugin: expected a 6-digit hex color, got "${hex}"`)
+  }
+  const [, r, g, b] = match
+  return [r, g, b].map((channel) => parseInt(channel, 16)).join(', ')
+}
+
+// Substitutes the `__BRAND_*__` placeholders in index.html with values from the root
+// `brand.config.ts` — see that file's `webAssets.themeColor` doc comment for why the
+// gradient tint and the theme-color meta tag are kept in sync.
+// This plugin is used in vite.config.mts
+// oxlint-disable-next-line import/no-unused-modules
+export function brandHtmlPlugin(): Plugin {
+  return {
+    name: 'inject-brand-html',
+    transformIndexHtml(html) {
+      return html
+        .replaceAll('__BRAND_WEB_APP_NAME__', BRAND.products.webApp)
+        .replaceAll('__BRAND_THEME_COLOR__', BRAND.webAssets.themeColor)
+        .replaceAll('__BRAND_THEME_COLOR_RGB__', hexToRgbTuple(BRAND.webAssets.themeColor))
     },
   }
 }

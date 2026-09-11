@@ -2,6 +2,7 @@ import { isWebAndroid, isWebIOS } from '@universe/environment'
 import { zIndexes } from 'ui/src/theme'
 import { type CreateConnectorFn, createConnector } from 'wagmi'
 import { walletConnect } from 'wagmi/connectors'
+import { BRAND } from '../../../../brand.config'
 import UNIWALLET_ICON from '~/assets/wallets/uniswap-wallet-icon.png'
 import { getConfig } from '~/config'
 import { instrumentWalletConnectRpc } from '~/connection/instrumentWalletConnectRpc'
@@ -49,10 +50,10 @@ export function makeWcParams({ relayUrl }: { relayUrl?: string } = {}) {
     projectId: WALLET_CONNECT_PROJECT_ID,
     ...(relayUrl ? { relayUrl } : {}),
     metadata: {
-      name: 'SupraSwap',
-      description: 'SupraSwap',
+      name: BRAND.products.webApp,
+      description: BRAND.products.webApp,
       url: window.location.origin,
-      icons: [`${window.location.origin}/favicon.png`],
+      icons: [`${window.location.origin}${BRAND.webAssets.faviconPng}`],
     },
     qrModalOptions: {
       themeVariables: {

@@ -1,6 +1,6 @@
 {
   "extends": "../../config/tsconfig/ui.json",
-  "include": ["src"],
+  "include": ["src", "../../brand.config.ts"],
   "references": [
     {
       "path": "../environment"
