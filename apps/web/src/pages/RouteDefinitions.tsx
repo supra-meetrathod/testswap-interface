@@ -6,6 +6,7 @@ import { CHROME_EXTENSION_UNINSTALL_URL_PATH } from 'uniswap/src/constants/urls'
 import { useEnabledChains } from 'uniswap/src/features/chains/hooks/useEnabledChains'
 import { WRAPPED_SOL_ADDRESS_SOLANA } from 'uniswap/src/features/chains/svm/defaults'
 import i18n from 'uniswap/src/i18n'
+import { BRAND } from '../../../../brand.config'
 import { isEmbedPath } from '~/pages/embedPaths'
 import { EMBED_ENTRY_ROUTES } from '~/pages/embedRoutes'
 import { getExploreDescription, getExploreTitle } from '~/pages/getExploreTitle'
@@ -435,7 +436,7 @@ export const routes: RouteDefinition[] = [
   }),
   createRouteDefinition({
     path: '/preview',
-    getTitle: () => 'Uniswap Preview',
+    getTitle: () => BRAND.products.preview,
     getElement: () => (
       <Suspense fallback={null}>
         <BetaPage />

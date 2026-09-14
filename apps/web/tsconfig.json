@@ -41,7 +41,8 @@
     ".storybook/main.ts",
     "vite.config.mts",
     "scripts/*",
-    "vite/*"
+    "vite/*",
+    "../../brand.config.ts"
   ],
   "exclude": ["scripts/build-vercel.ts"],
   "references": [

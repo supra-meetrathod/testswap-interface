@@ -6,6 +6,7 @@ import { Hamburger } from 'ui/src/components/icons/Hamburger'
 import { ElementName } from 'uniswap/src/features/telemetry/constants'
 import Trace from 'uniswap/src/features/telemetry/Trace'
 import { TestID } from 'uniswap/src/test/fixtures/testIDs'
+import { BRAND } from '../../../../../../brand.config'
 import { NavIcon } from '~/components/Logo/NavIcon'
 import { MenuDropdown } from '~/components/NavBar/CompanyMenu/MenuDropdown'
 import { MobileMenuDrawer } from '~/components/NavBar/CompanyMenu/MobileMenuDrawer'
@@ -56,9 +57,9 @@ export function CompanyMenu() {
             <Link to="/?intro=true" onClick={(e) => e.stopPropagation()} style={{ textDecoration: 'none' }}>
               <Flex row alignItems="center" gap="$gap4" data-testid={TestID.NavUniswapLogo}>
                 <NavIcon />
-                {isLargeScreen && (
+                {isLargeScreen && BRAND.navBar.showBrandName && (
                   <Text variant="subheading1" color="$accent1" userSelect="none">
-                    Uniswap
+                    {BRAND.products.webApp}
                   </Text>
                 )}
               </Flex>

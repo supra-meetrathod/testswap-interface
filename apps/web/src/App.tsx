@@ -5,6 +5,7 @@ import { Navigate, useLocation } from 'react-router'
 import { useSporeColors } from 'ui/src'
 import { initializeScrollWatcher } from 'uniswap/src/components/modals/ScrollLock'
 import Trace from 'uniswap/src/features/telemetry/Trace'
+import { BRAND } from '../../../brand.config'
 import { ResetPageScrollEffect } from '~/app/bootstrap/ResetPageScroll'
 import { ResetPortfolioChainOnEntryEffect } from '~/app/bootstrap/ResetPortfolioChainOnEntry'
 import { UserPropertyUpdater } from '~/app/bootstrap/UserPropertyUpdater'
@@ -39,7 +40,7 @@ export function App() {
   }, [])
 
   const metaTags = useDynamicMetatags()
-  const staticTitle = findRouteByPath(pathname)?.getTitle(pathname) ?? 'Uniswap Interface'
+  const staticTitle = findRouteByPath(pathname)?.getTitle(pathname) ?? BRAND.products.webApp
   const staticDescription = findRouteByPath(pathname)?.getDescription(pathname)
 
   // redirect address to landing pages until implemented

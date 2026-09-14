@@ -1,5 +1,4 @@
-import { Flex } from 'ui/src'
-import { UniswapLogo } from 'ui/src/components/icons/UniswapLogo'
+import { Flex, useSporeColors } from 'ui/src'
 import { GoogleChromeLogo } from 'ui/src/components/logos/GoogleChromeLogo'
 
 interface UniswapBrandedIconProps {
@@ -8,8 +7,10 @@ interface UniswapBrandedIconProps {
 }
 
 export function UniswapBrandedIcon({ size = 32, withChromeBadge }: UniswapBrandedIconProps): JSX.Element {
+  const colors = useSporeColors()
   const badgeSize = Math.round(size * 0.375)
   const chromeLogoSize = badgeSize - 2
+  const iconSize = size * 0.7
   return (
     <Flex
       position="relative"
@@ -21,7 +22,9 @@ export function UniswapBrandedIcon({ size = 32, withChromeBadge }: UniswapBrande
       backgroundColor="$accent2"
       borderRadius="$rounded8"
     >
-      <UniswapLogo color="$accent1" size={size * 0.7} />
+      <svg width={iconSize} height={iconSize} viewBox="0 0 24 24" fill="none">
+        <path d="M12 2L21 20H15V14H9V20H3L12 2Z" fill={colors.accent1.val} />
+      </svg>
       {withChromeBadge && (
         <Flex
           position="absolute"
