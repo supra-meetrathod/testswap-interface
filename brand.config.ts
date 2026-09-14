@@ -57,6 +57,11 @@ export interface BrandProductNames {
    * kept in sync with this value by hand when it changes.
    */
   webApp: string
+  /**
+   * `<title>` for the `/preview` (beta) route. Currently:
+   * `apps/web/src/pages/RouteDefinitions.tsx`.
+   */
+  preview: string
 }
 
 export interface BrandDescriptions {
@@ -144,6 +149,7 @@ export const BRAND: BrandConfig = {
 
   products: {
     webApp: BRAND_NAME,
+    preview: `${BRAND_NAME} Preview`,
   },
 
   descriptions: {
