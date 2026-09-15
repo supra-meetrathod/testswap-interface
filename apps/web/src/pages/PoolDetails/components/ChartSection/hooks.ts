@@ -15,7 +15,7 @@ export function usePDPVolumeChartData({
   })
 
   return useMemo(() => {
-    const { historicalVolume } = data?.v2Pair ?? data?.v3Pool ?? data?.v4Pool ?? {}
+    const { historicalVolume } = data?.v3Pool ?? {}
     const entries =
       historicalVolume?.filter((amt): amt is GraphQLApi.TimestampedAmount => amt !== undefined).map(withUTCTimestamp) ??
       []
@@ -23,5 +23,5 @@ export function usePDPVolumeChartData({
     const dataQuality = checkDataQuality({ data: entries, chartType: ChartType.VOLUME, duration: variables.duration })
 
     return { chartType: ChartType.VOLUME, entries, loading, dataQuality }
-  }, [data?.v2Pair, data?.v3Pool, data?.v4Pool, loading, variables.duration])
+  }, [data?.v3Pool, loading, variables.duration])
 }

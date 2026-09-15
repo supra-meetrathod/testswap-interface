@@ -22,7 +22,7 @@ export const ExploreStatsSection = ({ shouldHideStats = false }: { shouldHideSta
   const { t } = useTranslation()
   const { convertFiatAmountFormatted } = useLocalizationContext()
 
-  const { protocolVolumes, totalVolume, isLoading: isVolumeLoading } = use24hProtocolVolume()
+  const { totalVolume, isLoading: isVolumeLoading } = use24hProtocolVolume()
   const { totalTVL, protocolTVL, isLoading: isTVLLoading } = useDailyTVLWithChange()
 
   const isStatDataLoading = isVolumeLoading || isTVLLoading
@@ -30,16 +30,11 @@ export const ExploreStatsSection = ({ shouldHideStats = false }: { shouldHideSta
   const exploreStatsSectionData = useMemo(() => {
     const formatPrice = (price: number) => convertFiatAmountFormatted(price, NumberType.FiatTokenPrice)
 
-    const stats = [
+    const stats: ExploreStatSectionData[] = [
       {
         label: t('stats.volume.1d.long'),
         value: formatPrice(totalVolume),
         balance: totalVolume,
-        protocolPopoverFormattedData: [
-          { label: t('common.protocol.v4'), value: protocolVolumes.v4 },
-          { label: t('common.protocol.v3'), value: protocolVolumes.v3 },
-          { label: t('common.protocol.v2'), value: protocolVolumes.v2 },
-        ],
       },
       {
         label: t('common.totalUniswapTVL'),
@@ -47,36 +42,15 @@ export const ExploreStatsSection = ({ shouldHideStats = false }: { shouldHideSta
         balance: totalTVL,
       },
       {
-        label: t('explore.v2TVL'),
-        value: formatPrice(protocolTVL.v2),
-        balance: protocolTVL.v2,
-      },
-      {
         label: t('explore.v3TVL'),
         value: formatPrice(protocolTVL.v3),
         balance: protocolTVL.v3,
-      },
-      {
-        label: t('explore.v4TVL'),
-        value: formatPrice(protocolTVL.v4),
-        balance: protocolTVL.v4,
       },
     ]
 
     // oxlint-disable-next-line typescript/no-unnecessary-condition
     return stats.filter((state): state is Exclude<typeof state, null> => state !== null)
-  }, [
-    t,
-    convertFiatAmountFormatted,
-    totalVolume,
-    protocolVolumes.v4,
-    protocolVolumes.v3,
-    protocolVolumes.v2,
-    totalTVL,
-    protocolTVL.v2,
-    protocolTVL.v3,
-    protocolTVL.v4,
-  ])
+  }, [t, convertFiatAmountFormatted, totalVolume, totalTVL, protocolTVL.v3])
 
   const visibleStats = media.md ? exploreStatsSectionData.slice(0, 2) : exploreStatsSectionData
 
@@ -134,6 +108,10 @@ const StatDisplay = memo(({ data, isLoading, isHoverable }: StatDisplayProps) =>
 
 StatDisplay.displayName = 'StatDisplay'
 
+// Currently unreachable: no entry in exploreStatsSectionData sets
+// protocolPopoverFormattedData since Explore stats went V3-only, so the
+// isTouchable/!protocolPopoverFormattedData check above always falls through
+// to plain StatDisplay. Kept intact for a future V3-only popover breakdown.
 const StatDisplayWithPopover = memo(({ data, isLoading }: StatDisplayProps) => {
   const shadowProps = useShadowPropsMedium()
   const { convertFiatAmountFormatted } = useLocalizationContext()

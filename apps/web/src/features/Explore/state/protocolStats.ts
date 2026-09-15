@@ -57,9 +57,11 @@ export function use24hProtocolVolume() {
   const v4Data: TimestampedAmount[] | undefined = data?.historicalProtocolVolume?.Month?.v4
 
   return useMemo(() => {
-    const v2 = getLatestAndPreviousValues(v2Data, { protocolName: 'V2', isLoading })
+    // v2/v4 are durably empty on this V3-only fork (no V2/V4 deployment on
+    // Supra) — not an error, so skip the "no data" warn for them.
+    const v2 = getLatestAndPreviousValues(v2Data)
     const v3 = getLatestAndPreviousValues(v3Data, { protocolName: 'V3', isLoading })
-    const v4 = getLatestAndPreviousValues(v4Data, { protocolName: 'V4', isLoading })
+    const v4 = getLatestAndPreviousValues(v4Data)
 
     const totalLatest = v2.latest.value + v3.latest.value + v4.latest.value
     const totalPrevious = v2.previous.value + v3.previous.value + v4.previous.value
@@ -105,9 +107,11 @@ export function useDailyTVLWithChange() {
   const v4Data: TimestampedAmount[] | undefined = data?.dailyProtocolTvl?.v4
 
   return useMemo(() => {
-    const v2 = getLatestAndPreviousValues(v2Data, { protocolName: 'V2', isLoading })
+    // v2/v4 are durably empty on this V3-only fork (no V2/V4 deployment on
+    // Supra) — not an error, so skip the "no data" warn for them.
+    const v2 = getLatestAndPreviousValues(v2Data)
     const v3 = getLatestAndPreviousValues(v3Data, { protocolName: 'V3', isLoading })
-    const v4 = getLatestAndPreviousValues(v4Data, { protocolName: 'V4', isLoading })
+    const v4 = getLatestAndPreviousValues(v4Data)
 
     const protocolTVL = {
       v2: v2.latest.value,

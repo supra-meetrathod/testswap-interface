@@ -16,6 +16,7 @@ import {
   type PriceRangeState,
   RangeAmountInputPriceMode,
 } from '~/features/Liquidity/Create/types'
+import { getCurrencyForProtocol } from '~/features/Liquidity/utils/currency'
 import { getPriceRangeInfo } from '~/features/Liquidity/utils/priceRangeInfo'
 import type { DepositState } from '~/types/liquidity'
 import { PositionField } from '~/types/position'
@@ -255,7 +256,7 @@ export function CreateLiquidityContextProvider({
       protocolVersion: positionState.protocolVersion,
     })
     setCurrencyInputs({
-      tokenA: defaultInitialToken,
+      tokenA: getCurrencyForProtocol(defaultInitialToken, positionState.protocolVersion),
       tokenB: undefined,
     })
     setHistoryState(PositionFlowStep.SELECT_TOKENS_AND_FEE_TIER)

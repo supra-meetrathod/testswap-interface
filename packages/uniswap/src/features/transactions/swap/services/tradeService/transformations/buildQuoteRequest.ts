@@ -7,6 +7,7 @@ import {
   parseQuoteCurrencies,
 } from 'uniswap/src/features/transactions/swap/hooks/useTrade/parseQuoteCurrencies'
 import type { UseTradeArgs } from 'uniswap/src/features/transactions/swap/types/trade'
+import { UniverseChainId } from 'uniswap/src/features/chains/types'
 import {
   buildUrgency,
   DEFAULT_URGENCY_LEVEL,
@@ -142,6 +143,19 @@ export interface ParsedTradeInput {
   gasOverrides?: TradingApi.UrgencyOverrides
 }
 
+// Supra's gateway rejects the zero-address native-token sentinel (no wrap/unwrap
+// multicall support yet), so on Supra only, native currency is quoted as its
+// wrapped token instead of going through NATIVE_ADDRESS_FOR_TRADING_API.
+function getTokenAddressForQuote(currency: Maybe<Currency>): string | undefined {
+  if (!currency) {
+    return undefined
+  }
+  if (currency.isNative && currency.chainId === UniverseChainId.Supra) {
+    return currency.wrapped.address
+  }
+  return getTokenAddressForApi(currency)
+}
+
 export function parseTradeInputForTradingApiQuote(input: UseTradeArgs): ParsedTradeInput {
   const { currencyIn, currencyOut, requestTradeType } = parseQuoteCurrencies(input)
 
@@ -153,8 +167,8 @@ export function parseTradeInputForTradingApiQuote(input: UseTradeArgs): ParsedTr
     activeAccountAddress: input.account?.address,
     tokenInChainId: toTradingApiSupportedChainId(currencyIn?.chainId),
     tokenOutChainId: input.quoteOutputOverride?.tokenOutChainId ?? toTradingApiSupportedChainId(currencyOut?.chainId),
-    tokenInAddress: getTokenAddressForApi(currencyIn),
-    tokenOutAddress: input.quoteOutputOverride?.tokenOutAddress ?? getTokenAddressForApi(currencyOut),
+    tokenInAddress: getTokenAddressForQuote(currencyIn),
+    tokenOutAddress: input.quoteOutputOverride?.tokenOutAddress ?? getTokenAddressForQuote(currencyOut),
     generatePermitAsTransaction: input.generatePermitAsTransaction,
     earnIntent: input.earnIntent,
     isUSDQuote: input.isUSDQuote ?? false,

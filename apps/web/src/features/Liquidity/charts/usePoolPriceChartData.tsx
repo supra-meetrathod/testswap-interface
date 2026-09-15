@@ -29,12 +29,12 @@ export function usePoolPriceChartData({
     skip: !variables?.addressOrId,
   })
   return useMemo(() => {
-    const { priceHistory } = data?.v2Pair ?? data?.v3Pool ?? data?.v4Pool ?? {}
+    const { priceHistory } = data?.v3Pool ?? {}
 
     const entries =
       priceHistory
         ?.filter((price): price is GraphQLApi.TimestampedPoolPrice => price !== undefined)
-        .map((price) => {
+        .map((price: GraphQLApi.TimestampedPoolPrice) => {
           const value = priceInverted ? price.token0Price : price.token1Price
 
           return {
@@ -57,5 +57,5 @@ export function usePoolPriceChartData({
     const dataHash = hashKey(filteredEntries)
 
     return { chartType: ChartType.PRICE, entries: filteredEntries, loading, dataQuality, dataHash }
-  }, [data?.v2Pair, data?.v3Pool, data?.v4Pool, loading, priceInverted])
+  }, [data?.v3Pool, loading, priceInverted])
 }
