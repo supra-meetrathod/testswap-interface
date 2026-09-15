@@ -1,5 +1,6 @@
 import { Flex, useSporeColors } from 'ui/src'
 import { GoogleChromeLogo } from 'ui/src/components/logos/GoogleChromeLogo'
+import { SupraSwapMark } from '~/components/Logo/SupraSwapMark'
 
 interface UniswapBrandedIconProps {
   size?: number
@@ -22,9 +23,7 @@ export function UniswapBrandedIcon({ size = 32, withChromeBadge }: UniswapBrande
       backgroundColor="$accent2"
       borderRadius="$rounded8"
     >
-      <svg width={iconSize} height={iconSize} viewBox="0 0 24 24" fill="none">
-        <path d="M12 2L21 20H15V14H9V20H3L12 2Z" fill={colors.accent1.val} />
-      </svg>
+      <SupraSwapMark size={iconSize} color={colors.accent1.val} />
       {withChromeBadge && (
         <Flex
           position="absolute"

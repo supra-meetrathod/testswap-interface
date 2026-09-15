@@ -54,6 +54,7 @@ import { useSelectedFeeBreakdown } from '~/features/Liquidity/hooks/useSelectedF
 import { LpIncentivesAprDisplay } from '~/features/Liquidity/LPIncentives/LpIncentivesAprDisplay'
 import { useLPGeoRestriction } from '~/features/Liquidity/useLPGeoRestriction'
 import { getCreateFeeTierOptions, getSteeredRecommendedFee } from '~/features/Liquidity/utils/createFeeTiers'
+import { getCurrencyForProtocol } from '~/features/Liquidity/utils/currency'
 import { getDefaultFeeTiersWithData, getFeeTierKey } from '~/features/Liquidity/utils/feeTiers'
 import { hasLPFoTTransferError } from '~/features/Liquidity/utils/hasLPFoTTransferError'
 import { isUnsupportedLPChain } from '~/features/Liquidity/utils/isUnsupportedLPChain'
@@ -142,19 +143,25 @@ export function SelectTokensStep({
 
       const otherInputState = currencySearchInputState === 'tokenA' ? 'tokenB' : 'tokenA'
       const otherCurrency = currencyInputs[otherInputState]
-      const wrappedCurrencyNew = currency.isNative ? currency.wrapped : currency
-      const wrappedCurrencyOther = otherCurrency?.isNative ? otherCurrency.wrapped : otherCurrency
+      // v2/v3 pools can't hold the native currency directly, so selecting NATIVE here
+      // resolves straight to its wrapped token instead of storing native and only
+      // substituting at calldata-build time (which skipped the ERC20 approval step).
+      const resolvedCurrency = getCurrencyForProtocol(currency, protocolVersion)
+      const wrappedCurrencyOther = getCurrencyForProtocol(otherCurrency, protocolVersion)
 
       setSelectedChainId(currency.chainId)
 
       // If the tokens change, we want to reset the default fee tier (mostUsedFeeTier) in the useEffect below.
       setPositionState((prevState) => ({ ...prevState, fee: undefined }))
 
-      if (areCurrenciesEqual(currency, otherCurrency) || areCurrenciesEqual(wrappedCurrencyNew, wrappedCurrencyOther)) {
+      if (
+        areCurrenciesEqual(currency, otherCurrency) ||
+        areCurrenciesEqual(resolvedCurrency, wrappedCurrencyOther)
+      ) {
         setCurrencyInputs((prevState) => ({
           ...prevState,
           [otherInputState]: undefined,
-          [currencySearchInputState]: currency,
+          [currencySearchInputState]: resolvedCurrency,
         }))
         return
       }
@@ -163,7 +170,7 @@ export function SelectTokensStep({
         setCurrencyInputs((prevState) => ({
           ...prevState,
           [otherInputState]: undefined,
-          [currencySearchInputState]: currency,
+          [currencySearchInputState]: resolvedCurrency,
         }))
         return
       }
@@ -173,14 +180,14 @@ export function SelectTokensStep({
         case 'tokenB':
           setCurrencyInputs((prevState) => ({
             ...prevState,
-            [currencySearchInputState]: currency,
+            [currencySearchInputState]: resolvedCurrency,
           }))
           break
         default:
           break
       }
     },
-    [currencySearchInputState, setCurrencyInputs, currencyInputs, setSelectedChainId, setPositionState],
+    [currencySearchInputState, setCurrencyInputs, currencyInputs, setSelectedChainId, setPositionState, protocolVersion],
   )
 
   const handleFeeTierSelect = useCallback(

@@ -234,6 +234,11 @@ export const COMMON_BASES: ChainCurrencyList = {
     WRAPPED_NATIVE_CURRENCY[UniverseChainId.Zora] as Token,
     USDC_ZORA,
   ].map(buildPartialCurrencyInfo),
+
+  // Without this, getCommonBase() falls through to a backend token lookup for the
+  // native sentinel address, which doesn't reliably set isNative — breaking the
+  // NATIVE->wrapped URL substitution consistency between deep links and in-app selection.
+  [UniverseChainId.Supra]: [nativeOnChain(UniverseChainId.Supra)].map(buildPartialCurrencyInfo),
 }
 
 export function getCommonBase(chainId?: number, address?: string): CurrencyInfo | undefined {
