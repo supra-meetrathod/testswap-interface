@@ -45,8 +45,8 @@ export const SUPRA_RPC_URL = `${SUPRA_GATEWAY_URL}/rpc/953497288926`
 // (distinct from generic Multicall2/3 — never deployed on Supra, not part of
 // the recovered set) and Permit2 (confirmed NOT deployed — canonical
 // deterministic address has empty bytecode).
-export const SUPRA_V3_FACTORY_ADDRESS = '0x4e0a7f99D36Afac98F4Dd16E889888285ECa8Fb7'
-export const SUPRA_NFT_POSITION_MANAGER_ADDRESS = '0xEFADf49EDE9aA6255F0c6F1E7094E4C8E53A222D'
+export const SUPRA_V3_FACTORY_ADDRESS = '0x57bE9D20BF955f8bdfAF5665d4a13246E74d2908'
+export const SUPRA_NFT_POSITION_MANAGER_ADDRESS = '0xb7565d191391e76Db318Cb7779106e26D9645868'
 export const SUPRA_WSUPRA_ADDRESS = '0xcdf5f2a6af87b04584e26aa9646b60ce1c369e55'
 export const SUPRA_ERC20_HANDLER_ADDRESS = '0x659e9AADaF17CEFc487c14EB867046560125bCa8'
 

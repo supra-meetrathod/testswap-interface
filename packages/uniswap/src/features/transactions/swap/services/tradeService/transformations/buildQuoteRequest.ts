@@ -1,6 +1,7 @@
 import { Currency, CurrencyAmount } from '@uniswap/sdk-core'
 import { GasStrategy, TradingApi, UNCONNECTED_ADDRESS } from '@universe/api'
 import { FeatureFlags, getFeatureFlag } from '@universe/gating'
+import { UniverseChainId } from 'uniswap/src/features/chains/types'
 import { getActiveGasStrategy } from 'uniswap/src/features/gas/utils'
 import {
   isZeroAmount,
