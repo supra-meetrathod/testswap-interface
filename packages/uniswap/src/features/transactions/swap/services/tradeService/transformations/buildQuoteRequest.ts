@@ -1,13 +1,13 @@
 import { Currency, CurrencyAmount } from '@uniswap/sdk-core'
 import { GasStrategy, TradingApi, UNCONNECTED_ADDRESS } from '@universe/api'
 import { FeatureFlags, getFeatureFlag } from '@universe/gating'
+import { UniverseChainId } from 'uniswap/src/features/chains/types'
 import { getActiveGasStrategy } from 'uniswap/src/features/gas/utils'
 import {
   isZeroAmount,
   parseQuoteCurrencies,
 } from 'uniswap/src/features/transactions/swap/hooks/useTrade/parseQuoteCurrencies'
 import type { UseTradeArgs } from 'uniswap/src/features/transactions/swap/types/trade'
-import { UniverseChainId } from 'uniswap/src/features/chains/types'
 import {
   buildUrgency,
   DEFAULT_URGENCY_LEVEL,

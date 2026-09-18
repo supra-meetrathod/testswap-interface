@@ -1,0 +1,24 @@
+diff --git a/lib/fixednumber.d.ts b/lib/fixednumber.d.ts
+index e652a5328efd7ec3fc483576fb848dcfb1afbd55..71d8de614f3ba24ee91cf42e158e70b78f69aec5 100644
+--- a/lib/fixednumber.d.ts
++++ b/lib/fixednumber.d.ts
+@@ -1,5 +1,5 @@
+ import { BytesLike } from "@ethersproject/bytes";
+-import { BigNumber, BigNumberish } from "@ethersproject/bignumber/src.ts/bignumber";
++import { BigNumber, BigNumberish } from "./bignumber";
+ export declare function formatFixed(value: BigNumberish, decimals?: string | BigNumberish): string;
+ export declare function parseFixed(value: string, decimals?: BigNumberish): BigNumber;
+ export declare class FixedFormat {
+diff --git a/lib/index.d.ts b/lib/index.d.ts
+index 002a6b68afdf78a39caf40da46d068d7a717e20a..5d2c2d769f9a50db66fa2875160afe3f86fda0fb 100644
+--- a/lib/index.d.ts
++++ b/lib/index.d.ts
+@@ -1,4 +1,4 @@
+-export { BigNumber, BigNumberish } from "@ethersproject/bignumber/src.ts/bignumber";
+-export { formatFixed, FixedFormat, FixedNumber, parseFixed } from "@ethersproject/bignumber/src.ts/fixednumber";
+-export { _base16To36, _base36To16 } from "@ethersproject/bignumber/src.ts/bignumber";
++export { BigNumber, BigNumberish } from "./bignumber";
++export { formatFixed, FixedFormat, FixedNumber, parseFixed } from "./fixednumber";
++export { _base16To36, _base36To16 } from "./bignumber";
+ //# sourceMappingURL=index.d.ts.map
+\ No newline at end of file

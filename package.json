@@ -309,6 +309,7 @@
     "@uniswap/client-data-api@0.0.165": "patches/@uniswap%2Fclient-data-api@0.0.165.patch",
     "@uniswap/client-explore@0.0.18": "patches/@uniswap%2Fclient-explore@0.0.18.patch",
     "@uniswap/client-liquidity@1.4.16": "patches/@uniswap%2Fclient-liquidity@1.4.16.patch",
-    "@uniswap/client-unirpc-v2@0.0.4": "patches/@uniswap%2Fclient-unirpc-v2@0.0.4.patch"
+    "@uniswap/client-unirpc-v2@0.0.4": "patches/@uniswap%2Fclient-unirpc-v2@0.0.4.patch",
+    "@ethersproject/bignumber@5.8.0": "patches/@ethersproject%2Fbignumber@5.8.0.patch"
   }
 }

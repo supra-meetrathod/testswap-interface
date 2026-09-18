@@ -154,10 +154,7 @@ export function SelectTokensStep({
       // If the tokens change, we want to reset the default fee tier (mostUsedFeeTier) in the useEffect below.
       setPositionState((prevState) => ({ ...prevState, fee: undefined }))
 
-      if (
-        areCurrenciesEqual(currency, otherCurrency) ||
-        areCurrenciesEqual(resolvedCurrency, wrappedCurrencyOther)
-      ) {
+      if (areCurrenciesEqual(currency, otherCurrency) || areCurrenciesEqual(resolvedCurrency, wrappedCurrencyOther)) {
         setCurrencyInputs((prevState) => ({
           ...prevState,
           [otherInputState]: undefined,
@@ -187,7 +184,14 @@ export function SelectTokensStep({
           break
       }
     },
-    [currencySearchInputState, setCurrencyInputs, currencyInputs, setSelectedChainId, setPositionState, protocolVersion],
+    [
+      currencySearchInputState,
+      setCurrencyInputs,
+      currencyInputs,
+      setSelectedChainId,
+      setPositionState,
+      protocolVersion,
+    ],
   )
 
   const handleFeeTierSelect = useCallback(
