@@ -8,7 +8,6 @@ import {
   parseQuoteCurrencies,
 } from 'uniswap/src/features/transactions/swap/hooks/useTrade/parseQuoteCurrencies'
 import type { UseTradeArgs } from 'uniswap/src/features/transactions/swap/types/trade'
-import { UniverseChainId } from 'uniswap/src/features/chains/types'
 import {
   buildUrgency,
   DEFAULT_URGENCY_LEVEL,
